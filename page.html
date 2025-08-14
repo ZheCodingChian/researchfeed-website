@@ -63,6 +63,10 @@
                             blue: 'rgba(40, 100, 156, 0.7)',     // #28649C with 70% opacity
                             orange: 'rgba(234, 147, 0, 0.7)',    // #EA9300 with 70% opacity
                             red: 'rgba(129, 12, 12, 0.7)',       // #810C0C with 70% opacity
+                        },
+                        bar: {
+                            raw: 'rgba(107, 106, 101, 0.7)',       // #6B6A65 with 70% opacity
+                            normalized: '#4f4e4b' 
                         }
                     },
                     
@@ -844,7 +848,7 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">RLHF</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar rlhf-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar rlhf-progress-bar bg-bar-raw h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="rlhf">
                                                 </div>
@@ -860,7 +864,7 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar weak-supervision-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar weak-supervision-progress-bar bg-bar-raw h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="weak_supervision">
                                                 </div>
@@ -876,7 +880,7 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar diffusion-reasoning-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar diffusion-reasoning-progress-bar bg-bar-raw h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="diffusion_reasoning">
                                                 </div>
@@ -892,7 +896,7 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar distributed-training-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar distributed-training-progress-bar bg-bar-raw h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="distributed_training">
                                                 </div>
@@ -908,7 +912,7 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Datasets</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar datasets-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar datasets-progress-bar bg-bar-raw h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="datasets">
                                                 </div>
@@ -1203,15 +1207,17 @@
                     const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
                     if (progressBar) {
                         progressBar.style.width = `${normalizedScore}%`;
-                        // Change color to orange
-                        progressBar.classList.remove('bg-neutral-600');
-                        progressBar.classList.add('bg-status-orange');
+                        // Change to normalized bar color
+                        progressBar.classList.remove('bg-bar-raw');
+                        progressBar.classList.add('bg-bar-normalized');
                     }
                     
                     // Update score text
                     const scoreElement = container.querySelector(`.${topic.replace('_', '-')}-similarity-score`);
                     if (scoreElement) {
-                        scoreElement.textContent = `${normalizedScore.toFixed(3)}%`;
+                        // Convert to 3 significant figures
+                        const sigFigScore = normalizedScore.toPrecision(3);
+                        scoreElement.textContent = `${sigFigScore}%`;
                     }
                 });
             } else {
@@ -1223,9 +1229,9 @@
                     const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
                     if (progressBar) {
                         progressBar.style.width = `${(rawScore * 100)}%`;
-                        // Change color back to neutral
-                        progressBar.classList.remove('bg-status-orange');
-                        progressBar.classList.add('bg-neutral-600');
+                        // Change to raw bar color
+                        progressBar.classList.remove('bg-bar-normalized');
+                        progressBar.classList.add('bg-bar-raw');
                     }
                     
                     // Update score text
