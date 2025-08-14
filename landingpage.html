@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papers Dashboard - AI-Curated Research Papers</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'heading': ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+                        'body': ['Space Mono', 'Fira Code', 'Consolas', 'monospace'],
+                    },
+                    
+                    fontSize: {
+                            // 4px increments with responsive scaling
+                            'xs': 'clamp(0.5rem, 1vw, 0.625rem)',     // 8-10px
+                            'sm': 'clamp(0.625rem, 1.2vw, 0.75rem)',  // 10-12px
+                            'md': 'clamp(0.75rem, 1.4vw, 0.875rem)',  // 12-14px
+                            'lg': 'clamp(0.875rem, 1.6vw, 1rem)',     // 14-16px
+                            'xl': 'clamp(1rem, 1.8vw, 1.125rem)',     // 16-18px
+                            '2xl': 'clamp(1.125rem, 2vw, 1.25rem)',   // 18-20px
+                            '3xl': 'clamp(1.25rem, 2.2vw, 1.375rem)', // 20-22px
+                            '4xl': 'clamp(1.375rem, 2.4vw, 1.5rem)',  // 22-24px
+                            '5xl': 'clamp(1.5rem, 2.6vw, 1.625rem)',  // 24-26px
+                            '6xl': 'clamp(1.625rem, 2.8vw, 1.75rem)', // 26-28px
+                            '7xl': 'clamp(1.75rem, 3vw, 1.875rem)',   // 28-30px
+                            '8xl': 'clamp(1.875rem, 3.2vw, 2rem)',    // 30-32px
+                            '9xl': 'clamp(2rem, 3.4vw, 2.125rem)',    // 32-34px
+                        },
+
+                    colors: {
+                        neutral: {
+                            10: '#f5f2e7',
+                            20: '#e5e5e5',
+                            40: '#a3a3a3',
+                            60: '#525252',
+                            70: '#404040',
+                            90: '#171717',
+                            100: '#f5f2e7',
+                            200: '#dad7cd',
+                            300: '#bebcb3',
+                            400: '#a2a199',
+                            500: '#86857f',
+                            600: '#6b6a65',
+                            700: '#4f4e4b',
+                            900: '#171717',
+                        },
+                        // Status colors with 70% opacity
+                        status: {
+                            green: 'rgba(22, 104, 52, 0.7)',     // #166834 with 70% opacity
+                            blue: 'rgba(40, 100, 156, 0.7)',     // #28649C with 70% opacity
+                            orange: 'rgba(234, 147, 0, 0.7)',    // #EA9300 with 70% opacity
+                            red: 'rgba(129, 12, 12, 0.7)',       // #810C0C with 70% opacity
+                        }
+                    },
+                    
+                    spacing: {
+                        'xs': 'clamp(0.25rem, 1vw, 0.5rem)',    // 4-8px
+                        'sm': 'clamp(0.5rem, 1.5vw, 0.75rem)',  // 8-12px
+                        'md': 'clamp(0.75rem, 2vw, 1rem)',      // 12-16px
+                        'lg': 'clamp(1rem, 2.5vw, 1.5rem)',     // 16-24px
+                        'xl': 'clamp(1.5rem, 3vw, 2rem)',       // 24-32px
+                        '2xl': 'clamp(2rem, 4vw, 3rem)',        // 32-48px
+                        '3xl': 'clamp(3rem, 6vw, 4rem)',        // 48-64px
+                        '4xl': 'clamp(4rem, 8vw, 5rem)',        // 64-80px
+                        '5xl': 'clamp(5rem, 10vw, 6rem)',       // 80-96px
+                        '6xl': 'clamp(6rem, 12vw, 7rem)',       // 96-112px
+                        
+                        // Mobile-specific spacing
+                        'mobile-header': '5px',                  // 5px for mobile header padding
+                        
+                        // Card-specific spacing
+                        'card-gap': '20px',                      // 20px gap for card info grid
+                        
+                        // Tag-specific spacing
+                        'tag-x': '8px',                          // 8px horizontal padding for tags
+                        'tag-y': '4px',                          // 4px vertical padding for tags
+                    },
+                    
+                    screens: {
+                        'mobile': '480px',
+                        'tablet': '768px',
+                        'desktop': '1024px',
+                        'wide': '1440px',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS for additional styles -->
+    <style>
+        /* Focus states */
+        .nav-button:focus-visible {
+            outline: 2px solid #86857f;
+            outline-offset: 2px;
+        }
+        
+        .pagination-square:focus-visible {
+            outline: 2px solid #86857f;
+            outline-offset: 2px;
+        }
+        
+        /* Mobile active states */
+        @media (hover: none) {
+            .nav-button:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease-in;
+            }
+        }
+        
+        /* Font fallbacks */
+        .font-mono {
+            font-family: 'Space Mono', 'Fira Code', 'Consolas', monospace;
+        }
+        
+        /* Paper title link styling */
+        .paper-title-link {
+            color: inherit;
+            text-decoration: none;
+            transition: text-decoration 0.2s ease;
+        }
+        
+        .paper-title-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Abstract text truncation */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="bg-neutral-100 min-h-screen">
+    <!-- Mobile Layout (visible < 768px) -->
+    <div class="flex flex-col tablet:hidden">
+        <!-- Mobile Header -->
+        <header class="bg-neutral-200 w-full flex items-center px-mobile-header pt-xl pb-md">
+            <!-- Left: Navigation buttons (back to 2 buttons) -->
+            <div class="flex flex-col gap-sm">
+                <!-- TensorPlex Home Button -->
+                <button class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="TensorPlex Home">
+                    <svg width="24" height="18" viewBox="0 0 62 47" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#4f4e4b" d="M62 0v15.667H31L39.422 0H62ZM31 15.667 15.5 47H0l12.684-25.641L31 15.667ZM62 47H46.5L31 15.667l18.316 5.692L62 47ZM31 15.667H0V0H22.58L31 15.667Z" class="transition"></path>
+                    </svg>
+                </button>
+                
+                <!-- Menu Button -->
+                <button class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="Open Menu">
+                    <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Center: Page info -->
+            <div class="flex-1 flex flex-col items-center justify-center text-center" style="padding-right: 3rem;">
+                <h1 class="text-neutral-70 font-heading font-bold text-lg mb-md">
+                    Papers Published on 25 July 2025
+                </h1>
+                
+                <!-- Mobile Pagination -->
+                <div class="flex gap-sm mb-sm">
+                    <!-- Active Square 1 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-900 flex items-center justify-center">
+                        <span class="text-neutral-10 font-heading font-bold text-sm">1</span>
+                    </div>
+                    
+                    <!-- Inactive Square 2 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">2</span>
+                    </div>
+                    
+                    <!-- Inactive Square 3 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">3</span>
+                    </div>
+                    
+                    <!-- Inactive Square 4 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">4</span>
+                    </div>
+                    
+                    <!-- Inactive Square 5 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">5</span>
+                    </div>
+                </div>
+                
+                <!-- Papers Count -->
+                <p class="text-neutral-70 font-heading font-bold text-md">
+                    Showing 142/142 Papers
+                </p>
+            </div>
+        </header>
+        
+        <!-- Mobile Content Area -->
+        <main class="px-lg py-xl">
+            <div class="max-w-[500px] mx-auto">
+                <!-- Mobile Papers Grid -->
+                <div class="flex flex-col gap-3xl" id="mobile-papers">
+                    <!-- Paper cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Desktop Layout (visible ≥ 768px) -->
+    <div class="hidden tablet:block">
+        <!-- Desktop Header -->
+        <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md">
+            <!-- Left: Navigation buttons (back to 2 buttons) -->
+            <div class="flex flex-col gap-sm" style="width: clamp(4rem, 8vw, 5rem);">
+                <!-- TensorPlex Home Button --> 
+                <button class="nav-button bg-transparent flex items-center justify-center" 
+                        style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);"  
+                        aria-label="TensorPlex Home">
+                    <svg width="24" height="18" viewBox="0 0 62 47" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#4f4e4b" d="M62 0v15.667H31L39.422 0H62ZM31 15.667 15.5 47H0l12.684-25.641L31 15.667ZM62 47H46.5L31 15.667l18.316 5.692L62 47ZM31 15.667H0V0H22.58L31 15.667Z" class="transition"></path>
+                    </svg>
+                </button>
+                
+                <!-- Menu Button -->
+                <button class="nav-button bg-transparent flex items-center justify-center" 
+                        style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
+                        aria-label="Open Menu">
+                    <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Center: Page info -->
+            <div class="flex-1 flex flex-col items-center justify-center text-center" 
+                 style="padding-right: clamp(4rem, 8vw, 5rem);">
+                
+                <h1 class="text-neutral-70 font-heading font-bold text-4xl" 
+                    style="margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
+                    Papers Published on 25 July 2025
+                </h1>
+                
+                <!-- Desktop Pagination -->
+                <div class="flex" style="gap: clamp(0.5rem, 1vw, 0.75rem); margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
+                    <!-- Active Square 1 -->
+                    <div class="pagination-square bg-neutral-900 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-10 font-heading font-bold text-md">1</span>
+                    </div>
+                    
+                    <!-- Inactive Square 2 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">2</span>
+                    </div>
+                    
+                    <!-- Inactive Square 3 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">3</span>
+                    </div>
+                    
+                    <!-- Inactive Square 4 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">4</span>
+                    </div>
+                    
+                    <!-- Inactive Square 5 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">5</span>
+                    </div>
+                </div>
+                
+                <!-- Papers Count -->
+                <p class="text-neutral-70 font-heading font-bold text-md">
+                    Showing 142/142 Papers
+                </p>
+            </div>
+        </header>
+        
+        <!-- Desktop Content Area -->
+        <main class="px-xl py-2xl">
+            <div class="max-w-[1400px] mx-auto">
+                <!-- Desktop Papers Grid -->
+                <div class="flex flex-col gap-3xl" id="desktop-papers">
+                    <!-- Paper cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sample paper data based on your Paper dataclass
+        const samplePapers = [
+            {
+                id: "2501.12345",
+                title: "Reinforcement Learning with Human Feedback for Large Language Models",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Multi-object tracking is a classic field in computer vision. Among them, pedestrian tracking has extremely high application value and has become the most popular research category. Existing methods mainly use motion or appearance information for tracking, which is often difficult in complex scenarios. For the motion information, mutual occlusions between objects often prevent updating of the motion state; for the appearance information, non-robust results are often obtained due to reasons such as only partial visibility of the object or blurred images. Although learning how to perform tracking in these situations from the annotated data is the simplest solution, the existing MOT dataset fails to satisfy this solution. Existing methods mainly have two drawbacks: relatively simple scene composition and non-realistic scenarios. Although some of the video sequences in existing dataset do not have the above-mentioned drawbacks, the number is far from adequate for research purposes. To this end, we propose a difficult large-scale dataset for multi-pedestrian tracking, shot mainly from the first-person view and all from real-life complex scenarios. We name it ``CrowdTrack'' because there are numerous objects in most of the sequences. Our dataset consists of 33 videos, containing a total of 5,185 trajectories. Each object is annotated with a complete bounding box and a unique object ID. The dataset will provide a platform to facilitate the development of algorithms that remain effective in complex situations. We analyzed the dataset comprehensively and tested multiple SOTA models on our dataset. Besides, we analyzed the performance of the foundation models on our dataset. The dataset and project code is released at: https://github.com/loseevaya/CrowdTrack .",
+                published_date: "2025-01-15T00:00:00",
+                
+                arxiv_url: "https://arxiv.org/abs/2501.12345",
+                pdf_url: "https://arxiv.org/pdf/2501.12345.pdf",
+                latex_url: "https://arxiv.org/e-print/2501.12345",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.92,
+                weak_supervision_score: 0.87,
+                diffusion_reasoning_score: 0.33,
+                distributed_training_score: 0.54,
+                datasets_score: 0.40,
+                highest_similarity_topic: "rlhf",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "high",
+                weak_supervision_relevance: "medium",
+                diffusion_reasoning_relevance: "low",
+                distributed_training_relevance: "low",
+                datasets_relevance: "low",
+                
+                rlhf_justification: "The paper directly focuses on applying RLHF to LLM training with novel approaches.",
+                weak_supervision_justification: "Uses weak-supervision signals derived from partial labeling.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "Uses existing datasets; no significant contribution.",
+                
+                llm_score_status: "completed",
+                summary: "This paper presents a... novel self-supervised depth completion method that utilizes only sparse depth measurements and a single corresponding RGB image for training, addressing the limitations of existing approaches that require dense annotations or multiple frames. The methodology incorporates segmentation maps from vision foundation models and introduces two new loss functions—the Local Gradient Constraint Loss and Selective Mask-Aware Smoothness Loss—to propagate depth information effectively and ensure consistent predictions, with extensive experiments on datasets like NYU Depth v2 and KITTI demonstrating state-of-the-art performance.",
+                novelty_score: "High",
+                novelty_justification: "Combines RLHF with weak-supervision in a previously unexplored way.",
+                impact_score: "Moderate",
+                impact_justification: "Likely to influence fine-tuning practices but not foundational training.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "Key advance in RLHF training methodology for LLM alignment.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2501.12346",
+                title: "Advanced Reinforcement Learning with Human Feedback for Multimodal Language Models",
+                authors: ["Alice Tan", "Benjamin Koh", "David Liu"],
+                categories: ["cs.AI", "cs.LG", "cs.CL"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-16T00:00:00",
+                
+                arxiv_url: "https://arxiv.org/abs/2501.12346",
+                pdf_url: "https://arxiv.org/pdf/2501.12346.pdf",
+                latex_url: "https://arxiv.org/e-print/2501.12346",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in multimodal language models have highlighted the importance of aligning these systems with human preferences across modalities. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.94,
+                weak_supervision_score: 0.89,
+                diffusion_reasoning_score: 0.45,
+                distributed_training_score: 0.67,
+                datasets_score: 0.52,
+                highest_similarity_topic: "rlhf",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "high",
+                weak_supervision_relevance: "high",
+                diffusion_reasoning_relevance: "medium",
+                distributed_training_relevance: "medium",
+                datasets_relevance: "medium",
+                
+                rlhf_justification: "The paper directly focuses on applying RLHF to multimodal LLM training with novel approaches.",
+                weak_supervision_justification: "Uses advanced weak-supervision signals derived from multimodal partial labeling.",
+                diffusion_reasoning_justification: "Incorporates diffusion models for vision component alignment.",
+                distributed_training_justification: "Proposes distributed training strategies for multimodal models.",
+                datasets_justification: "Introduces new multimodal evaluation datasets.",
+                
+                llm_score_status: "completed",
+                summary: "This paper presents a novel self-supervised depth completion method that utilizes only sparse depth measurements and a single corresponding RGB image for training, addressing the limitations of existing approaches that require dense annotations or multiple frames. The methodology incorporates segmentation maps from vision foundation models and introduces two new loss functions—the Local Gradient Constraint Loss and Selective Mask-Aware Smoothness Loss—to propagate depth information effectively and ensure consistent predictions, with extensive experiments on datasets like NYU Depth v2 and KITTI demonstrating state-of-the-art performance.",
+                novelty_score: "High",
+                novelty_justification: "Extends RLHF with weak-supervision to multimodal settings in a novel way.",
+                impact_score: "High",
+                impact_justification: "Likely to significantly influence multimodal fine-tuning practices.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "Major advance in multimodal RLHF training methodology.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/bcdefg",
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 29.3,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "David Liu",
+                        profile_url: "https://www.semanticscholar.org/author/David-Liu/456789",
+                        h_index: 16
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2501.12347",
+                title: "Scalable Reinforcement Learning with Human Feedback for Large Language Models",
+                authors: ["Alice Tan", "Elena Rodriguez", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG", "cs.DC"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-17T00:00:00",
+                
+                arxiv_url: "https://arxiv.org/abs/2501.12347",
+                pdf_url: "https://arxiv.org/pdf/2501.12347.pdf",
+                latex_url: "https://arxiv.org/e-print/2501.12347",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of scalable alignment with human preferences. RLHF is a key technique enabling this alignment at scale...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.88,
+                weak_supervision_score: 0.82,
+                diffusion_reasoning_score: 0.28,
+                distributed_training_score: 0.91,
+                datasets_score: 0.65,
+                highest_similarity_topic: "distributed_training",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "high",
+                weak_supervision_relevance: "medium",
+                diffusion_reasoning_relevance: "low",
+                distributed_training_relevance: "high",
+                datasets_relevance: "high",
+                
+                rlhf_justification: "The paper focuses on scalable RLHF applications for large-scale LLM training.",
+                weak_supervision_justification: "Uses distributed weak-supervision signals for scalable training.",
+                diffusion_reasoning_justification: "Only mentions diffusion models in comparison studies.",
+                distributed_training_justification: "Core contribution is distributed RLHF training methodology.",
+                datasets_justification: "Introduces large-scale datasets for RLHF evaluation.",
+                
+                llm_score_status: "completed",
+                summary: "This paper presents a novel self-supervised depth completion method that utilizes only sparse depth measurements and a single corresponding RGB image for training, addressing the limitations of existing approaches that require dense annotations or multiple frames. The methodology incorporates segmentation maps from vision foundation models and introduces two new loss functions—the Local Gradient Constraint Loss and Selective Mask-Aware Smoothness Loss—to propagate depth information effectively and ensure consistent predictions, with extensive experiments on datasets like NYU Depth v2 and KITTI demonstrating state-of-the-art performance.",
+                novelty_score: "Moderate",
+                novelty_justification: "Applies existing RLHF techniques to distributed settings with some novel optimizations.",
+                impact_score: "High",
+                impact_justification: "Enables practical RLHF deployment at industry scale.",
+                recommendation_score: "Should Read",
+                recommendation_justification: "Important for practitioners working on large-scale LLM alignment.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/cdefgh",
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 25.3,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Elena Rodriguez",
+                        profile_url: "https://www.semanticscholar.org/author/Elena-Rodriguez/567890",
+                        h_index: 22
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            }
+        ];
+
+        // Helper function to format publication date
+        function formatPublicationDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('en-GB', options);
+        }
+
+        // Helper function to get score color based on value
+        function getScoreColor(scoreType, value) {
+            const colorMap = {
+                recommendation: {
+                    'Must Read': 'rgba(22, 104, 52, 0.7)',      // status-green
+                    'Should Read': 'rgba(40, 100, 156, 0.7)',   // status-blue
+                    'Can Skip': 'rgba(234, 147, 0, 0.7)',       // status-orange
+                    'Ignore': 'rgba(129, 12, 12, 0.7)'          // status-red
+                },
+                novelty: {
+                    'High': 'rgba(22, 104, 52, 0.7)',           // status-green
+                    'Moderate': 'rgba(40, 100, 156, 0.7)',      // status-blue
+                    'Low': 'rgba(234, 147, 0, 0.7)',            // status-orange
+                    'None': 'rgba(129, 12, 12, 0.7)'            // status-red
+                },
+                impact: {
+                    'High': 'rgba(22, 104, 52, 0.7)',           // status-green
+                    'Moderate': 'rgba(40, 100, 156, 0.7)',      // status-blue
+                    'Low': 'rgba(234, 147, 0, 0.7)',            // status-orange
+                    'Negligible': 'rgba(129, 12, 12, 0.7)'      // status-red
+                }
+            };
+            
+            return colorMap[scoreType][value] || '#86857f';  // fallback to neutral-500
+        }
+
+        // Function to create a paper card
+        function createPaperCard(paper, index) {
+            const cardId = `paper-${index}`;
+            
+            return `
+                <article class="bg-neutral-200" role="article" aria-labelledby="${cardId}">
+                    <!-- Title Section -->
+                    <div class="p-md">
+                        <h2 id="${cardId}" class="text-neutral-70 font-heading font-bold text-xl">
+                            <span class="mr-sm">${index + 1}.</span><a href="${paper.arxiv_url}" 
+                               class="paper-title-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               aria-label="View paper on arXiv">${paper.title}</a>
+                        </h2>
+                    </div>
+                    
+                    <!-- Paper Info Grid -->
+                    <div class="grid grid-cols-1 gap-md pb-lg px-lg">
+                        <!-- Row 1: Metadata Module -->
+                        <div class="flex flex-col gap-xs">
+                            <!-- First row: arXiv ID and Publication Date -->
+                            <div class="flex gap-xs">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    arXiv ID: ${paper.id}
+                                </span>
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    Published ${formatPublicationDate(paper.published_date)}
+                                </span>
+                            </div>
+                            
+                            <!-- Second row: Authors -->
+                            <div>
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    Authors: ${paper.authors.join(', ')}
+                                </span>
+                            </div>
+                            
+                            <!-- Third row: Categories -->
+                            <div>
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    Categories: ${paper.categories.join(', ')}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Row 2: AI Generated Summary Module -->
+                        ${paper.summary && paper.summary.trim() ? `
+                        <div class="bg-neutral-300 p-md">
+                            <div class="flex flex-col gap-xs">
+                                <h3 class="text-neutral-70 font-heading font-bold text-lg">AI-generated summary</h3>
+                                <p class="text-neutral-70 font-body text-md">${paper.summary}</p>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Row 3: Abstract Module -->
+                        <div class="bg-neutral-300 p-md">
+                            <div class="flex flex-col gap-xs">
+                                <h3 class="text-neutral-70 font-heading font-bold text-lg">Abstract</h3>
+                                <div class="abstract-container" data-paper-id="${paper.id}">
+                                    <p class="abstract-text text-neutral-70 font-body text-md" 
+                                       style="line-height: calc(1.5em);">${paper.abstract}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Row 4: Score Row Section -->
+                        <div class="grid grid-cols-3 gap-md">
+                            <!-- Recommendation Score Module -->
+                            <div class="bg-neutral-300 p-xs">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Score Section -->
+                                    <div class="flex">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
+                                            Recommendation:
+                                        </span>
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
+                                              style="background-color: ${getScoreColor('recommendation', paper.recommendation_score)}">
+                                            ${paper.recommendation_score}
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Justification Section -->
+                                    <div class="w-full">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y w-full block text-left">
+                                            Show Justification <span class="text-xs">▼</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Novelty Score Module -->
+                            <div class="bg-neutral-300 p-xs">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Score Section -->
+                                    <div class="flex">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
+                                            Novelty:
+                                        </span>
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
+                                              style="background-color: ${getScoreColor('novelty', paper.novelty_score)}">
+                                            ${paper.novelty_score}
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Justification Section -->
+                                    <div class="w-full">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y w-full block text-left">
+                                            Show Justification <span class="text-xs">▼</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Potential Impact Score Module -->
+                            <div class="bg-neutral-300 p-xs">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Score Section -->
+                                    <div class="flex">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
+                                            Potential Impact:
+                                        </span>
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
+                                              style="background-color: ${getScoreColor('impact', paper.impact_score)}">
+                                            ${paper.impact_score}
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Justification Section -->
+                                    <div class="w-full">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y w-full block text-left">
+                                            Show Justification <span class="text-xs">▼</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Row 5: Similarity, Relevance, H-index placeholder -->
+                        <div class="bg-neutral-300 p-sm rounded min-h-[80px] flex items-center justify-center">
+                            <span class="text-neutral-60 font-body text-sm">Similarity, Relevance, H-index Section</span>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        // Function to toggle abstract expand/collapse
+        function toggleAbstract(paperId) {
+            const containers = document.querySelectorAll(`[data-paper-id="${paperId}"]`);
+            
+            containers.forEach(container => {
+                const abstractText = container.querySelector('.abstract-text');
+                const isExpanded = abstractText.getAttribute('data-expanded') === 'true';
+                
+                if (isExpanded) {
+                    // Collapse - restore truncated text
+                    const originalText = abstractText.getAttribute('data-original-text');
+                    const truncatedText = abstractText.getAttribute('data-truncated-text');
+                    abstractText.innerHTML = truncatedText;
+                    abstractText.setAttribute('data-expanded', 'false');
+                } else {
+                    // Expand - show full text
+                    const originalText = abstractText.getAttribute('data-original-text');
+                    abstractText.innerHTML = `${originalText} <button class="expand-toggle text-neutral-70 font-body font-bold text-md cursor-pointer bg-transparent border-none p-0 hover:opacity-70 transition-opacity duration-200" onclick="toggleAbstract('${paperId}')">[Collapse]</button>`;
+                    abstractText.setAttribute('data-expanded', 'true');
+                }
+            });
+        }
+
+        // Function to setup abstract truncation
+        function setupAbstractTruncation() {
+            document.querySelectorAll('.abstract-container').forEach(container => {
+                const abstractText = container.querySelector('.abstract-text');
+                const paperId = container.getAttribute('data-paper-id');
+                const originalText = abstractText.textContent;
+                
+                // Store original text
+                abstractText.setAttribute('data-original-text', originalText);
+                abstractText.setAttribute('data-expanded', 'false');
+                
+                // Create a clone to measure text height
+                const clone = abstractText.cloneNode(true);
+                clone.style.position = 'absolute';
+                clone.style.visibility = 'hidden';
+                clone.style.height = 'auto';
+                clone.style.maxHeight = 'none';
+                clone.style.width = abstractText.offsetWidth + 'px';
+                document.body.appendChild(clone);
+                
+                const lineHeight = parseFloat(getComputedStyle(clone).lineHeight);
+                const maxHeight = lineHeight * 3;
+                
+                // Check if text overflows 3 lines
+                if (clone.offsetHeight > maxHeight) {
+                    // Text needs truncation
+                    let truncatedText = originalText;
+                    const expandButton = ' <span class="text-neutral-70 font-body text-md">...</span> <button class="expand-toggle text-neutral-70 font-body font-bold text-md cursor-pointer bg-transparent border-none p-0 hover:opacity-70 transition-opacity duration-200" onclick="toggleAbstract(\'' + paperId + '\')">[Expand]</button>';
+                    
+                    // Binary search to find the right truncation point
+                    let left = 0;
+                    let right = originalText.length;
+                    let bestFit = '';
+                    
+                    while (left <= right) {
+                        const mid = Math.floor((left + right) / 2);
+                        const testText = originalText.substring(0, mid) + expandButton;
+                        
+                        clone.innerHTML = testText;
+                        
+                        if (clone.offsetHeight <= maxHeight) {
+                            bestFit = testText;
+                            left = mid + 1;
+                        } else {
+                            right = mid - 1;
+                        }
+                    }
+                    
+                    // Store truncated text and apply it
+                    abstractText.setAttribute('data-truncated-text', bestFit);
+                    abstractText.innerHTML = bestFit;
+                } else {
+                    // Text fits in 3 lines, no truncation needed
+                    abstractText.innerHTML = originalText;
+                }
+                
+                document.body.removeChild(clone);
+            });
+        }
+
+        // Populate paper cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Papers Dashboard loaded successfully');
+            
+            const mobileContainer = document.getElementById('mobile-papers');
+            const desktopContainer = document.getElementById('desktop-papers');
+            
+            const papersHTML = samplePapers.map((paper, index) => createPaperCard(paper, index)).join('');
+            
+            mobileContainer.innerHTML = papersHTML;
+            desktopContainer.innerHTML = papersHTML;
+            
+            // Setup abstract truncation after DOM is populated
+            setTimeout(setupAbstractTruncation, 100);
+            
+            // Navigation button event listeners
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('Navigation button clicked:', this.getAttribute('aria-label'));
+                });
+            });
+            
+            // Pagination square event listeners
+            const paginationSquares = document.querySelectorAll('.pagination-square');
+            paginationSquares.forEach(square => {
+                square.addEventListener('click', function() {
+                    const pageNumber = this.querySelector('span').textContent;
+                    console.log('Pagination clicked:', pageNumber);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

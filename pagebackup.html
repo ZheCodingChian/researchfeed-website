@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papers Dashboard - AI-Curated Research Papers</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'heading': ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+                        'body': ['Space Mono', 'Fira Code', 'Consolas', 'monospace'],
+                    },
+                    
+                    fontSize: {
+                            // 4px increments with responsive scaling
+                            'xs': 'clamp(0.5rem, 1vw, 0.625rem)',     // 8-10px
+                            'sm': 'clamp(0.625rem, 1.2vw, 0.75rem)',  // 10-12px
+                            'md': 'clamp(0.75rem, 1.4vw, 0.875rem)',  // 12-14px
+                            'lg': 'clamp(0.875rem, 1.6vw, 1rem)',     // 14-16px
+                            'xl': 'clamp(1rem, 1.8vw, 1.125rem)',     // 16-18px
+                            '2xl': 'clamp(1.125rem, 2vw, 1.25rem)',   // 18-20px
+                            '3xl': 'clamp(1.25rem, 2.2vw, 1.375rem)', // 20-22px
+                            '4xl': 'clamp(1.375rem, 2.4vw, 1.5rem)',  // 22-24px
+                            '5xl': 'clamp(1.5rem, 2.6vw, 1.625rem)',  // 24-26px
+                            '6xl': 'clamp(1.625rem, 2.8vw, 1.75rem)', // 26-28px
+                            '7xl': 'clamp(1.75rem, 3vw, 1.875rem)',   // 28-30px
+                            '8xl': 'clamp(1.875rem, 3.2vw, 2rem)',    // 30-32px
+                            '9xl': 'clamp(2rem, 3.4vw, 2.125rem)',    // 32-34px
+                        },
+
+                    colors: {
+                        neutral: {
+                            10: '#f5f2e7',
+                            20: '#e5e5e5',
+                            40: '#a3a3a3',
+                            60: '#525252',
+                            70: '#404040',
+                            90: '#171717',
+                            100: '#f5f2e7',
+                            200: '#dad7cd',
+                            300: '#bebcb3',
+                            400: '#a2a199',
+                            500: '#86857f',
+                            600: '#6b6a65',
+                            700: '#4f4e4b',
+                            900: '#171717',
+                        },
+                        // Status colors with 70% opacity
+                        status: {
+                            green: 'rgba(22, 104, 52, 0.7)',     // #166834 with 70% opacity
+                            blue: 'rgba(40, 100, 156, 0.7)',     // #28649C with 70% opacity
+                            orange: 'rgba(234, 147, 0, 0.7)',    // #EA9300 with 70% opacity
+                            red: 'rgba(129, 12, 12, 0.7)',       // #810C0C with 70% opacity
+                        }
+                    },
+                    
+                    spacing: {
+                        '2xs': 'clamp(0.125rem, 0.5vw, 0.25rem)', // 2-4px
+                        'xs': 'clamp(0.25rem, 1vw, 0.5rem)',    // 4-8px
+                        'sm': 'clamp(0.5rem, 1.5vw, 0.75rem)',  // 8-12px
+                        'md': 'clamp(0.75rem, 2vw, 1rem)',      // 12-16px
+                        'lg': 'clamp(1rem, 2.5vw, 1.5rem)',     // 16-24px
+                        'xl': 'clamp(1.5rem, 3vw, 2rem)',       // 24-32px
+                        '2xl': 'clamp(2rem, 4vw, 3rem)',        // 32-48px
+                        '3xl': 'clamp(3rem, 6vw, 4rem)',        // 48-64px
+                        '4xl': 'clamp(4rem, 8vw, 5rem)',        // 64-80px
+                        '5xl': 'clamp(5rem, 10vw, 6rem)',       // 80-96px
+                        '6xl': 'clamp(6rem, 12vw, 7rem)',       // 96-112px
+                        
+                        // Mobile-specific spacing
+                        'mobile-header': '5px',                  // 5px for mobile header padding
+                        
+                        // Card-specific spacing
+                        'card-gap': '20px',                      // 20px gap for card info grid
+                        
+                        // Tag-specific spacing
+                        'tag-x': '8px',                          // 8px horizontal padding for tags
+                        'tag-y': '4px',                          // 4px vertical padding for tags
+                    },
+                    
+                    screens: {
+                        'mobile': '480px',
+                        'tablet': '768px',
+                        'desktop': '1024px',
+                        'wide': '1440px',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS for additional styles -->
+    <style>
+        /* Focus states */
+        .nav-button:focus-visible {
+            outline: 2px solid #86857f;
+            outline-offset: 2px;
+        }
+        
+        .pagination-square:focus-visible {
+            outline: 2px solid #86857f;
+            outline-offset: 2px;
+        }
+        
+        /* Mobile active states */
+        @media (hover: none) {
+            .nav-button:active {
+                transform: scale(0.95);
+                transition: transform 0.1s ease-in;
+            }
+        }
+        
+        /* Font fallbacks */
+        .font-mono {
+            font-family: 'Space Mono', 'Fira Code', 'Consolas', monospace;
+        }
+        
+        /* Paper title link styling */
+        .paper-title-link {
+            color: inherit;
+            text-decoration: none;
+            transition: text-decoration 0.2s ease;
+        }
+        
+        .paper-title-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Abstract text styling */
+        .abstract-text {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-neutral-100 min-h-screen">
+    <!-- Mobile Layout (visible < 768px) -->
+    <div class="flex flex-col tablet:hidden">
+        <!-- Mobile Header -->
+        <header class="bg-neutral-200 w-full flex items-center px-mobile-header pt-xl pb-md">
+            <!-- Left: Navigation buttons (back to 2 buttons) -->
+            <div class="flex flex-col gap-sm">
+                <!-- TensorPlex Home Button -->
+                <button class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="TensorPlex Home">
+                    <svg width="24" height="18" viewBox="0 0 62 47" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#4f4e4b" d="M62 0v15.667H31L39.422 0H62ZM31 15.667 15.5 47H0l12.684-25.641L31 15.667ZM62 47H46.5L31 15.667l18.316 5.692L62 47ZM31 15.667H0V0H22.58L31 15.667Z" class="transition"></path>
+                    </svg>
+                </button>
+                
+                <!-- Menu Button -->
+                <button class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="Open Menu">
+                    <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Center: Page info -->
+            <div class="flex-1 flex flex-col items-center justify-center text-center" style="padding-right: 3rem;">
+                <h1 class="text-neutral-70 font-heading font-bold text-lg mb-md">
+                    Papers Published on 25 July 2025
+                </h1>
+                
+                <!-- Mobile Pagination -->
+                <div class="flex gap-sm mb-sm">
+                    <!-- Active Square 1 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-900 flex items-center justify-center">
+                        <span class="text-neutral-10 font-heading font-bold text-sm">1</span>
+                    </div>
+                    
+                    <!-- Inactive Square 2 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">2</span>
+                    </div>
+                    
+                    <!-- Inactive Square 3 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">3</span>
+                    </div>
+                    
+                    <!-- Inactive Square 4 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">4</span>
+                    </div>
+                    
+                    <!-- Inactive Square 5 -->
+                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
+                        <span class="text-neutral-70 font-heading font-bold text-sm">5</span>
+                    </div>
+                </div>
+                
+                <!-- Papers Count -->
+                <p class="text-neutral-70 font-heading font-bold text-md">
+                    Showing 142/142 Papers
+                </p>
+            </div>
+        </header>
+        
+        <!-- Mobile Content Area -->
+        <main class="px-lg py-xl">
+            <div class="max-w-[500px] mx-auto">
+                <!-- Mobile Papers Grid -->
+                <div class="flex flex-col gap-3xl" id="mobile-papers">
+                    <!-- Paper cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Desktop Layout (visible ≥ 768px) -->
+    <div class="hidden tablet:block">
+        <!-- Desktop Header -->
+        <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md">
+            <!-- Left: Navigation buttons (back to 2 buttons) -->
+            <div class="flex flex-col gap-sm" style="width: clamp(4rem, 8vw, 5rem);">
+                <!-- TensorPlex Home Button --> 
+                <button class="nav-button bg-transparent flex items-center justify-center" 
+                        style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);"  
+                        aria-label="TensorPlex Home">
+                    <svg width="24" height="18" viewBox="0 0 62 47" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#4f4e4b" d="M62 0v15.667H31L39.422 0H62ZM31 15.667 15.5 47H0l12.684-25.641L31 15.667ZM62 47H46.5L31 15.667l18.316 5.692L62 47ZM31 15.667H0V0H22.58L31 15.667Z" class="transition"></path>
+                    </svg>
+                </button>
+                
+                <!-- Menu Button -->
+                <button class="nav-button bg-transparent flex items-center justify-center" 
+                        style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
+                        aria-label="Open Menu">
+                    <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Center: Page info -->
+            <div class="flex-1 flex flex-col items-center justify-center text-center" 
+                 style="padding-right: clamp(4rem, 8vw, 5rem);">
+                
+                <h1 class="text-neutral-70 font-heading font-bold text-4xl" 
+                    style="margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
+                    Papers Published on 25 July 2025
+                </h1>
+                
+                <!-- Desktop Pagination -->
+                <div class="flex" style="gap: clamp(0.5rem, 1vw, 0.75rem); margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
+                    <!-- Active Square 1 -->
+                    <div class="pagination-square bg-neutral-900 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-10 font-heading font-bold text-md">1</span>
+                    </div>
+                    
+                    <!-- Inactive Square 2 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">2</span>
+                    </div>
+                    
+                    <!-- Inactive Square 3 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">3</span>
+                    </div>
+                    
+                    <!-- Inactive Square 4 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">4</span>
+                    </div>
+                    
+                    <!-- Inactive Square 5 -->
+                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
+                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
+                        <span class="text-neutral-70 font-heading font-bold text-md">5</span>
+                    </div>
+                </div>
+                
+                <!-- Papers Count -->
+                <p class="text-neutral-70 font-heading font-bold text-md">
+                    Showing 142/142 Papers
+                </p>
+            </div>
+        </header>
+        
+        <!-- Desktop Content Area -->
+        <main class="px-xl py-2xl">
+            <div class="max-w-[1400px] mx-auto">
+                <!-- Desktop Papers Grid -->
+                <div class="flex flex-col gap-3xl" id="desktop-papers">
+                    <!-- Paper cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Sample paper data based on your Paper dataclass
+        const samplePapers = [
+            {
+                id: "2507.02217",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
+
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.390,
+                weak_supervision_score: 0.455,
+                diffusion_reasoning_score: 0.501,
+                distributed_training_score: 0.370,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "not validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
+                
+                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                
+                llm_score_status: "completed",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2507.02218",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
+
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.390,
+                weak_supervision_score: 0.455,
+                diffusion_reasoning_score: 0.501,
+                distributed_training_score: 0.370,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "not validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
+                
+                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                
+                llm_score_status: "completed",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2507.02219",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
+
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.780,
+                weak_supervision_score: 0.845,
+                diffusion_reasoning_score: 0.901,
+                distributed_training_score: 0.800,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "not validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
+                
+                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                
+                llm_score_status: "completed",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2507.02210",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
+
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.390,
+                weak_supervision_score: 0.455,
+                diffusion_reasoning_score: 0.501,
+                distributed_training_score: 0.370,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "not validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
+                
+                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                
+                llm_score_status: "completed",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+        ];
+
+        // Helper function to format publication date
+        function formatPublicationDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('en-GB', options);
+        }
+
+        // Helper function to get score color based on value
+        function getScoreColor(scoreType, value) {
+            const colorMap = {
+                recommendation: {
+                    'Must Read': 'rgba(22, 104, 52, 0.7)',      // status-green
+                    'Should Read': 'rgba(40, 100, 156, 0.7)',   // status-blue
+                    'Can Skip': 'rgba(234, 147, 0, 0.7)',       // status-orange
+                    'Ignore': 'rgba(129, 12, 12, 0.7)'          // status-red
+                },
+                novelty: {
+                    'High': 'rgba(22, 104, 52, 0.7)',           // status-green
+                    'Moderate': 'rgba(40, 100, 156, 0.7)',      // status-blue
+                    'Low': 'rgba(234, 147, 0, 0.7)',            // status-orange
+                    'None': 'rgba(129, 12, 12, 0.7)'            // status-red
+                },
+                impact: {
+                    'High': 'rgba(22, 104, 52, 0.7)',           // status-green
+                    'Moderate': 'rgba(40, 100, 156, 0.7)',      // status-blue
+                    'Low': 'rgba(234, 147, 0, 0.7)',            // status-orange
+                    'Negligible': 'rgba(129, 12, 12, 0.7)'      // status-red
+                }
+            };
+            
+            return colorMap[scoreType][value] || '#86857f';  // fallback to neutral-500
+        }
+
+        // Function to create a paper card
+        function createPaperCard(paper, index) {
+            const cardId = `paper-${index}`;
+            
+            return `
+                <article class="bg-neutral-200" role="article" aria-labelledby="${cardId}">
+                    <!-- Title Section -->
+                    <div class="p-md">
+                        <h2 id="${cardId}" class="text-neutral-70 font-heading font-bold text-xl">
+                            <span class="mr-sm">${index + 1}.</span><a href="${paper.arxiv_url}" 
+                               class="paper-title-link" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               aria-label="View paper on arXiv">${paper.title}</a>
+                        </h2>
+                    </div>
+                    
+                    <!-- Paper Info Grid -->
+                    <div class="grid grid-cols-1 gap-md pb-lg px-lg">
+                        <!-- Row 1: Metadata Module -->
+                        <div class="flex flex-col gap-xs">
+                            <!-- First row: arXiv ID and Publication Date -->
+                            <div class="flex gap-xs">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    arXiv ID: ${paper.id}
+                                </span>
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    Published ${formatPublicationDate(paper.published_date)}
+                                </span>
+                            </div>
+                            
+                            <!-- Second row: Authors -->
+                            <div>
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    Authors: ${paper.authors.join(', ')}
+                                </span>
+                            </div>
+                            
+                            <!-- Third row: Categories -->
+                            <div>
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                    Categories: ${paper.categories.join(', ')}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Row 2: AI Generated Summary Module -->
+                        ${paper.summary && paper.summary.trim() ? `
+                        <div class="bg-neutral-300 p-md">
+                            <div class="flex flex-col gap-xs">
+                                <h3 class="text-neutral-70 font-heading font-bold text-lg">AI-generated summary</h3>
+                                <p class="text-neutral-70 font-body text-md">${paper.summary}</p>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Row 3: Abstract Module -->
+                        <div class="bg-neutral-300 p-md">
+                            <div class="flex flex-col gap-xs">
+                                <h3 class="text-neutral-70 font-heading font-bold text-lg">Abstract</h3>
+                                <div class="abstract-container" data-paper-id="${paper.id}">
+                                    <p class="abstract-text text-neutral-70 font-body text-md" 
+                                       style="line-height: calc(1.5em);">${paper.abstract}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Row 4: Score Row Section -->
+                        <div class="flex flex-col tablet:flex-row gap-md items-start">
+                            <!-- Recommendation Score Module -->
+                            <div class="bg-neutral-300 p-xs flex-1 w-full">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Score Section -->
+                                    <div class="flex">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
+                                            Recommendation:
+                                        </span>
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
+                                              style="background-color: ${getScoreColor('recommendation', paper.recommendation_score)}">
+                                            ${paper.recommendation_score}
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Justification Section -->
+                                    <div class="w-full recommendation-justification-section" data-paper-id="${paper.id}">
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y w-full block text-left cursor-pointer border-none transition-opacity duration-200" 
+                                                onclick="toggleRecommendationJustification('${paper.id}')">
+                                            Show Justification <span class="text-xs">▲</span>
+                                        </button>
+                                        <div class="justification-text hidden text-neutral-60 font-body text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                            ${paper.recommendation_justification}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Novelty Score Module -->
+                            <div class="bg-neutral-300 p-xs flex-1 w-full">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Score Section -->
+                                    <div class="flex">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
+                                            Novelty:
+                                        </span>
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
+                                              style="background-color: ${getScoreColor('novelty', paper.novelty_score)}">
+                                            ${paper.novelty_score}
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Justification Section -->
+                                    <div class="w-full novelty-justification-section" data-paper-id="${paper.id}">
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y w-full block text-left cursor-pointer border-none transition-opacity duration-200" 
+                                                onclick="toggleNoveltyJustification('${paper.id}')">
+                                            Show Justification <span class="text-xs">▲</span>
+                                        </button>
+                                        <div class="justification-text hidden text-neutral-60 font-body text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                            ${paper.novelty_justification}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Potential Impact Score Module -->
+                            <div class="bg-neutral-300 p-xs flex-1 w-full">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Score Section -->
+                                    <div class="flex">
+                                        <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
+                                            Potential Impact:
+                                        </span>
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
+                                              style="background-color: ${getScoreColor('impact', paper.impact_score)}">
+                                            ${paper.impact_score}
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- Justification Section -->
+                                    <div class="w-full impact-justification-section" data-paper-id="${paper.id}">
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y w-full block text-left cursor-pointer border-none transition-opacity duration-200" 
+                                                onclick="toggleImpactJustification('${paper.id}')">
+                                            Show Justification <span class="text-xs">▲</span>
+                                        </button>
+                                        <div class="justification-text hidden text-neutral-60 font-body text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                            ${paper.impact_justification}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Row 5: Similarity, Relevance, H-index Section -->
+                        <div class="flex flex-col tablet:flex-row gap-md items-start">
+                            <!-- Similarity Scores Module -->
+                            <div class="bg-neutral-300 py-md px-lg flex-1 w-full">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Title Section -->
+                                    <div class="text-center py-tag-y">
+                                        <h3 class="text-neutral-70 font-heading font-bold text-xl">Similarity Scores</h3>
+                                    </div>
+                                    
+                                    <!-- Scores Section -->
+                                    <div class="flex flex-col gap-xs">
+                                        <!-- RLHF Score Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">RLHF</span>
+                                            </div>
+                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
+                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                     data-paper-id="${paper.id}" 
+                                                     data-topic="rlhf">
+                                                </div>
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                    ${paper.rlhf_score.toFixed(3)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Weak Supervision Score Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision</span>
+                                            </div>
+                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
+                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                     data-paper-id="${paper.id}" 
+                                                     data-topic="weak_supervision">
+                                                </div>
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                    ${paper.weak_supervision_score.toFixed(3)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Diffusion Reasoning Score Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning</span>
+                                            </div>
+                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
+                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                     data-paper-id="${paper.id}" 
+                                                     data-topic="diffusion_reasoning">
+                                                </div>
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                    ${paper.diffusion_reasoning_score.toFixed(3)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Distributed Training Score Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training</span>
+                                            </div>
+                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
+                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                     data-paper-id="${paper.id}" 
+                                                     data-topic="distributed_training">
+                                                </div>
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                    ${paper.distributed_training_score.toFixed(3)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Datasets Score Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Datasets</span>
+                                            </div>
+                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
+                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                     data-paper-id="${paper.id}" 
+                                                     data-topic="datasets">
+                                                </div>
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                    ${paper.datasets_score.toFixed(3)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Button Section -->
+                                    <div>
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-lg w-full text-center">
+                                            Show Normalized Scores ⇄
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Relevance Module Placeholder -->
+                            <div class="bg-neutral-300 flex-1 w-full h-full">
+                            </div>
+                            
+                            <!-- Author H-Index Module Placeholder -->
+                            <div class="bg-neutral-300 flex-1 w-full h-full">
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        // Helper function to calculate average character width using canvas
+        function calculateAverageCharWidth(fontStyle, fontSize, fontFamily) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.font = `${fontStyle} ${fontSize} ${fontFamily}`;
+            
+            const characterSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ';
+            const totalWidth = ctx.measureText(characterSet).width;
+            
+            return totalWidth / characterSet.length;
+        }
+
+        // Helper function to get text content width (excluding padding)
+        function getTextContentWidth(element) {
+            const computedStyle = getComputedStyle(element);
+            return element.clientWidth - 
+                parseFloat(computedStyle.paddingLeft) - 
+                parseFloat(computedStyle.paddingRight);
+        }
+
+        // Calculate three-line character limit for a given element
+        function calculateThreeLineCharLimit(element) {
+            const computedStyle = getComputedStyle(element);
+            const fontSize = computedStyle.fontSize;
+            const fontFamily = computedStyle.fontFamily;
+            const fontWeight = computedStyle.fontWeight;
+            
+            // Get average character width
+            const avgCharWidth = calculateAverageCharWidth(fontWeight, fontSize, fontFamily);
+            
+            // Get content width
+            const contentWidth = getTextContentWidth(element);
+            
+            // Calculate characters per line
+            const charsPerLine = Math.floor(contentWidth / avgCharWidth);
+            
+            // Total characters for 3 lines
+            const totalChars = charsPerLine * 3;
+            
+            // Reserve space for "... [Expand]"
+            const expandButtonChars = 30;
+            
+            return Math.max(0, totalChars - expandButtonChars);
+        }
+
+        // Function to toggle abstract text expand/collapse
+        function toggleAbstract(paperId) {
+            const containers = document.querySelectorAll(`.abstract-container[data-paper-id="${paperId}"]`);
+            
+            containers.forEach(container => {
+                const abstractText = container.querySelector('.abstract-text');
+                if (!abstractText) return; // Safety check
+                
+                const isExpanded = abstractText.getAttribute('data-expanded') === 'true';
+                
+                if (isExpanded) {
+                    // Collapse - restore truncated text
+                    const truncatedText = abstractText.getAttribute('data-truncated-text');
+                    abstractText.innerHTML = truncatedText;
+                    abstractText.setAttribute('data-expanded', 'false');
+                } else {
+                    // Expand - show full text
+                    const originalText = abstractText.getAttribute('data-original-text');
+                    abstractText.innerHTML = `${originalText} <button class="text-neutral-60 font-body font-bold text-md cursor-pointer bg-transparent border-none p-0 hover:opacity-70 transition-opacity duration-200" onclick="toggleAbstract('${paperId}')">[Collapse]</button>`;
+                    abstractText.setAttribute('data-expanded', 'true');
+                }
+            });
+        }
+
+        // Function to setup abstract truncation using font metrics and binary search
+        function setupAbstractTruncation() {
+            document.querySelectorAll('.abstract-container').forEach(container => {
+                const abstractText = container.querySelector('.abstract-text');
+                const paperId = container.getAttribute('data-paper-id');
+                const originalText = abstractText.textContent;
+                
+                // Store original text
+                abstractText.setAttribute('data-original-text', originalText);
+                abstractText.setAttribute('data-expanded', 'false');
+                
+                // Calculate the rough character limit for 3 lines as starting point
+                const roughCharLimit = calculateThreeLineCharLimit(abstractText);
+                
+                // Check if text needs truncation
+                if (originalText.length > roughCharLimit) {
+                    // Create expand button template
+                    const expandButton = '... <button class="text-neutral-60 font-body font-bold text-md cursor-pointer bg-transparent border-none p-0 hover:opacity-70 transition-opacity duration-200" onclick="toggleAbstract(\'' + paperId + '\')">[Expand]</button>';
+                    
+                    // Calculate 3-line height for comparison
+                    const computedStyle = getComputedStyle(abstractText);
+                    const lineHeight = parseFloat(computedStyle.lineHeight);
+                    const maxHeight = lineHeight * 3;
+                    
+                    // Binary search for perfect truncation point
+                    let left = 0;
+                    let right = Math.min(originalText.length, roughCharLimit + 100); // Use rough estimate + buffer
+                    let bestFit = '';
+                    let bestLength = 0;
+                    
+                    // Create temporary element for height testing
+                    const testElement = abstractText.cloneNode(true);
+                    testElement.style.position = 'absolute';
+                    testElement.style.visibility = 'hidden';
+                    testElement.style.width = abstractText.offsetWidth + 'px';
+                    testElement.style.height = 'auto';
+                    testElement.style.maxHeight = 'none';
+                    document.body.appendChild(testElement);
+                    
+                    while (left <= right) {
+                        const mid = Math.floor((left + right) / 2);
+                        const testText = originalText.substring(0, mid) + expandButton;
+                        
+                        testElement.innerHTML = testText;
+                        
+                        if (testElement.offsetHeight <= maxHeight) {
+                            // Text fits, try longer
+                            bestFit = testText;
+                            bestLength = mid;
+                            left = mid + 1;
+                        } else {
+                            // Text too long, try shorter
+                            right = mid - 1;
+                        }
+                    }
+                    
+                    // Clean up temporary element
+                    document.body.removeChild(testElement);
+                    
+                    // Apply the best fit result
+                    if (bestFit) {
+                        abstractText.setAttribute('data-truncated-text', bestFit);
+                        abstractText.innerHTML = bestFit;
+                    } else {
+                        // Fallback to rough estimate if binary search fails
+                        const fallbackText = originalText.substring(0, Math.max(0, roughCharLimit - 50)) + expandButton;
+                        abstractText.setAttribute('data-truncated-text', fallbackText);
+                        abstractText.innerHTML = fallbackText;
+                    }
+                } else {
+                    // Text fits without truncation
+                    abstractText.innerHTML = originalText;
+                }
+            });
+        }
+
+        // Function to toggle recommendation justification
+        function toggleRecommendationJustification(paperId) {
+            const containers = document.querySelectorAll(`.recommendation-justification-section[data-paper-id="${paperId}"]`);
+            
+            containers.forEach(container => {
+                const button = container.querySelector('button');
+                const textDiv = container.querySelector('.justification-text');
+                const isHidden = textDiv.classList.contains('hidden');
+                
+                if (isHidden) {
+                    // Show justification
+                    textDiv.classList.remove('hidden');
+                    button.innerHTML = 'Hide Justification <span class="text-xs">▼</span>';
+                } else {
+                    // Hide justification
+                    textDiv.classList.add('hidden');
+                    button.innerHTML = 'Show Justification <span class="text-xs">▲</span>';
+                }
+            });
+        }
+
+        // Function to toggle novelty justification
+        function toggleNoveltyJustification(paperId) {
+            const containers = document.querySelectorAll(`.novelty-justification-section[data-paper-id="${paperId}"]`);
+            
+            containers.forEach(container => {
+                const button = container.querySelector('button');
+                const textDiv = container.querySelector('.justification-text');
+                const isHidden = textDiv.classList.contains('hidden');
+                
+                if (isHidden) {
+                    // Show justification
+                    textDiv.classList.remove('hidden');
+                    button.innerHTML = 'Hide Justification <span class="text-xs">▼</span>';
+                } else {
+                    // Hide justification
+                    textDiv.classList.add('hidden');
+                    button.innerHTML = 'Show Justification <span class="text-xs">▲</span>';
+                }
+            });
+        }
+
+        // Function to toggle impact justification
+        function toggleImpactJustification(paperId) {
+            const containers = document.querySelectorAll(`.impact-justification-section[data-paper-id="${paperId}"]`);
+            
+            containers.forEach(container => {
+                const button = container.querySelector('button');
+                const textDiv = container.querySelector('.justification-text');
+                const isHidden = textDiv.classList.contains('hidden');
+                
+                if (isHidden) {
+                    // Show justification
+                    textDiv.classList.remove('hidden');
+                    button.innerHTML = 'Hide Justification <span class="text-xs">▼</span>';
+                } else {
+                    // Hide justification
+                    textDiv.classList.add('hidden');
+                    button.innerHTML = 'Show Justification <span class="text-xs">▲</span>';
+                }
+            });
+        }
+
+        // Function to update similarity progress bars
+        function updateSimilarityProgressBars() {
+            samplePapers.forEach(paper => {
+                const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
+                
+                topics.forEach(topic => {
+                    const progressBars = document.querySelectorAll(
+                        `.similarity-progress-bar[data-paper-id="${paper.id}"][data-topic="${topic}"]`
+                    );
+                    
+                    progressBars.forEach(progressBar => {
+                        const score = paper[`${topic}_score`];
+                        const percentage = (score * 100);
+                        progressBar.style.width = `${percentage}%`;
+                    });
+                });
+            });
+        }
+
+        // Populate paper cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Papers Dashboard loaded successfully');
+            
+            const mobileContainer = document.getElementById('mobile-papers');
+            const desktopContainer = document.getElementById('desktop-papers');
+            
+            const papersHTML = samplePapers.map((paper, index) => createPaperCard(paper, index)).join('');
+            
+            mobileContainer.innerHTML = papersHTML;
+            desktopContainer.innerHTML = papersHTML;
+            
+            // Setup abstract truncation after DOM is populated
+            setTimeout(setupAbstractTruncation, 100);
+            
+            // Update similarity progress bars after DOM is populated
+            setTimeout(updateSimilarityProgressBars, 150);
+            
+        });
+    </script>
+</body>
+</html>
