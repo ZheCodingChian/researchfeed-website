@@ -349,7 +349,7 @@
                 highest_similarity_topic: "diffusion reasoning",
                 
                 llm_validation_status: "validated",
-                rlhf_relevance: "not validated",
+                rlhf_relevance: "not_validated",
                 weak_supervision_relevance: "Highly Relevant",
                 diffusion_reasoning_relevance: "Not Relevant",
                 distributed_training_relevance: "Moderately Relevant",
@@ -430,7 +430,7 @@
                 highest_similarity_topic: "diffusion reasoning",
                 
                 llm_validation_status: "validated",
-                rlhf_relevance: "not validated",
+                rlhf_relevance: "not_validated",
                 weak_supervision_relevance: "Highly Relevant",
                 diffusion_reasoning_relevance: "Not Relevant",
                 distributed_training_relevance: "Moderately Relevant",
@@ -511,13 +511,13 @@
                 highest_similarity_topic: "diffusion reasoning",
                 
                 llm_validation_status: "validated",
-                rlhf_relevance: "not validated",
+                rlhf_relevance: "not_validated",
                 weak_supervision_relevance: "Highly Relevant",
                 diffusion_reasoning_relevance: "Not Relevant",
                 distributed_training_relevance: "Moderately Relevant",
                 datasets_relevance: "Tangentially Relevant",
                 
-                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                rlhf_justification: "not_validated",
                 weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
                 diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
                 distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
@@ -592,7 +592,7 @@
                 highest_similarity_topic: "diffusion reasoning",
                 
                 llm_validation_status: "validated",
-                rlhf_relevance: "not validated",
+                rlhf_relevance: "not_validated",
                 weak_supervision_relevance: "Highly Relevant",
                 diffusion_reasoning_relevance: "Not Relevant",
                 distributed_training_relevance: "Moderately Relevant",
@@ -657,26 +657,55 @@
         function getScoreColor(scoreType, value) {
             const colorMap = {
                 recommendation: {
-                    'Must Read': 'rgba(22, 104, 52, 0.7)',      // status-green
-                    'Should Read': 'rgba(40, 100, 156, 0.7)',   // status-blue
-                    'Can Skip': 'rgba(234, 147, 0, 0.7)',       // status-orange
-                    'Ignore': 'rgba(129, 12, 12, 0.7)'          // status-red
+                    'Must Read': 'bg-status-green',      
+                    'Should Read': 'bg-status-blue',   
+                    'Can Skip': 'bg-status-orange',       
+                    'Ignore': 'bg-status-red'          
                 },
                 novelty: {
-                    'High': 'rgba(22, 104, 52, 0.7)',           // status-green
-                    'Moderate': 'rgba(40, 100, 156, 0.7)',      // status-blue
-                    'Low': 'rgba(234, 147, 0, 0.7)',            // status-orange
-                    'None': 'rgba(129, 12, 12, 0.7)'            // status-red
+                    'High': 'bg-status-green',           
+                    'Moderate': 'bg-status-blue',      
+                    'Low': 'bg-status-orange',            
+                    'None': 'bg-status-red'            
                 },
                 impact: {
-                    'High': 'rgba(22, 104, 52, 0.7)',           // status-green
-                    'Moderate': 'rgba(40, 100, 156, 0.7)',      // status-blue
-                    'Low': 'rgba(234, 147, 0, 0.7)',            // status-orange
-                    'Negligible': 'rgba(129, 12, 12, 0.7)'      // status-red
+                    'High': 'bg-status-green',           
+                    'Moderate': 'bg-status-blue',      
+                    'Low': 'bg-status-orange',            
+                    'Negligible': 'bg-status-red'      
                 }
             };
             
-            return colorMap[scoreType][value] || '#86857f';  // fallback to neutral-500
+            return colorMap[scoreType][value] || 'bg-neutral-500';  // fallback to neutral-500
+        }
+
+        // Helper function to get relevance color based on value
+        function getRelevanceColor(relevanceValue) {
+            const colorMap = {
+                'Highly Relevant': 'bg-status-green',      
+                'Moderately Relevant': 'bg-status-blue', 
+                'Tangentially Relevant': 'bg-status-orange', 
+                'Not Relevant': 'bg-status-red',         
+                'not_validated': 'bg-status-red'         
+            };
+            
+            return colorMap[relevanceValue] || 'bg-status-red';  // fallback to status-red
+        }
+
+        // Helper function to get relevance display text
+        function getRelevanceDisplayText(relevanceValue) {
+            if (relevanceValue === 'not_validated') {
+                return 'Not Relevant';
+            }
+            return relevanceValue;
+        }
+
+        // Helper function to get justification text
+        function getJustificationText(justificationValue) {
+            if (justificationValue === 'not_validated') {
+                return "Topic similarity score below 0.4, hence defaulted to 'Not Relevant'.";
+            }
+            return justificationValue;
         }
 
         // Function to create a paper card
@@ -756,8 +785,7 @@
                                         <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
                                             Recommendation:
                                         </span>
-                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
-                                              style="background-color: ${getScoreColor('recommendation', paper.recommendation_score)}">
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center ${getScoreColor('recommendation', paper.recommendation_score)}">
                                             ${paper.recommendation_score}
                                         </span>
                                     </div>
@@ -768,7 +796,7 @@
                                                 onclick="toggleRecommendationJustification('${paper.id}')">
                                             Show Justification <span class="text-xs">▲</span>
                                         </button>
-                                        <div class="justification-text hidden text-neutral-10 font-body text-md px-tag-x py-tag-y bg-neutral-500 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                        <div class="justification-text hidden text-neutral-60 font-body text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
                                             ${paper.recommendation_justification}
                                         </div>
                                     </div>
@@ -783,8 +811,7 @@
                                         <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
                                             Novelty:
                                         </span>
-                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
-                                              style="background-color: ${getScoreColor('novelty', paper.novelty_score)}">
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center ${getScoreColor('novelty', paper.novelty_score)}">
                                             ${paper.novelty_score}
                                         </span>
                                     </div>
@@ -795,7 +822,7 @@
                                                 onclick="toggleNoveltyJustification('${paper.id}')">
                                             Show Justification <span class="text-xs">▲</span>
                                         </button>
-                                        <div class="justification-text hidden text-neutral-10 font-body text-md px-tag-x py-tag-y bg-neutral-400 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                        <div class="justification-text hidden text-neutral-60 font-body text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
                                             ${paper.novelty_justification}
                                         </div>
                                     </div>
@@ -810,8 +837,7 @@
                                         <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center">
                                             Potential Impact:
                                         </span>
-                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center" 
-                                              style="background-color: ${getScoreColor('impact', paper.impact_score)}">
+                                        <span class="text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y text-center ${getScoreColor('impact', paper.impact_score)}">
                                             ${paper.impact_score}
                                         </span>
                                     </div>
@@ -845,14 +871,14 @@
                                         <!-- RLHF Score Row -->
                                         <div class="flex flex-col">
                                             <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">RLHF</span>
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">RLHF:</span>
                                             </div>
-                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar rlhf-progress-bar bg-bar-raw h-full min-w-[1px]" 
+                                            <div class="bg-neutral-200 relative flex items-center justify-end">
+                                                <div class="similarity-progress-bar rlhf-progress-bar bg-bar-raw absolute inset-0 z-0" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="rlhf">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 rlhf-similarity-score">
+                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 rlhf-similarity-score">
                                                     ${paper.rlhf_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -861,14 +887,14 @@
                                         <!-- Weak Supervision Score Row -->
                                         <div class="flex flex-col">
                                             <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision</span>
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision:</span>
                                             </div>
-                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar weak-supervision-progress-bar bg-bar-raw h-full min-w-[1px]" 
+                                            <div class="bg-neutral-200 relative flex items-center justify-end">
+                                                <div class="similarity-progress-bar weak-supervision-progress-bar bg-bar-raw absolute inset-0 z-0" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="weak_supervision">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 weak-supervision-similarity-score">
+                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 weak-supervision-similarity-score">
                                                     ${paper.weak_supervision_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -877,14 +903,14 @@
                                         <!-- Diffusion Reasoning Score Row -->
                                         <div class="flex flex-col">
                                             <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning</span>
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning:</span>
                                             </div>
-                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar diffusion-reasoning-progress-bar bg-bar-raw h-full min-w-[1px]" 
+                                            <div class="bg-neutral-200 relative flex items-center justify-end">
+                                                <div class="similarity-progress-bar diffusion-reasoning-progress-bar bg-bar-raw absolute inset-0 z-0" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="diffusion_reasoning">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 diffusion-reasoning-similarity-score">
+                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 diffusion-reasoning-similarity-score">
                                                     ${paper.diffusion_reasoning_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -893,14 +919,14 @@
                                         <!-- Distributed Training Score Row -->
                                         <div class="flex flex-col">
                                             <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training</span>
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training:</span>
                                             </div>
-                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar distributed-training-progress-bar bg-bar-raw h-full min-w-[1px]" 
+                                            <div class="bg-neutral-200 relative flex items-center justify-end">
+                                                <div class="similarity-progress-bar distributed-training-progress-bar bg-bar-raw absolute inset-0 z-0" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="distributed_training">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 distributed-training-similarity-score">
+                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 distributed-training-similarity-score">
                                                     ${paper.distributed_training_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -909,14 +935,14 @@
                                         <!-- Datasets Score Row -->
                                         <div class="flex flex-col">
                                             <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Datasets</span>
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Datasets:</span>
                                             </div>
-                                            <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar datasets-progress-bar bg-bar-raw h-full min-w-[1px]" 
+                                            <div class="bg-neutral-200 relative flex items-center justify-end">
+                                                <div class="similarity-progress-bar datasets-progress-bar bg-bar-raw absolute inset-0 z-0" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="datasets">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 datasets-similarity-score">
+                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 datasets-similarity-score">
                                                     ${paper.datasets_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -932,8 +958,92 @@
                                 </div>
                             </div>
                             
-                            <!-- Relevance Module Placeholder -->
-                            <div class="bg-neutral-300 flex-1 w-full h-full">
+                            <!-- Relevance Module -->
+                            <div class="bg-neutral-300 py-md px-lg flex-1 w-full h-full">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Title Section -->
+                                    <div class="text-center py-tag-y">
+                                        <h3 class="text-neutral-70 font-heading font-bold text-xl">Topic Relevance</h3>
+                                    </div>
+                                    
+                                    <!-- Scores Section -->
+                                    <div class="flex flex-col gap-xs">
+                                        <!-- RLHF Relevance Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">RLHF:</span>
+                                            </div>
+                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.rlhf_relevance)}">
+                                                ${getRelevanceDisplayText(paper.rlhf_relevance)}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Weak Supervision Relevance Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision:</span>
+                                            </div>
+                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.weak_supervision_relevance)}">
+                                                ${getRelevanceDisplayText(paper.weak_supervision_relevance)}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Diffusion Reasoning Relevance Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning:</span>
+                                            </div>
+                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.diffusion_reasoning_relevance)}">
+                                                ${getRelevanceDisplayText(paper.diffusion_reasoning_relevance)}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Distributed Training Relevance Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training:</span>
+                                            </div>
+                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.distributed_training_relevance)}">
+                                                ${getRelevanceDisplayText(paper.distributed_training_relevance)}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Datasets Relevance Row -->
+                                        <div class="flex flex-col">
+                                            <div class="text-left">
+                                                <span class="text-neutral-70 font-heading font-bold text-lg">Datasets:</span>
+                                            </div>
+                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.datasets_relevance)}">
+                                                ${getRelevanceDisplayText(paper.datasets_relevance)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Justification Section -->
+                                    <div class="w-full relevance-justification-section" data-paper-id="${paper.id}">
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y mt-md w-full block text-left cursor-pointer border-none transition-opacity duration-200" 
+                                                onclick="toggleRelevanceJustification('${paper.id}')">
+                                            Show Justification <span class="text-xs">▲</span>
+                                        </button>
+                                        <div class="justification-text hidden text-neutral-60 font-mono text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                            <div class="mb-xs">
+                                                <span class="font-bold">RLHF:</span> ${getJustificationText(paper.rlhf_justification)}
+                                            </div>
+                                            <div class="mb-xs">
+                                                <span class="font-bold">Weak Supervision:</span> ${getJustificationText(paper.weak_supervision_justification)}
+                                            </div>
+                                            <div class="mb-xs">
+                                                <span class="font-bold">Diffusion Reasoning:</span> ${getJustificationText(paper.diffusion_reasoning_justification)}
+                                            </div>
+                                            <div class="mb-xs">
+                                                <span class="font-bold">Distributed Training:</span> ${getJustificationText(paper.distributed_training_justification)}
+                                            </div>
+                                            <div>
+                                                <span class="font-bold">Datasets:</span> ${getJustificationText(paper.datasets_justification)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             
                             <!-- Author H-Index Module Placeholder -->
@@ -1135,6 +1245,27 @@
         // Function to toggle impact justification
         function toggleImpactJustification(paperId) {
             const containers = document.querySelectorAll(`.impact-justification-section[data-paper-id="${paperId}"]`);
+            
+            containers.forEach(container => {
+                const button = container.querySelector('button');
+                const textDiv = container.querySelector('.justification-text');
+                const isHidden = textDiv.classList.contains('hidden');
+                
+                if (isHidden) {
+                    // Show justification
+                    textDiv.classList.remove('hidden');
+                    button.innerHTML = 'Hide Justification <span class="text-xs">▼</span>';
+                } else {
+                    // Hide justification
+                    textDiv.classList.add('hidden');
+                    button.innerHTML = 'Show Justification <span class="text-xs">▲</span>';
+                }
+            });
+        }
+
+        // Function to toggle relevance justification
+        function toggleRelevanceJustification(paperId) {
+            const containers = document.querySelectorAll(`.relevance-justification-section[data-paper-id="${paperId}"]`);
             
             containers.forEach(container => {
                 const button = container.querySelector('button');
