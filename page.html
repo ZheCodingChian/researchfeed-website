@@ -142,6 +142,11 @@
         .abstract-text {
             transition: all 0.3s ease-in-out;
         }
+        
+        /* Status color classes */
+        .bg-status-orange {
+            background-color: rgba(234, 147, 0, 1);
+        }
     </style>
 </head>
 
@@ -740,7 +745,7 @@
                         <!-- Row 4: Score Row Section -->
                         <div class="flex flex-col tablet:flex-row gap-md items-start">
                             <!-- Recommendation Score Module -->
-                            <div class="bg-neutral-300 p-xs flex-1 w-full">
+                            <div class="bg-neutral-300 px-md py-xs flex-1 w-full">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Score Section -->
                                     <div class="flex">
@@ -759,7 +764,7 @@
                                                 onclick="toggleRecommendationJustification('${paper.id}')">
                                             Show Justification <span class="text-xs">▲</span>
                                         </button>
-                                        <div class="justification-text hidden text-neutral-60 font-body text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                        <div class="justification-text hidden text-neutral-10 font-body text-md px-tag-x py-tag-y bg-neutral-500 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
                                             ${paper.recommendation_justification}
                                         </div>
                                     </div>
@@ -786,7 +791,7 @@
                                                 onclick="toggleNoveltyJustification('${paper.id}')">
                                             Show Justification <span class="text-xs">▲</span>
                                         </button>
-                                        <div class="justification-text hidden text-neutral-60 font-body text-md px-tag-x py-tag-y bg-neutral-200 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
+                                        <div class="justification-text hidden text-neutral-10 font-body text-md px-tag-x py-tag-y bg-neutral-400 border-b-[3px] border-r-[3px] border-l-[3px] border-neutral-500 transition-all duration-300 ease-in-out">
                                             ${paper.novelty_justification}
                                         </div>
                                     </div>
@@ -824,7 +829,7 @@
                         <!-- Row 5: Similarity, Relevance, H-index Section -->
                         <div class="flex flex-col tablet:flex-row gap-md items-start">
                             <!-- Similarity Scores Module -->
-                            <div class="bg-neutral-300 py-md px-lg flex-1 w-full">
+                            <div class="bg-neutral-300 py-md px-lg flex-1 w-full" data-paper-id="${paper.id}" data-normalized="false">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Title Section -->
                                     <div class="text-center py-tag-y">
@@ -839,11 +844,11 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">RLHF</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar rlhf-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="rlhf">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 rlhf-similarity-score">
                                                     ${paper.rlhf_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -855,11 +860,11 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar weak-supervision-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="weak_supervision">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 weak-supervision-similarity-score">
                                                     ${paper.weak_supervision_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -871,11 +876,11 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar diffusion-reasoning-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="diffusion_reasoning">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 diffusion-reasoning-similarity-score">
                                                     ${paper.diffusion_reasoning_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -887,11 +892,11 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar distributed-training-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="distributed_training">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 distributed-training-similarity-score">
                                                     ${paper.distributed_training_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -903,11 +908,11 @@
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Datasets</span>
                                             </div>
                                             <div class="bg-neutral-200 relative flex items-center h-[clamp(1.25rem,2.2vw,1.375rem)]">
-                                                <div class="similarity-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
+                                                <div class="similarity-progress-bar datasets-progress-bar bg-neutral-600 opacity-70 h-full min-w-[1px]" 
                                                      data-paper-id="${paper.id}" 
                                                      data-topic="datasets">
                                                 </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2">
+                                                <span class="text-neutral-70 font-heading font-bold text-md absolute right-2 datasets-similarity-score">
                                                     ${paper.datasets_score.toFixed(3)}
                                                 </span>
                                             </div>
@@ -916,8 +921,8 @@
                                     
                                     <!-- Button Section -->
                                     <div>
-                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center">
-                                            Show Normalizedddd Scores ⇄
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center" onclick="toggleSimilarityScores(this)">
+                                            Show Normalized Scores ⇄
                                         </button>
                                     </div>
                                 </div>
@@ -1144,8 +1149,8 @@
             });
         }
 
-        // Function to update similarity progress bars
-        function updateSimilarityProgressBars() {
+        // Function to setup initial similarity progress bars (raw scores only)
+        function setupInitialProgressBars() {
             samplePapers.forEach(paper => {
                 const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
                 
@@ -1163,6 +1168,75 @@
             });
         }
 
+        // Function to toggle similarity scores between raw and normalized
+        function toggleSimilarityScores(buttonElement) {
+            // Find the parent container with data-paper-id
+            const container = buttonElement.closest('[data-paper-id]');
+            if (!container) return;
+            
+            const paperId = container.getAttribute('data-paper-id');
+            const isNormalized = container.getAttribute('data-normalized') === 'true';
+            
+            // Find the paper data
+            const paper = samplePapers.find(p => p.id === paperId);
+            if (!paper) return;
+            
+            // Toggle state
+            container.setAttribute('data-normalized', (!isNormalized).toString());
+            
+            // Update button text
+            buttonElement.textContent = isNormalized ? 'Show Normalized Scores ⇄' : 'Show Raw Scores ⇄';
+            
+            // Calculate scores and update UI
+            const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
+            
+            if (!isNormalized) {
+                // Switch to normalized mode
+                const scores = topics.map(topic => paper[`${topic}_score`]);
+                const totalScore = scores.reduce((sum, score) => sum + score, 0);
+                
+                topics.forEach(topic => {
+                    const rawScore = paper[`${topic}_score`];
+                    const normalizedScore = (rawScore / totalScore) * 100;
+                    
+                    // Update progress bar
+                    const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
+                    if (progressBar) {
+                        progressBar.style.width = `${normalizedScore}%`;
+                        // Change color to orange
+                        progressBar.classList.remove('bg-neutral-600');
+                        progressBar.classList.add('bg-status-orange');
+                    }
+                    
+                    // Update score text
+                    const scoreElement = container.querySelector(`.${topic.replace('_', '-')}-similarity-score`);
+                    if (scoreElement) {
+                        scoreElement.textContent = `${normalizedScore.toFixed(3)}%`;
+                    }
+                });
+            } else {
+                // Switch to raw mode
+                topics.forEach(topic => {
+                    const rawScore = paper[`${topic}_score`];
+                    
+                    // Update progress bar
+                    const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
+                    if (progressBar) {
+                        progressBar.style.width = `${(rawScore * 100)}%`;
+                        // Change color back to neutral
+                        progressBar.classList.remove('bg-status-orange');
+                        progressBar.classList.add('bg-neutral-600');
+                    }
+                    
+                    // Update score text
+                    const scoreElement = container.querySelector(`.${topic.replace('_', '-')}-similarity-score`);
+                    if (scoreElement) {
+                        scoreElement.textContent = rawScore.toFixed(3);
+                    }
+                });
+            }
+        }
+
         // Populate paper cards on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Papers Dashboard loaded successfully');
@@ -1178,8 +1252,8 @@
             // Setup abstract truncation after DOM is populated
             setTimeout(setupAbstractTruncation, 100);
             
-            // Update similarity progress bars after DOM is populated
-            setTimeout(updateSimilarityProgressBars, 150);
+            // Setup initial similarity progress bars after DOM is populated
+            setTimeout(setupInitialProgressBars, 150);
             
         });
     </script>
