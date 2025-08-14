@@ -119,11 +119,38 @@ Each of these fields can have these exact values:
 - `distributed_training_justification`: str
 - `datasets_justification`: str
 
+### Complex Object: AuthorHIndex
+The `author_h_indexes` field contains a list of `AuthorHIndex` objects with the following structure:
+
+```python
+@dataclass
+class AuthorHIndex:
+    name: str                    # Author's full name
+    profile_url: Optional[str]   # Semantic Scholar profile URL (if found)
+    h_index: Optional[int]       # Author's H-index value (if available)
+```
+
+**Example AuthorHIndex objects:**
+```json
+[
+    {
+        "name": "John Smith",
+        "profile_url": "https://www.semanticscholar.org/author/123456789",
+        "h_index": 42
+    },
+    {
+        "name": "Jane Doe", 
+        "profile_url": null,
+        "h_index": null
+    }
+]
+```
+
 ### Other Fields
 - `errors`: List[str] (list of error messages)
-- `author_h_indexes`: List[AuthorHIndex] (complex objects)
-- `created_at`: datetime
-- `updated_at`: datetime
+- `author_h_indexes`: List[AuthorHIndex] (complex objects - see above)
+- `created_at`: datetime (ISO format string when serialized)
+- `updated_at`: datetime (ISO format string when serialized)
 - `last_generated`: Optional[str] (YYYY-MM-DD format)
 
 This comprehensive breakdown shows the exact possible values for each field, especially the status fields that track processing through the 9-stage pipeline.
