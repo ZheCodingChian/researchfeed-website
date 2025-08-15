@@ -13,25 +13,6 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- MathJax CDN for LaTeX rendering -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['\\(', '\\)']],
-                displayMath: [['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-                ignoreHtmlClass: 'tex2jax_ignore',
-                processHtmlClass: 'tex2jax_process'
-            }
-        };
-    </script>
-    
     <!-- Custom Tailwind Configuration -->
     <script>
         tailwind.config = {
@@ -337,108 +318,313 @@
     </div>
 
     <script>
-        // Global variables
-        let papersData = null;
-        let isLoading = true;
+        // Sample paper data based on your Paper dataclass
+        const samplePapers = [
+            {
+                id: "2507.02217",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
 
-        // Load papers data from processed JSON
-        async function loadPapersData() {
-            try {
-                console.log('Loading papers data from processed_papers.json...');
-                const response = await fetch('processed_papers.json');
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
                 
-                papersData = await response.json();
-                console.log(`Loaded ${papersData.papers.length} papers from ${papersData.date}`);
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
                 
-                // Update page title and counts
-                updatePageInfo();
+                embedding_status: "embedded",
+                rlhf_score: 0.390,
+                weak_supervision_score: 0.455,
+                diffusion_reasoning_score: 0.501,
+                distributed_training_score: 0.370,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
                 
-                // Render papers
-                renderPapers();
+                llm_validation_status: "validated",
+                rlhf_relevance: "not_validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
                 
-                isLoading = false;
+                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
                 
-            } catch (error) {
-                console.error('Error loading papers data:', error);
-                showErrorMessage('Failed to load papers data. Please make sure processed_papers.json exists.');
-                isLoading = false;
-            }
-        }
+                llm_score_status: "not_relevant_enough",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2507.02218",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
 
-        // Update page information with loaded data
-        function updatePageInfo() {
-            if (!papersData) return;
-            
-            // Update titles
-            const titles = document.querySelectorAll('h1');
-            const formattedDate = formatDate(papersData.date);
-            titles.forEach(title => {
-                title.textContent = `Papers Published on ${formattedDate}`;
-            });
-            
-            // Update paper counts
-            const counts = document.querySelectorAll('p');
-            const totalPapers = papersData.papers.length;
-            counts.forEach(count => {
-                if (count.textContent.includes('Showing')) {
-                    count.textContent = `Showing ${totalPapers}/${totalPapers} Papers`;
-                }
-            });
-        }
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.390,
+                weak_supervision_score: 0.455,
+                diffusion_reasoning_score: 0.501,
+                distributed_training_score: 0.370,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "not_validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
+                
+                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                
+                llm_score_status: "completed",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2507.02219",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
 
-        // Format date for display
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            return date.toLocaleDateString('en-GB', options);
-        }
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.780,
+                weak_supervision_score: 0.845,
+                diffusion_reasoning_score: 0.901,
+                distributed_training_score: 0.800,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "not_validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
+                
+                rlhf_justification: "not_validated",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                
+                llm_score_status: "completed",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                
+                h_index_status: "completed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [
+                    {
+                        name: "Alice Tan",
+                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
+                        h_index: 42
+                    },
+                    {
+                        name: "Benjamin Koh",
+                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
+                        h_index: 30
+                    },
+                    {
+                        name: "Chen Wei",
+                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
+                        h_index: 14
+                    }
+                ],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+            {
+                id: "2507.02210",
+                title: "Understanding Trade offs When Conditioning Synthetic Data",
+                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
+                categories: ["cs.AI", "cs.LG"],
+                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
+                published_date: "2025-01-15T00:00:00",
 
-        // Show error message
-        function showErrorMessage(message) {
-            const mobileContainer = document.getElementById('mobile-papers');
-            const desktopContainer = document.getElementById('desktop-papers');
-            
-            const errorHTML = `
-                <div class="bg-status-red text-neutral-10 p-xl text-center">
-                    <h2 class="font-heading font-bold text-xl mb-md">Error Loading Papers</h2>
-                    <p class="font-body text-md">${message}</p>
-                    <p class="font-body text-sm mt-md">Please run the Python script to process the papers data first.</p>
-                </div>
-            `;
-            
-            mobileContainer.innerHTML = errorHTML;
-            desktopContainer.innerHTML = errorHTML;
-        }
-
-        // Render papers from loaded data
-        function renderPapers() {
-            if (!papersData || !papersData.papers) return;
-            
-            const mobileContainer = document.getElementById('mobile-papers');
-            const desktopContainer = document.getElementById('desktop-papers');
-            
-            const papersHTML = papersData.papers.map((paper, index) => createPaperCard(paper, index)).join('');
-            
-            mobileContainer.innerHTML = papersHTML;
-            desktopContainer.innerHTML = papersHTML;
-            
-            // Setup abstract truncation after DOM is populated
-            setTimeout(setupAbstractTruncation, 100);
-            
-            // Setup initial similarity progress bars after DOM is populated
-            setTimeout(setupInitialProgressBars, 150);
-            
-            // Trigger MathJax rendering for LaTeX expressions
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise().catch((err) => {
-                    console.warn('MathJax rendering error:', err);
-                });
-            }
-        }
+                arxiv_url: "https://arxiv.org/abs/2507.02217",
+                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
+                latex_url: "https://arxiv.org/e-print/2507.02217",
+                
+                scraper_status: "completed",
+                intro_status: "extracted",
+                errors: [],
+                
+                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
+                intro_extraction_method: "tex_parser_v2",
+                tex_file_name: "main.tex",
+                
+                embedding_status: "embedded",
+                rlhf_score: 0.390,
+                weak_supervision_score: 0.455,
+                diffusion_reasoning_score: 0.501,
+                distributed_training_score: 0.370,
+                datasets_score: 0.396,
+                highest_similarity_topic: "diffusion reasoning",
+                
+                llm_validation_status: "validated",
+                rlhf_relevance: "not_validated",
+                weak_supervision_relevance: "Highly Relevant",
+                diffusion_reasoning_relevance: "Not Relevant",
+                distributed_training_relevance: "Moderately Relevant",
+                datasets_relevance: "Tangentially Relevant",
+                
+                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
+                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
+                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                
+                llm_score_status: "completed",
+                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
+                novelty_score: "High",
+                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
+                impact_score: "Moderate",
+                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
+                recommendation_score: "Must Read",
+                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
+                
+                h_index_status: "failed",
+                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
+                h_index_fetch_method: "title_search",
+                total_authors: 3,
+                authors_found: 3,
+                highest_h_index: 42,
+                average_h_index: 28.7,
+                notable_authors_count: 3,
+                author_h_indexes: [],
+                
+                created_at: "2025-08-12T13:00:00",
+                updated_at: "2025-08-12T13:00:00",
+                last_generated: "2025-08-12"
+            },
+        ];
 
         // Helper function to format publication date
         function formatPublicationDate(dateString) {
@@ -1199,9 +1385,7 @@
 
         // Function to setup initial similarity progress bars (raw scores only)
         function setupInitialProgressBars() {
-            if (!papersData || !papersData.papers) return;
-            
-            papersData.papers.forEach(paper => {
+            samplePapers.forEach(paper => {
                 const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
                 
                 topics.forEach(topic => {
@@ -1211,10 +1395,8 @@
                     
                     progressBars.forEach(progressBar => {
                         const score = paper[`${topic}_score`];
-                        if (score !== undefined && score !== null) {
-                            const percentage = (score * 100);
-                            progressBar.style.width = `${percentage}%`;
-                        }
+                        const percentage = (score * 100);
+                        progressBar.style.width = `${percentage}%`;
                     });
                 });
             });
@@ -1230,7 +1412,7 @@
             const isNormalized = container.getAttribute('data-normalized') === 'true';
             
             // Find the paper data
-            const paper = papersData.papers.find(p => p.id === paperId);
+            const paper = samplePapers.find(p => p.id === paperId);
             if (!paper) return;
             
             // Toggle state
@@ -1244,36 +1426,34 @@
             
             if (!isNormalized) {
                 // Switch to normalized mode
-                const scores = topics.map(topic => paper[`${topic}_score`] || 0);
+                const scores = topics.map(topic => paper[`${topic}_score`]);
                 const totalScore = scores.reduce((sum, score) => sum + score, 0);
                 
-                if (totalScore > 0) {
-                    topics.forEach(topic => {
-                        const rawScore = paper[`${topic}_score`] || 0;
-                        const normalizedScore = (rawScore / totalScore) * 100;
-                        
-                        // Update progress bar
-                        const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
-                        if (progressBar) {
-                            progressBar.style.width = `${normalizedScore}%`;
-                            // Change to normalized bar color
-                            progressBar.classList.remove('bg-bar-raw');
-                            progressBar.classList.add('bg-bar-normalized');
-                        }
-                        
-                        // Update score text
-                        const scoreElement = container.querySelector(`.${topic.replace('_', '-')}-similarity-score`);
-                        if (scoreElement) {
-                            // Convert to 3 significant figures
-                            const sigFigScore = normalizedScore.toPrecision(3);
-                            scoreElement.textContent = `${sigFigScore}%`;
-                        }
-                    });
-                }
+                topics.forEach(topic => {
+                    const rawScore = paper[`${topic}_score`];
+                    const normalizedScore = (rawScore / totalScore) * 100;
+                    
+                    // Update progress bar
+                    const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
+                    if (progressBar) {
+                        progressBar.style.width = `${normalizedScore}%`;
+                        // Change to normalized bar color
+                        progressBar.classList.remove('bg-bar-raw');
+                        progressBar.classList.add('bg-bar-normalized');
+                    }
+                    
+                    // Update score text
+                    const scoreElement = container.querySelector(`.${topic.replace('_', '-')}-similarity-score`);
+                    if (scoreElement) {
+                        // Convert to 3 significant figures
+                        const sigFigScore = normalizedScore.toPrecision(3);
+                        scoreElement.textContent = `${sigFigScore}%`;
+                    }
+                });
             } else {
                 // Switch to raw mode
                 topics.forEach(topic => {
-                    const rawScore = paper[`${topic}_score`] || 0;
+                    const rawScore = paper[`${topic}_score`];
                     
                     // Update progress bar
                     const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
@@ -1293,10 +1473,24 @@
             }
         }
 
-        // Load papers data and initialize page when DOM is ready
+        // Populate paper cards on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Papers Dashboard loaded successfully');
-            loadPapersData();
+            
+            const mobileContainer = document.getElementById('mobile-papers');
+            const desktopContainer = document.getElementById('desktop-papers');
+            
+            const papersHTML = samplePapers.map((paper, index) => createPaperCard(paper, index)).join('');
+            
+            mobileContainer.innerHTML = papersHTML;
+            desktopContainer.innerHTML = papersHTML;
+            
+            // Setup abstract truncation after DOM is populated
+            setTimeout(setupAbstractTruncation, 100);
+            
+            // Setup initial similarity progress bars after DOM is populated
+            setTimeout(setupInitialProgressBars, 150);
+            
         });
     </script>
 </body>
