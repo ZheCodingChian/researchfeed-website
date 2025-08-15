@@ -128,12 +128,22 @@
         }
         
         .pagination-arrow {
-            transition: background-color 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
         }
         
-        .pagination-arrow.hidden {
-            visibility: hidden;
-            opacity: 0;
+        .pagination-arrow.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-arrow.disabled:hover {
+            background-color: transparent;
+        }
+        
+        /* Fix for multiline text padding in author and category spans */
+        .metadata-tag {
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
         }
         
         /* Sidebar styling */
@@ -231,7 +241,7 @@
                 </h1>
                 
                 <!-- Mobile Pagination -->
-                <div class="flex items-center gap-sm mb-sm">
+                <div class="flex items-center gap-sm">
                     <!-- Previous Arrow -->
                     <button id="mobile-prev-btn" class="pagination-arrow w-8 h-8 bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" onclick="goToPage(currentPage - 1)">
                         <span class="font-heading font-bold text-sm">‹</span>
@@ -247,11 +257,6 @@
                         <span class="font-heading font-bold text-sm">›</span>
                     </button>
                 </div>
-                
-                <!-- Papers Count -->
-                <p class="text-neutral-70 font-heading font-bold text-md" id="papers-count-mobile">
-                    Showing 0/0 Papers
-                </p>
             </div>
         </header>
         
@@ -264,6 +269,29 @@
                 </div>
             </div>
         </main>
+        
+        <!-- Mobile Footer -->
+        <footer class="py-xl px-lg bg-neutral-200">
+            <div class="flex flex-col items-center justify-center text-center">
+                <!-- Mobile Footer Pagination -->
+                <div class="flex items-center gap-sm">
+                    <!-- Previous Arrow -->
+                    <button id="mobile-footer-prev-btn" class="pagination-arrow w-8 h-8 bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" onclick="goToPage(currentPage - 1)">
+                        <span class="font-heading font-bold text-sm">‹</span>
+                    </button>
+                    
+                    <!-- Page Numbers Container -->
+                    <div class="flex gap-sm" id="mobile-footer-pagination-numbers">
+                        <!-- Page numbers will be populated by JavaScript -->
+                    </div>
+                    
+                    <!-- Next Arrow -->
+                    <button id="mobile-footer-next-btn" class="pagination-arrow w-8 h-8 bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" onclick="goToPage(currentPage + 1)">
+                        <span class="font-heading font-bold text-sm">›</span>
+                    </button>
+                </div>
+            </div>
+        </footer>
     </div>
     
     <!-- Mobile Sidebar -->
@@ -354,13 +382,12 @@
             
             <!-- Center: Page info (full width since menu button is positioned absolutely) -->
             <div class="w-full flex flex-col items-center justify-center text-center">
-                <h1 class="text-neutral-70 font-heading font-bold text-4xl" 
-                    style="margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);" id="page-title-desktop">
+                <h1 class="text-neutral-70 font-heading font-bold text-4xl mb-md" id="page-title-desktop">
                     Papers Published on 15 July 2025
                 </h1>
                 
                 <!-- Desktop Pagination -->
-                <div class="flex items-center" style="gap: clamp(0.5rem, 1vw, 0.75rem); margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
+                <div class="flex items-center" style="gap: clamp(0.5rem, 1vw, 0.75rem);">
                     <!-- Previous Arrow -->
                     <button id="desktop-prev-btn" class="pagination-arrow bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" 
                             style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);" onclick="goToPage(currentPage - 1)">
@@ -378,11 +405,6 @@
                         <span class="font-heading font-bold text-md">›</span>
                     </button>
                 </div>
-                
-                <!-- Papers Count -->
-                <p class="text-neutral-70 font-heading font-bold text-md" id="papers-count-desktop">
-                    Showing 0/0 Papers
-                </p>
             </div>
         </header>
         
@@ -395,6 +417,31 @@
                 </div>
             </div>
         </main>
+        
+        <!-- Desktop Footer -->
+        <footer class="py-xl bg-neutral-200">
+            <div class="flex flex-col items-center justify-center text-center">
+                <!-- Desktop Footer Pagination -->
+                <div class="flex items-center" style="gap: clamp(0.5rem, 1vw, 0.75rem);">
+                    <!-- Previous Arrow -->
+                    <button id="desktop-footer-prev-btn" class="pagination-arrow bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" 
+                            style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);" onclick="goToPage(currentPage - 1)">
+                        <span class="font-heading font-bold text-md">‹</span>
+                    </button>
+                    
+                    <!-- Page Numbers Container -->
+                    <div class="flex" style="gap: clamp(0.5rem, 1vw, 0.75rem);" id="desktop-footer-pagination-numbers">
+                        <!-- Page numbers will be populated by JavaScript -->
+                    </div>
+                    
+                    <!-- Next Arrow -->
+                    <button id="desktop-footer-next-btn" class="pagination-arrow bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" 
+                            style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);" onclick="goToPage(currentPage + 1)">
+                        <span class="font-heading font-bold text-md">›</span>
+                    </button>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script>
@@ -450,19 +497,6 @@
             }
         }
 
-        function updatePapersCount(startIndex, endIndex, totalCount) {
-            const mobileCount = document.getElementById('papers-count-mobile');
-            const desktopCount = document.getElementById('papers-count-desktop');
-            
-            // Hide the papers count as requested
-            if (mobileCount) {
-                mobileCount.style.display = 'none';
-            }
-            if (desktopCount) {
-                desktopCount.style.display = 'none';
-            }
-        }
-
         function formatPageDate(dateString) {
             const date = new Date(dateString);
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -498,9 +532,6 @@
             // Calculate continuous indexing
             const startIndex = (page - 1) * PAPERS_PER_PAGE + 1;
             const endIndex = Math.min(page * PAPERS_PER_PAGE, totalPapers);
-            
-            // Update papers count display (hidden as requested)
-            updatePapersCount(startIndex, endIndex, totalPapers);
             
             // Update pagination UI
             updatePaginationUI();
@@ -658,7 +689,7 @@
                             
                             <!-- Second row: Authors -->
                             <div>
-                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y metadata-tag">
                                     Authors: ${paper.h_index_status === 'completed' && paper.author_h_indexes && paper.author_h_indexes.length > 0 
                                         ? paper.author_h_indexes.map(author => `<a href="${author.profile_url}" target="_blank" rel="noopener noreferrer" class="text-neutral-10 underline hover:no-underline">${author.name}</a>`).join(', ')
                                         : paper.authors.join(', ')
@@ -668,7 +699,7 @@
                             
                             <!-- Third row: Categories -->
                             <div>
-                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y metadata-tag">
                                     Categories: ${paper.categories.join(', ')}
                                 </span>
                             </div>
@@ -1437,6 +1468,10 @@
             
             // Update desktop pagination
             updatePaginationButtons('desktop', start, end);
+            
+            // Update footer pagination
+            updateFooterPaginationButtons('mobile', start, end);
+            updateFooterPaginationButtons('desktop', start, end);
         }
 
         function updatePaginationButtons(layout, start, end) {
@@ -1484,6 +1519,51 @@
             updateArrowButtons(layout);
         }
 
+        function updateFooterPaginationButtons(layout, start, end) {
+            const container = layout === 'mobile' 
+                ? document.getElementById('mobile-footer-pagination-numbers')
+                : document.getElementById('desktop-footer-pagination-numbers');
+            
+            if (!container) return;
+            
+            // Clear existing buttons
+            container.innerHTML = '';
+            
+            // Create pagination buttons
+            for (let i = start; i <= end; i++) {
+                const isActive = i === currentPage;
+                const buttonClass = isActive 
+                    ? 'bg-neutral-900 text-neutral-10' 
+                    : 'bg-neutral-300 text-neutral-70 hover:bg-neutral-400 cursor-pointer';
+                
+                const sizeClasses = layout === 'mobile' 
+                    ? 'w-8 h-8' 
+                    : 'clamp(1.5rem, 3vw, 1.875rem)';
+                
+                const button = document.createElement('div');
+                button.className = `pagination-square ${buttonClass} flex items-center justify-center`;
+                
+                if (layout === 'desktop') {
+                    button.style.width = sizeClasses;
+                    button.style.height = sizeClasses;
+                } else {
+                    button.className += ` ${sizeClasses}`;
+                }
+                
+                button.innerHTML = `<span class="font-heading font-bold text-${layout === 'mobile' ? 'sm' : 'md'}">${i}</span>`;
+                
+                if (!isActive) {
+                    button.onclick = () => goToPage(i);
+                    button.style.cursor = 'pointer';
+                }
+                
+                container.appendChild(button);
+            }
+            
+            // Update footer arrow button states
+            updateFooterArrowButtons(layout);
+        }
+
         function updateArrowButtons(layout) {
             const prevBtn = document.getElementById(`${layout}-prev-btn`);
             const nextBtn = document.getElementById(`${layout}-next-btn`);
@@ -1491,12 +1571,12 @@
             // Update previous button
             if (prevBtn) {
                 if (currentPage <= 1) {
-                    // Hide the button completely when not clickable
-                    prevBtn.classList.add('hidden');
+                    // Show disabled state instead of hiding
+                    prevBtn.classList.add('disabled');
                     prevBtn.onclick = null;
                 } else {
-                    // Show the button with transparent background when clickable
-                    prevBtn.classList.remove('hidden');
+                    // Show enabled state
+                    prevBtn.classList.remove('disabled');
                     prevBtn.onclick = () => goToPage(currentPage - 1);
                 }
             }
@@ -1504,18 +1584,50 @@
             // Update next button
             if (nextBtn) {
                 if (currentPage >= totalPages) {
-                    // Hide the button completely when not clickable
-                    nextBtn.classList.add('hidden');
+                    // Show disabled state instead of hiding
+                    nextBtn.classList.add('disabled');
                     nextBtn.onclick = null;
                 } else {
-                    // Show the button with transparent background when clickable
-                    nextBtn.classList.remove('hidden');
+                    // Show enabled state
+                    nextBtn.classList.remove('disabled');
+                    nextBtn.onclick = () => goToPage(currentPage + 1);
+                }
+            }
+        }
+
+        function updateFooterArrowButtons(layout) {
+            const prevBtn = document.getElementById(`${layout}-footer-prev-btn`);
+            const nextBtn = document.getElementById(`${layout}-footer-next-btn`);
+            
+            // Update previous button
+            if (prevBtn) {
+                if (currentPage <= 1) {
+                    // Show disabled state instead of hiding
+                    prevBtn.classList.add('disabled');
+                    prevBtn.onclick = null;
+                } else {
+                    // Show enabled state
+                    prevBtn.classList.remove('disabled');
+                    prevBtn.onclick = () => goToPage(currentPage - 1);
+                }
+            }
+            
+            // Update next button
+            if (nextBtn) {
+                if (currentPage >= totalPages) {
+                    // Show disabled state instead of hiding
+                    nextBtn.classList.add('disabled');
+                    nextBtn.onclick = null;
+                } else {
+                    // Show enabled state
+                    nextBtn.classList.remove('disabled');
                     nextBtn.onclick = () => goToPage(currentPage + 1);
                 }
             }
         }
 
         async function goToPage(page) {
+            // Prevent navigation if page is out of bounds or is current page
             if (page === currentPage || page < 1 || page > totalPages) {
                 return;
             }
