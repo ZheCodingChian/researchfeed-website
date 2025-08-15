@@ -6,7 +6,7 @@ import re
 from datetime import datetime
 import logging
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)  # Enable CORS for frontend communication
 
 # Configure logging
@@ -112,6 +112,16 @@ def format_paper_data(row):
     except Exception as e:
         logger.error(f"Error formatting paper data: {e}")
         return None
+
+@app.route('/')
+def index():
+    """Serve the main page"""
+    return app.send_static_file('2025-07-15.html')
+
+@app.route('/2025-07-15.html')
+def serve_page():
+    """Serve the 2025-07-15 page"""
+    return app.send_static_file('2025-07-15.html')
 
 @app.route('/api/papers/count')
 def get_papers_count():

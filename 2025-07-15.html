@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papers Dashboard - AI-Curated Research Papers</title>
+    <meta name="paper-date" content="2025-07-15">
+    <title>Research Feed -- 15 July 2025</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -118,6 +122,34 @@
             outline-offset: 2px;
         }
         
+        .pagination-arrow:focus-visible {
+            outline: 2px solid #86857f;
+            outline-offset: 2px;
+        }
+        
+        .pagination-arrow {
+            transition: background-color 0.2s ease, opacity 0.2s ease, visibility 0.2s ease;
+        }
+        
+        .pagination-arrow.hidden {
+            visibility: hidden;
+            opacity: 0;
+        }
+        
+        /* Sidebar styling */
+        #mobile-sidebar {
+            backdrop-filter: blur(4px);
+        }
+        
+        #desktop-sidebar {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Prevent scrolling when mobile sidebar is open */
+        body.mobile-sidebar-open {
+            overflow: hidden;
+        }
+        
         /* Mobile active states */
         @media (hover: none) {
             .nav-button:active {
@@ -151,6 +183,30 @@
         .bg-status-orange {
             background-color: rgba(234, 147, 0, 1);
         }
+        
+        /* KaTeX styling customization */
+        .katex {
+            font-size: 1em !important;
+            line-height: inherit !important;
+        }
+        
+        /* Inline math styling */
+        .katex-display {
+            margin: 0.5em 0 !important;
+            text-align: left !important;
+        }
+        
+        /* Make KaTeX blend with our color scheme */
+        .katex .base {
+            color: inherit;
+        }
+        
+        /* Ensure KaTeX math doesn't break responsive design */
+        .katex-display > .katex {
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
     </style>
 </head>
 
@@ -158,63 +214,43 @@
     <!-- Mobile Layout (visible < 768px) -->
     <div class="flex flex-col tablet:hidden">
         <!-- Mobile Header -->
-        <header class="bg-neutral-200 w-full flex items-center px-mobile-header pt-xl pb-md">
-            <!-- Left: Navigation buttons (back to 2 buttons) -->
-            <div class="flex flex-col gap-sm">
-                <!-- TensorPlex Home Button -->
-                <button class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="TensorPlex Home">
-                    <svg width="24" height="18" viewBox="0 0 62 47" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#4f4e4b" d="M62 0v15.667H31L39.422 0H62ZM31 15.667 15.5 47H0l12.684-25.641L31 15.667ZM62 47H46.5L31 15.667l18.316 5.692L62 47ZM31 15.667H0V0H22.58L31 15.667Z" class="transition"></path>
-                    </svg>
-                </button>
-                
-                <!-- Menu Button -->
-                <button class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="Open Menu">
-                    <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
-                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
-                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
-                    </svg>
-                </button>
-            </div>
+        <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md relative">
+            <!-- Menu Button - Positioned absolutely within header -->
+            <button id="mobile-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="Open Menu" onclick="toggleMobileMenu()">
+                <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
+                    <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
+                    <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                </svg>
+            </button>
             
-            <!-- Center: Page info -->
-            <div class="flex-1 flex flex-col items-center justify-center text-center" style="padding-right: 3rem;">
-                <h1 class="text-neutral-70 font-heading font-bold text-lg mb-md">
-                    Papers Published on 25 July 2025
+            <!-- Center: Page info (full width since menu button is positioned absolutely) -->
+            <div class="w-full flex flex-col items-center justify-center text-center">
+                <h1 class="text-neutral-70 font-heading font-bold text-lg mb-md" id="page-title-mobile">
+                    Papers Published on 15 July 2025
                 </h1>
                 
                 <!-- Mobile Pagination -->
-                <div class="flex gap-sm mb-sm">
-                    <!-- Active Square 1 -->
-                    <div class="pagination-square w-8 h-8 bg-neutral-900 flex items-center justify-center">
-                        <span class="text-neutral-10 font-heading font-bold text-sm">1</span>
+                <div class="flex items-center gap-sm mb-sm">
+                    <!-- Previous Arrow -->
+                    <button id="mobile-prev-btn" class="pagination-arrow w-8 h-8 bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" onclick="goToPage(currentPage - 1)">
+                        <span class="font-heading font-bold text-sm">‹</span>
+                    </button>
+                    
+                    <!-- Page Numbers Container -->
+                    <div class="flex gap-sm" id="mobile-pagination-numbers">
+                        <!-- Page numbers will be populated by JavaScript -->
                     </div>
                     
-                    <!-- Inactive Square 2 -->
-                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
-                        <span class="text-neutral-70 font-heading font-bold text-sm">2</span>
-                    </div>
-                    
-                    <!-- Inactive Square 3 -->
-                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
-                        <span class="text-neutral-70 font-heading font-bold text-sm">3</span>
-                    </div>
-                    
-                    <!-- Inactive Square 4 -->
-                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
-                        <span class="text-neutral-70 font-heading font-bold text-sm">4</span>
-                    </div>
-                    
-                    <!-- Inactive Square 5 -->
-                    <div class="pagination-square w-8 h-8 bg-neutral-300 flex items-center justify-center">
-                        <span class="text-neutral-70 font-heading font-bold text-sm">5</span>
-                    </div>
+                    <!-- Next Arrow -->
+                    <button id="mobile-next-btn" class="pagination-arrow w-8 h-8 bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" onclick="goToPage(currentPage + 1)">
+                        <span class="font-heading font-bold text-sm">›</span>
+                    </button>
                 </div>
                 
                 <!-- Papers Count -->
-                <p class="text-neutral-70 font-heading font-bold text-md">
-                    Showing 142/142 Papers
+                <p class="text-neutral-70 font-heading font-bold text-md" id="papers-count-mobile">
+                    Showing 0/0 Papers
                 </p>
             </div>
         </header>
@@ -230,25 +266,13 @@
         </main>
     </div>
     
-    <!-- Desktop Layout (visible ≥ 768px) -->
-    <div class="hidden tablet:block">
-        <!-- Desktop Header -->
-        <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md">
-            <!-- Left: Navigation buttons (back to 2 buttons) -->
-            <div class="flex flex-col gap-sm" style="width: clamp(4rem, 8vw, 5rem);">
-                <!-- TensorPlex Home Button --> 
-                <button class="nav-button bg-transparent flex items-center justify-center" 
-                        style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);"  
-                        aria-label="TensorPlex Home">
-                    <svg width="24" height="18" viewBox="0 0 62 47" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#4f4e4b" d="M62 0v15.667H31L39.422 0H62ZM31 15.667 15.5 47H0l12.684-25.641L31 15.667ZM62 47H46.5L31 15.667l18.316 5.692L62 47ZM31 15.667H0V0H22.58L31 15.667Z" class="transition"></path>
-                    </svg>
-                </button>
-                
-                <!-- Menu Button -->
-                <button class="nav-button bg-transparent flex items-center justify-center" 
-                        style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
-                        aria-label="Open Menu">
+    <!-- Mobile Sidebar -->
+    <div id="mobile-sidebar" class="fixed inset-0 z-50 tablet:hidden transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="w-full h-full bg-neutral-200 flex flex-col">
+            <!-- Mobile Sidebar Header -->
+            <div class="flex items-center justify-between p-lg">
+                <div></div> <!-- Empty space for balance -->
+                <button id="mobile-close-btn" class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="Close Menu" onclick="closeMobileMenu()">
                     <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
                         <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
@@ -257,51 +281,107 @@
                 </button>
             </div>
             
-            <!-- Center: Page info -->
-            <div class="flex-1 flex flex-col items-center justify-center text-center" 
-                 style="padding-right: clamp(4rem, 8vw, 5rem);">
+            <!-- Mobile Sidebar Content -->
+            <div class="flex-1 p-lg flex flex-col gap-md">
+                <!-- Empty container 1 -->
+                <div class="bg-neutral-300 p-lg flex-1">
+                    <!-- Content placeholder -->
+                </div>
                 
+                <!-- Empty container 2 -->
+                <div class="bg-neutral-300 p-lg flex-1">
+                    <!-- Content placeholder -->
+                </div>
+                
+                <!-- Empty container 3 -->
+                <div class="bg-neutral-300 p-lg flex-1">
+                    <!-- Content placeholder -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Desktop Sidebar -->
+    <div id="desktop-sidebar" class="hidden tablet:block fixed top-0 left-0 w-full bg-neutral-200 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out" style="height: 400px;">
+        <div class="h-full flex flex-col">
+            <!-- Desktop Sidebar Content -->
+            <div class="flex-1 p-lg flex gap-md">
+                <!-- Empty container 1 -->
+                <div class="bg-neutral-300 p-lg flex-1">
+                    <!-- Content placeholder -->
+                </div>
+                
+                <!-- Empty container 2 -->
+                <div class="bg-neutral-300 p-lg flex-1">
+                    <!-- Content placeholder -->
+                </div>
+                
+                <!-- Empty container 3 -->
+                <div class="bg-neutral-300 p-lg flex-1">
+                    <!-- Content placeholder -->
+                </div>
+            </div>
+            
+            <!-- Desktop Menu Button in Bottom Left -->
+            <div class="absolute bottom-4 left-4">
+                <button id="desktop-menu-btn-sidebar" class="nav-button bg-transparent flex items-center justify-center" 
+                        style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
+                        aria-label="Close Menu" onclick="closeDesktopMenu()">
+                    <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Desktop Layout (visible ≥ 768px) -->
+    <div class="hidden tablet:block">
+        <!-- Desktop Header -->
+        <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md relative">
+            <!-- Menu Button - Positioned absolutely within header -->
+            <button id="desktop-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button bg-transparent flex items-center justify-center" 
+                    style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
+                    aria-label="Open Menu" onclick="toggleDesktopMenu()">
+                <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
+                    <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
+                    <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                </svg>
+            </button>
+            
+            <!-- Center: Page info (full width since menu button is positioned absolutely) -->
+            <div class="w-full flex flex-col items-center justify-center text-center">
                 <h1 class="text-neutral-70 font-heading font-bold text-4xl" 
-                    style="margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
-                    Papers Published on 25 July 2025
+                    style="margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);" id="page-title-desktop">
+                    Papers Published on 15 July 2025
                 </h1>
                 
                 <!-- Desktop Pagination -->
-                <div class="flex" style="gap: clamp(0.5rem, 1vw, 0.75rem); margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
-                    <!-- Active Square 1 -->
-                    <div class="pagination-square bg-neutral-900 flex items-center justify-center" 
-                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
-                        <span class="text-neutral-10 font-heading font-bold text-md">1</span>
+                <div class="flex items-center" style="gap: clamp(0.5rem, 1vw, 0.75rem); margin-bottom: clamp(0.625rem, 1.5vw, 0.75rem);">
+                    <!-- Previous Arrow -->
+                    <button id="desktop-prev-btn" class="pagination-arrow bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" 
+                            style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);" onclick="goToPage(currentPage - 1)">
+                        <span class="font-heading font-bold text-md">‹</span>
+                    </button>
+                    
+                    <!-- Page Numbers Container -->
+                    <div class="flex" style="gap: clamp(0.5rem, 1vw, 0.75rem);" id="desktop-pagination-numbers">
+                        <!-- Page numbers will be populated by JavaScript -->
                     </div>
                     
-                    <!-- Inactive Square 2 -->
-                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
-                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
-                        <span class="text-neutral-70 font-heading font-bold text-md">2</span>
-                    </div>
-                    
-                    <!-- Inactive Square 3 -->
-                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
-                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
-                        <span class="text-neutral-70 font-heading font-bold text-md">3</span>
-                    </div>
-                    
-                    <!-- Inactive Square 4 -->
-                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
-                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
-                        <span class="text-neutral-70 font-heading font-bold text-md">4</span>
-                    </div>
-                    
-                    <!-- Inactive Square 5 -->
-                    <div class="pagination-square bg-neutral-300 flex items-center justify-center" 
-                         style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);">
-                        <span class="text-neutral-70 font-heading font-bold text-md">5</span>
-                    </div>
+                    <!-- Next Arrow -->
+                    <button id="desktop-next-btn" class="pagination-arrow bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" 
+                            style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);" onclick="goToPage(currentPage + 1)">
+                        <span class="font-heading font-bold text-md">›</span>
+                    </button>
                 </div>
                 
                 <!-- Papers Count -->
-                <p class="text-neutral-70 font-heading font-bold text-md">
-                    Showing 142/142 Papers
+                <p class="text-neutral-70 font-heading font-bold text-md" id="papers-count-desktop">
+                    Showing 0/0 Papers
                 </p>
             </div>
         </header>
@@ -318,313 +398,170 @@
     </div>
 
     <script>
-        // Sample paper data based on your Paper dataclass
-        const samplePapers = [
-            {
-                id: "2507.02217",
-                title: "Understanding Trade offs When Conditioning Synthetic Data",
-                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
-                categories: ["cs.AI", "cs.LG"],
-                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
-                published_date: "2025-01-15T00:00:00",
+        // Page configuration - get the date from metadata
+        const PAGE_DATE = document.querySelector('meta[name="paper-date"]').getAttribute('content');
+        const API_BASE_URL = 'http://127.0.0.1:5000/api';
+        const PAPERS_PER_PAGE = 10;
+        let currentPage = 1;
+        let totalPapers = 0;
+        let totalPages = 0;
+        let currentPapers = [];
 
-                arxiv_url: "https://arxiv.org/abs/2507.02217",
-                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
-                latex_url: "https://arxiv.org/e-print/2507.02217",
-                
-                scraper_status: "completed",
-                intro_status: "extracted",
-                errors: [],
-                
-                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
-                intro_extraction_method: "tex_parser_v2",
-                tex_file_name: "main.tex",
-                
-                embedding_status: "embedded",
-                rlhf_score: 0.390,
-                weak_supervision_score: 0.455,
-                diffusion_reasoning_score: 0.501,
-                distributed_training_score: 0.370,
-                datasets_score: 0.396,
-                highest_similarity_topic: "diffusion reasoning",
-                
-                llm_validation_status: "validated",
-                rlhf_relevance: "not_validated",
-                weak_supervision_relevance: "Highly Relevant",
-                diffusion_reasoning_relevance: "Not Relevant",
-                distributed_training_relevance: "Moderately Relevant",
-                datasets_relevance: "Tangentially Relevant",
-                
-                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
-                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
-                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                
-                llm_score_status: "not_relevant_enough",
-                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
-                novelty_score: "High",
-                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                impact_score: "Moderate",
-                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
-                recommendation_score: "Must Read",
-                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                
-                h_index_status: "completed",
-                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
-                h_index_fetch_method: "title_search",
-                total_authors: 3,
-                authors_found: 3,
-                highest_h_index: 42,
-                average_h_index: 28.7,
-                notable_authors_count: 3,
-                author_h_indexes: [
-                    {
-                        name: "Alice Tan",
-                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
-                        h_index: 42
-                    },
-                    {
-                        name: "Benjamin Koh",
-                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
-                        h_index: 30
-                    },
-                    {
-                        name: "Chen Wei",
-                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
-                        h_index: 14
-                    }
-                ],
-                
-                created_at: "2025-08-12T13:00:00",
-                updated_at: "2025-08-12T13:00:00",
-                last_generated: "2025-08-12"
-            },
-            {
-                id: "2507.02218",
-                title: "Understanding Trade offs When Conditioning Synthetic Data",
-                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
-                categories: ["cs.AI", "cs.LG"],
-                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
-                published_date: "2025-01-15T00:00:00",
+        // API functions
+        async function fetchPapersCount(date) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/papers/count?date=${date}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data.total_papers;
+            } catch (error) {
+                console.error('Error fetching papers count:', error);
+                return 0;
+            }
+        }
 
-                arxiv_url: "https://arxiv.org/abs/2507.02217",
-                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
-                latex_url: "https://arxiv.org/e-print/2507.02217",
-                
-                scraper_status: "completed",
-                intro_status: "extracted",
-                errors: [],
-                
-                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
-                intro_extraction_method: "tex_parser_v2",
-                tex_file_name: "main.tex",
-                
-                embedding_status: "embedded",
-                rlhf_score: 0.390,
-                weak_supervision_score: 0.455,
-                diffusion_reasoning_score: 0.501,
-                distributed_training_score: 0.370,
-                datasets_score: 0.396,
-                highest_similarity_topic: "diffusion reasoning",
-                
-                llm_validation_status: "validated",
-                rlhf_relevance: "not_validated",
-                weak_supervision_relevance: "Highly Relevant",
-                diffusion_reasoning_relevance: "Not Relevant",
-                distributed_training_relevance: "Moderately Relevant",
-                datasets_relevance: "Tangentially Relevant",
-                
-                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
-                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
-                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                
-                llm_score_status: "completed",
-                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
-                novelty_score: "High",
-                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                impact_score: "Moderate",
-                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
-                recommendation_score: "Must Read",
-                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                
-                h_index_status: "completed",
-                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
-                h_index_fetch_method: "title_search",
-                total_authors: 3,
-                authors_found: 3,
-                highest_h_index: 42,
-                average_h_index: 28.7,
-                notable_authors_count: 3,
-                author_h_indexes: [
-                    {
-                        name: "Alice Tan",
-                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
-                        h_index: 42
-                    },
-                    {
-                        name: "Benjamin Koh",
-                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
-                        h_index: 30
-                    },
-                    {
-                        name: "Chen Wei",
-                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
-                        h_index: 14
-                    }
-                ],
-                
-                created_at: "2025-08-12T13:00:00",
-                updated_at: "2025-08-12T13:00:00",
-                last_generated: "2025-08-12"
-            },
-            {
-                id: "2507.02219",
-                title: "Understanding Trade offs When Conditioning Synthetic Data",
-                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
-                categories: ["cs.AI", "cs.LG"],
-                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
-                published_date: "2025-01-15T00:00:00",
+        async function fetchPapers(date, page = 1, limit = PAPERS_PER_PAGE) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/papers?date=${date}&page=${page}&limit=${limit}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching papers:', error);
+                return { papers: [], page: 1, limit: limit, total_papers: 0, total_pages: 0, has_next: false, has_prev: false };
+            }
+        }
 
-                arxiv_url: "https://arxiv.org/abs/2507.02217",
-                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
-                latex_url: "https://arxiv.org/e-print/2507.02217",
-                
-                scraper_status: "completed",
-                intro_status: "extracted",
-                errors: [],
-                
-                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
-                intro_extraction_method: "tex_parser_v2",
-                tex_file_name: "main.tex",
-                
-                embedding_status: "embedded",
-                rlhf_score: 0.780,
-                weak_supervision_score: 0.845,
-                diffusion_reasoning_score: 0.901,
-                distributed_training_score: 0.800,
-                datasets_score: 0.396,
-                highest_similarity_topic: "diffusion reasoning",
-                
-                llm_validation_status: "validated",
-                rlhf_relevance: "not_validated",
-                weak_supervision_relevance: "Highly Relevant",
-                diffusion_reasoning_relevance: "Not Relevant",
-                distributed_training_relevance: "Moderately Relevant",
-                datasets_relevance: "Tangentially Relevant",
-                
-                rlhf_justification: "not_validated",
-                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
-                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
-                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                
-                llm_score_status: "completed",
-                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
-                novelty_score: "High",
-                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                impact_score: "Moderate",
-                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
-                recommendation_score: "Must Read",
-                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                
-                h_index_status: "completed",
-                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
-                h_index_fetch_method: "title_search",
-                total_authors: 3,
-                authors_found: 3,
-                highest_h_index: 42,
-                average_h_index: 28.7,
-                notable_authors_count: 3,
-                author_h_indexes: [
-                    {
-                        name: "Alice Tan",
-                        profile_url: "https://www.semanticscholar.org/author/Alice-Tan/123456",
-                        h_index: 42
-                    },
-                    {
-                        name: "Benjamin Koh",
-                        profile_url: "https://www.semanticscholar.org/author/Benjamin-Koh/234567",
-                        h_index: 30
-                    },
-                    {
-                        name: "Chen Wei",
-                        profile_url: "https://www.semanticscholar.org/author/Chen-Wei/345678",
-                        h_index: 14
-                    }
-                ],
-                
-                created_at: "2025-08-12T13:00:00",
-                updated_at: "2025-08-12T13:00:00",
-                last_generated: "2025-08-12"
-            },
-            {
-                id: "2507.02210",
-                title: "Understanding Trade offs When Conditioning Synthetic Data",
-                authors: ["Alice Tan", "Benjamin Koh", "Chen Wei"],
-                categories: ["cs.AI", "cs.LG"],
-                abstract: "Learning robust object detectors from only a handful of images is a critical challenge in industrial vision systems, where collecting high quality training data can take months. Synthetic data has emerged as a key solution for data efficient visual inspection and pick and place robotics. Current pipelines rely on 3D engines such as Blender or Unreal, which offer fine control but still require weeks to render a small dataset, and the resulting images often suffer from a large gap between simulation and reality. Diffusion models promise a step change because they can generate high quality images in minutes, yet precise control, especially in low data regimes, remains difficult. Although many adapters now extend diffusion beyond plain text prompts, the effect of different conditioning schemes on synthetic data quality is poorly understood. We study eighty diverse visual concepts drawn from four standard object detection benchmarks and compare two conditioning strategies: prompt based and layout based. When the set of conditioning cues is narrow, prompt conditioning yields higher quality synthetic data; as diversity grows, layout conditioning becomes superior. When layout cues match the full training distribution, synthetic data raises mean average precision by an average of thirty four percent and by as much as one hundred seventy seven percent compared with using real data alone.",
-                published_date: "2025-01-15T00:00:00",
+        // UI update functions
+        function updatePageTitle(date) {
+            const formattedDate = formatPageDate(date);
+            const mobileTitle = document.getElementById('page-title-mobile');
+            const desktopTitle = document.getElementById('page-title-desktop');
+            
+            if (mobileTitle) {
+                mobileTitle.textContent = `Papers Published on ${formattedDate}`;
+            }
+            if (desktopTitle) {
+                desktopTitle.textContent = `Papers Published on ${formattedDate}`;
+            }
+        }
 
-                arxiv_url: "https://arxiv.org/abs/2507.02217",
-                pdf_url: "https://arxiv.org/pdf/2507.02217.pdf",
-                latex_url: "https://arxiv.org/e-print/2507.02217",
-                
-                scraper_status: "completed",
-                intro_status: "extracted",
-                errors: [],
-                
-                introduction_text: "Recent advancements in large language models have highlighted the importance of aligning these systems with human preferences. RLHF is a key technique enabling this alignment...",
-                intro_extraction_method: "tex_parser_v2",
-                tex_file_name: "main.tex",
-                
-                embedding_status: "embedded",
-                rlhf_score: 0.390,
-                weak_supervision_score: 0.455,
-                diffusion_reasoning_score: 0.501,
-                distributed_training_score: 0.370,
-                datasets_score: 0.396,
-                highest_similarity_topic: "diffusion reasoning",
-                
-                llm_validation_status: "validated",
-                rlhf_relevance: "not_validated",
-                weak_supervision_relevance: "Highly Relevant",
-                diffusion_reasoning_relevance: "Not Relevant",
-                distributed_training_relevance: "Moderately Relevant",
-                datasets_relevance: "Tangentially Relevant",
-                
-                rlhf_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                weak_supervision_justification: "The paper's main contribution involves generating synthetic data using Diffusion Models to augment limited real data for object detection, which aligns closely with weak supervision. It programmatically creates training labels and images from high-level sources like prompts or layouts, reducing reliance on hand-labeled data and addressing noisy or imprecise alternatives, as seen in industrial scenarios.",
-                diffusion_reasoning_justification: "Only briefly mentions diffusion models in related work. The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                distributed_training_justification: "Mentions multi-GPU deployment but not core research.",
-                datasets_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                
-                llm_score_status: "completed",
-                summary: "The paper introduces CrowdTrack, a new large-scale dataset for multi-pedestrian tracking, consisting of 33 videos from real-life complex scenarios such as crowds and occlusions, to address the limitations of existing datasets like MOT17 and MOT20. It provides detailed annotations, evaluates state-of-the-art tracking methods to demonstrate their performance degradation in these challenging conditions, and aims to serve as a benchmark for developing more robust algorithms by highlighting the need for better handling of real-world complexities.",
-                novelty_score: "High",
-                novelty_justification: "The paper's main contribution is the introduction of a new dataset, CrowdTrack, specifically designed for multi-pedestrian tracking in complex real-world scenarios. It covers dataset creation by detailing collection from diverse real-life environments, annotation processes, and inclusion of challenging elements like occlusions and crowds. The paper also includes benchmarking of state-of-the-art models, comprehensive analysis of the dataset, and evaluation metrics, directly aligning with research on creating, analyzing, benchmarking, and evaluating datasets for AI applications.",
-                impact_score: "Moderate",
-                impact_justification: "The paper's main contribution involves developing a simulation framework to generate a new dataset of fault-injected images specifically for training and testing AI-based fault detection algorithms in Vision-Based Navigation. This directly aligns with the topic, as it includes dataset creation, curation methodologies (e.g., image acquisition, faults injection, and label mask generation), and its application in AI, thereby advancing research in datasets for machine learning.",
-                recommendation_score: "Must Read",
-                recommendation_justification: "The paper focuses on using Diffusion Models for image generation and synthetic data creation, not for adapting diffusion processes to solve complex logical tasks or multi-step reasoning. There is no component involving chain-of-thought or iterative refinement for logical reasoning, making it unrelated to the topic.",
-                
-                h_index_status: "failed",
-                semantic_scholar_url: "https://www.semanticscholar.org/paper/abcdef",   
-                h_index_fetch_method: "title_search",
-                total_authors: 3,
-                authors_found: 3,
-                highest_h_index: 42,
-                average_h_index: 28.7,
-                notable_authors_count: 3,
-                author_h_indexes: [],
-                
-                created_at: "2025-08-12T13:00:00",
-                updated_at: "2025-08-12T13:00:00",
-                last_generated: "2025-08-12"
-            },
-        ];
+        function updatePapersCount(startIndex, endIndex, totalCount) {
+            const mobileCount = document.getElementById('papers-count-mobile');
+            const desktopCount = document.getElementById('papers-count-desktop');
+            
+            // Hide the papers count as requested
+            if (mobileCount) {
+                mobileCount.style.display = 'none';
+            }
+            if (desktopCount) {
+                desktopCount.style.display = 'none';
+            }
+        }
+
+        function formatPageDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('en-GB', options);
+        }
+
+        // Initialize page
+        async function initializePage() {
+            console.log(`Initializing page for date: ${PAGE_DATE}`);
+            
+            // Update page title
+            updatePageTitle(PAGE_DATE);
+            
+            // Fetch total papers count
+            totalPapers = await fetchPapersCount(PAGE_DATE);
+            totalPages = Math.ceil(totalPapers / PAPERS_PER_PAGE);
+            console.log(`Total papers for ${PAGE_DATE}: ${totalPapers}, Total pages: ${totalPages}`);
+            
+            // Update pagination UI
+            updatePaginationUI();
+            
+            // Fetch and display first page of papers
+            await loadPapers(currentPage);
+        }
+
+        async function loadPapers(page) {
+            console.log(`Loading papers for page ${page}`);
+            
+            const data = await fetchPapers(PAGE_DATE, page, PAPERS_PER_PAGE);
+            currentPapers = data.papers;
+            currentPage = page;
+            
+            // Calculate continuous indexing
+            const startIndex = (page - 1) * PAPERS_PER_PAGE + 1;
+            const endIndex = Math.min(page * PAPERS_PER_PAGE, totalPapers);
+            
+            // Update papers count display (hidden as requested)
+            updatePapersCount(startIndex, endIndex, totalPapers);
+            
+            // Update pagination UI
+            updatePaginationUI();
+            
+            // Populate paper cards with continuous indexing
+            populatePaperCards(currentPapers, startIndex);
+            
+            console.log(`Loaded ${currentPapers.length} papers for page ${page} (papers ${startIndex}-${endIndex})`);
+        }
+
+        function populatePaperCards(papers, startIndex = 1) {
+            const mobileContainer = document.getElementById('mobile-papers');
+            const desktopContainer = document.getElementById('desktop-papers');
+            
+            const papersHTML = papers.map((paper, index) => createPaperCard(paper, startIndex + index)).join('');
+            
+            if (mobileContainer) {
+                mobileContainer.innerHTML = papersHTML;
+            }
+            if (desktopContainer) {
+                desktopContainer.innerHTML = papersHTML;
+            }
+            
+            // Setup abstract truncation after DOM is populated
+            setTimeout(setupAbstractTruncation, 100);
+            
+            // Setup initial similarity progress bars after DOM is populated
+            setTimeout(setupInitialProgressBars, 150);
+            
+            // Render KaTeX for mathematical expressions after content is loaded
+            setTimeout(function() {
+                if (typeof renderMathInElement !== 'undefined') {
+                    renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true},
+                        ],
+                        throwOnError: false,
+                        trust: true
+                    });
+                }
+            }, 200);
+        }
+
+        // Helper function to render KaTeX in specific elements
+        function renderKatexInElement(element) {
+            if (typeof renderMathInElement !== 'undefined' && element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                    ],
+                    throwOnError: false,
+                    trust: true
+                });
+            }
+        }
 
         // Helper function to format publication date
         function formatPublicationDate(dateString) {
@@ -682,22 +619,22 @@
 
         // Helper function to get justification text
         function getJustificationText(justificationValue) {
-            if (justificationValue === 'not_validated') {
-                return "Topic similarity score below 0.4, hence defaulted to 'Not Relevant'.";
+            if (justificationValue === 'below_threshold') {
+                return "Topic similarity score below 0.4, hence default to 'Not Relevant'.";
             }
             return justificationValue;
         }
 
         // Function to create a paper card
-        function createPaperCard(paper, index) {
-            const cardId = `paper-${index}`;
+        function createPaperCard(paper, paperNumber) {
+            const cardId = `paper-${paperNumber}`;
             
             return `
                 <article class="bg-neutral-200" role="article" aria-labelledby="${cardId}">
                     <!-- Title Section -->
                     <div class="p-md">
                         <h2 id="${cardId}" class="text-neutral-70 font-heading font-bold text-xl">
-                            <span class="mr-sm">${index + 1}.</span><a href="${paper.pdf_url}" 
+                            <span class="mr-sm">${paperNumber}.</span><a href="${paper.pdf_url}" 
                                class="paper-title-link" 
                                target="_blank" 
                                rel="noopener noreferrer"
@@ -1179,6 +1116,9 @@
                     abstractText.innerHTML = `${originalText} <button class="text-neutral-60 font-body font-bold text-md cursor-pointer bg-transparent border-none p-0 hover:opacity-70 transition-opacity duration-200" onclick="toggleAbstract('${paperId}')">[Collapse]</button>`;
                     abstractText.setAttribute('data-expanded', 'true');
                 }
+                
+                // Re-render KaTeX after content change
+                setTimeout(() => renderKatexInElement(abstractText), 50);
             });
         }
 
@@ -1385,7 +1325,7 @@
 
         // Function to setup initial similarity progress bars (raw scores only)
         function setupInitialProgressBars() {
-            samplePapers.forEach(paper => {
+            currentPapers.forEach(paper => {
                 const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
                 
                 topics.forEach(topic => {
@@ -1412,7 +1352,7 @@
             const isNormalized = container.getAttribute('data-normalized') === 'true';
             
             // Find the paper data
-            const paper = samplePapers.find(p => p.id === paperId);
+            const paper = currentPapers.find(p => p.id === paperId);
             if (!paper) return;
             
             // Toggle state
@@ -1473,24 +1413,268 @@
             }
         }
 
-        // Populate paper cards on page load
+        // Pagination functions
+        function calculatePaginationWindow(currentPage, totalPages) {
+            const windowSize = 5;
+            const halfWindow = Math.floor(windowSize / 2);
+            
+            let start = Math.max(1, currentPage - halfWindow);
+            let end = Math.min(totalPages, start + windowSize - 1);
+            
+            // Adjust start if we can't show a full window at the end
+            if (end - start + 1 < windowSize) {
+                start = Math.max(1, end - windowSize + 1);
+            }
+            
+            return { start, end };
+        }
+
+        function updatePaginationUI() {
+            const { start, end } = calculatePaginationWindow(currentPage, totalPages);
+            
+            // Update mobile pagination
+            updatePaginationButtons('mobile', start, end);
+            
+            // Update desktop pagination
+            updatePaginationButtons('desktop', start, end);
+        }
+
+        function updatePaginationButtons(layout, start, end) {
+            const container = layout === 'mobile' 
+                ? document.getElementById('mobile-pagination-numbers')
+                : document.getElementById('desktop-pagination-numbers');
+            
+            if (!container) return;
+            
+            // Clear existing buttons
+            container.innerHTML = '';
+            
+            // Create pagination buttons
+            for (let i = start; i <= end; i++) {
+                const isActive = i === currentPage;
+                const buttonClass = isActive 
+                    ? 'bg-neutral-900 text-neutral-10' 
+                    : 'bg-neutral-300 text-neutral-70 hover:bg-neutral-400 cursor-pointer';
+                
+                const sizeClasses = layout === 'mobile' 
+                    ? 'w-8 h-8' 
+                    : 'clamp(1.5rem, 3vw, 1.875rem)';
+                
+                const button = document.createElement('div');
+                button.className = `pagination-square ${buttonClass} flex items-center justify-center`;
+                
+                if (layout === 'desktop') {
+                    button.style.width = sizeClasses;
+                    button.style.height = sizeClasses;
+                } else {
+                    button.className += ` ${sizeClasses}`;
+                }
+                
+                button.innerHTML = `<span class="font-heading font-bold text-${layout === 'mobile' ? 'sm' : 'md'}">${i}</span>`;
+                
+                if (!isActive) {
+                    button.onclick = () => goToPage(i);
+                    button.style.cursor = 'pointer';
+                }
+                
+                container.appendChild(button);
+            }
+            
+            // Update arrow button states
+            updateArrowButtons(layout);
+        }
+
+        function updateArrowButtons(layout) {
+            const prevBtn = document.getElementById(`${layout}-prev-btn`);
+            const nextBtn = document.getElementById(`${layout}-next-btn`);
+            
+            // Update previous button
+            if (prevBtn) {
+                if (currentPage <= 1) {
+                    // Hide the button completely when not clickable
+                    prevBtn.classList.add('hidden');
+                    prevBtn.onclick = null;
+                } else {
+                    // Show the button with transparent background when clickable
+                    prevBtn.classList.remove('hidden');
+                    prevBtn.onclick = () => goToPage(currentPage - 1);
+                }
+            }
+            
+            // Update next button
+            if (nextBtn) {
+                if (currentPage >= totalPages) {
+                    // Hide the button completely when not clickable
+                    nextBtn.classList.add('hidden');
+                    nextBtn.onclick = null;
+                } else {
+                    // Show the button with transparent background when clickable
+                    nextBtn.classList.remove('hidden');
+                    nextBtn.onclick = () => goToPage(currentPage + 1);
+                }
+            }
+        }
+
+        async function goToPage(page) {
+            if (page === currentPage || page < 1 || page > totalPages) {
+                return;
+            }
+            
+            console.log(`Navigating to page ${page}`);
+            await loadPapers(page);
+            
+            // Scroll to top after loading new page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Sidebar functionality
+        let isMobileSidebarOpen = false;
+        let isDesktopSidebarOpen = false;
+
+        function toggleMobileMenu() {
+            if (isMobileSidebarOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        }
+
+        function openMobileMenu() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            
+            sidebar.classList.remove('translate-x-full');
+            sidebar.classList.add('translate-x-0');
+            
+            // Prevent body scrolling
+            document.body.classList.add('mobile-sidebar-open');
+            
+            isMobileSidebarOpen = true;
+            
+            // Add click outside to close functionality
+            setTimeout(() => {
+                document.addEventListener('click', handleMobileOutsideClick);
+            }, 100);
+        }
+
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            
+            sidebar.classList.remove('translate-x-0');
+            sidebar.classList.add('translate-x-full');
+            
+            // Re-enable body scrolling
+            document.body.classList.remove('mobile-sidebar-open');
+            
+            isMobileSidebarOpen = false;
+            
+            // Remove click outside listener
+            document.removeEventListener('click', handleMobileOutsideClick);
+        }
+
+        function handleMobileOutsideClick(event) {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            
+            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+                closeMobileMenu();
+            }
+        }
+
+        function toggleDesktopMenu() {
+            if (isDesktopSidebarOpen) {
+                closeDesktopMenu();
+            } else {
+                openDesktopMenu();
+            }
+        }
+
+        function openDesktopMenu() {
+            const sidebar = document.getElementById('desktop-sidebar');
+            const menuBtn = document.getElementById('desktop-menu-btn');
+            
+            sidebar.classList.remove('-translate-y-full');
+            sidebar.classList.add('translate-y-0');
+            
+            isDesktopSidebarOpen = true;
+            
+            // Add click outside to close functionality
+            setTimeout(() => {
+                document.addEventListener('click', handleDesktopOutsideClick);
+            }, 100);
+        }
+
+        function closeDesktopMenu() {
+            const sidebar = document.getElementById('desktop-sidebar');
+            
+            sidebar.classList.remove('translate-y-0');
+            sidebar.classList.add('-translate-y-full');
+            
+            isDesktopSidebarOpen = false;
+            
+            // Remove click outside listener
+            document.removeEventListener('click', handleDesktopOutsideClick);
+        }
+
+        function handleDesktopOutsideClick(event) {
+            const sidebar = document.getElementById('desktop-sidebar');
+            const menuBtn = document.getElementById('desktop-menu-btn');
+            const sidebarMenuBtn = document.getElementById('desktop-menu-btn-sidebar');
+            
+            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && !sidebarMenuBtn.contains(event.target)) {
+                closeDesktopMenu();
+            }
+        }
+
+        // Initialize page on load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Papers Dashboard loaded successfully');
-            
-            const mobileContainer = document.getElementById('mobile-papers');
-            const desktopContainer = document.getElementById('desktop-papers');
-            
-            const papersHTML = samplePapers.map((paper, index) => createPaperCard(paper, index)).join('');
-            
-            mobileContainer.innerHTML = papersHTML;
-            desktopContainer.innerHTML = papersHTML;
-            
-            // Setup abstract truncation after DOM is populated
-            setTimeout(setupAbstractTruncation, 100);
-            
-            // Setup initial similarity progress bars after DOM is populated
-            setTimeout(setupInitialProgressBars, 150);
-            
+            initializePage();
+        });
+    </script>
+
+    <!-- KaTeX JavaScript -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+    
+    <!-- KaTeX Auto-render Configuration -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Configure KaTeX auto-render after page content is loaded
+            setTimeout(function() {
+                renderMathInElement(document.body, {
+                    // KaTeX rendering options
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},       // Block math
+                        {left: '$', right: '$', display: false},        // Inline math
+                        {left: '\\(', right: '\\)', display: false},    // Inline math alternative
+                        {left: '\\[', right: '\\]', display: true},     // Block math alternative
+                        {left: '\\begin{equation}', right: '\\end{equation}', display: true},
+                        {left: '\\begin{align}', right: '\\end{align}', display: true},
+                        {left: '\\begin{alignat}', right: '\\end{alignat}', display: true},
+                        {left: '\\begin{gather}', right: '\\end{gather}', display: true},
+                        {left: '\\begin{CD}', right: '\\end{CD}', display: true},
+                    ],
+                    // Throw errors on unknown commands/symbols
+                    throwOnError: false,
+                    // Allow HTML in math expressions
+                    trust: true,
+                    // Ignore certain classes/elements
+                    ignoredClasses: [
+                        "nokatex", 
+                        "katex-ignore"
+                    ],
+                    // Skip script and style tags
+                    ignoredTags: [
+                        "script", 
+                        "noscript", 
+                        "style", 
+                        "textarea", 
+                        "pre", 
+                        "code"
+                    ]
+                });
+            }, 500); // Delay to ensure all content is loaded
         });
     </script>
 </body>
