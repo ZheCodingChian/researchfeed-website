@@ -6,6 +6,11 @@
     <meta name="paper-date" content="2025-07-15">
     <title>Research Feed -- 15 July 2025</title>
     
+    <!-- Favicon and Apple Touch Icons -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,6 +160,11 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
         
+        /* Mobile main container transition */
+        #mobile-main-container {
+            transition: transform 300ms ease-in-out;
+        }
+        
         /* Prevent scrolling when mobile sidebar is open */
         body.mobile-sidebar-open {
             overflow: hidden;
@@ -162,10 +172,7 @@
         
         /* Mobile active states */
         @media (hover: none) {
-            .nav-button:active {
-                transform: scale(0.95);
-                transition: transform 0.1s ease-in;
-            }
+            /* Remove button animation */
         }
         
         /* Font fallbacks */
@@ -188,12 +195,7 @@
         .abstract-text {
             transition: all 0.3s ease-in-out;
         }
-        
-        /* Status color classes */
-        .bg-status-orange {
-            background-color: rgba(234, 147, 0, 1);
-        }
-        
+
         /* KaTeX styling customization */
         .katex {
             font-size: 1em !important;
@@ -217,20 +219,25 @@
             overflow-x: auto;
             overflow-y: hidden;
         }
+        
+        /* Prevent double tap to zoom on mobile */
+        .button, .interactive-element {
+            touch-action: manipulation;
+        }
     </style>
 </head>
 
 <body class="bg-neutral-100 min-h-screen">
     <!-- Mobile Layout (visible < 768px) -->
-    <div class="flex flex-col tablet:hidden">
+    <div class="flex flex-col tablet:hidden" id="mobile-main-container">
         <!-- Mobile Header -->
         <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md relative">
             <!-- Menu Button - Positioned absolutely within header -->
-            <button id="mobile-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="Open Menu" onclick="toggleMobileMenu()">
+            <button id="mobile-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button w-12 h-12 bg-transparent flex items-center justify-center button" aria-label="Open Menu" onclick="toggleMobileMenu()">
                 <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
-                    <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
-                    <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                    <rect x="0" y="0" width="24" height="5" fill="#4F4E4B"/>
+                    <rect x="0" y="6.5" width="24" height="5" fill="#4F4E4B"/>
+                    <rect x="0" y="13" width="24" height="5" fill="#4F4E4B"/>
                 </svg>
             </button>
             
@@ -295,72 +302,64 @@
     </div>
     
     <!-- Mobile Sidebar -->
-    <div id="mobile-sidebar" class="fixed inset-0 z-50 tablet:hidden transform translate-x-full transition-transform duration-300 ease-in-out">
-        <div class="w-full h-full bg-neutral-200 flex flex-col">
+    <div id="mobile-sidebar" class="fixed inset-y-0 left-0 z-50 tablet:hidden bg-neutral-200 transition-transform duration-300 ease-in-out" style="width: 100vw; transform: translateX(-100%);">
+        <div class="w-full h-full flex flex-col">
             <!-- Mobile Sidebar Header -->
             <div class="flex items-center justify-between p-lg">
-                <div></div> <!-- Empty space for balance -->
-                <button id="mobile-close-btn" class="nav-button w-12 h-12 bg-transparent flex items-center justify-center" aria-label="Close Menu" onclick="closeMobileMenu()">
+                <!-- Left: Research Feed Box -->
+                <div>
+                    <a href="landingpage.html" class="bg-neutral-700 px-tag-x py-tag-y text-center">
+                        <span class="text-neutral-10 font-heading font-bold text-lg">Research Feed</span>
+                    </a>
+                </div>
+                
+                <!-- Right: Menu Button -->
+                <button id="mobile-close-btn" class="nav-button w-12 h-12 bg-transparent flex items-center justify-center button" aria-label="Close Menu" onclick="closeMobileMenu()">
                     <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
-                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
-                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="0" width="24" height="5" fill="#4F4E4B"/>
+                        <rect x="0" y="6.5" width="24" height="5" fill="#4F4E4B"/>
+                        <rect x="0" y="13" width="24" height="5" fill="#4F4E4B"/>
                     </svg>
                 </button>
             </div>
             
             <!-- Mobile Sidebar Content -->
-            <div class="flex-1 p-lg flex flex-col gap-md">
-                <!-- Empty container 1 -->
-                <div class="bg-neutral-300 p-lg flex-1">
-                    <!-- Content placeholder -->
-                </div>
-                
-                <!-- Empty container 2 -->
-                <div class="bg-neutral-300 p-lg flex-1">
-                    <!-- Content placeholder -->
-                </div>
-                
-                <!-- Empty container 3 -->
-                <div class="bg-neutral-300 p-lg flex-1">
-                    <!-- Content placeholder -->
-                </div>
+            <div class="flex-1">
+                <!-- Empty content area -->
             </div>
         </div>
     </div>
     
+    <!-- Desktop Sidebar Overlay -->
+    <div id="desktop-sidebar-overlay" class="hidden tablet:block fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out" onclick="closeDesktopMenu()"></div>
+    
     <!-- Desktop Sidebar -->
-    <div id="desktop-sidebar" class="hidden tablet:block fixed top-0 left-0 w-full bg-neutral-200 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out" style="height: 400px;">
-        <div class="h-full flex flex-col">
-            <!-- Desktop Sidebar Content -->
-            <div class="flex-1 p-lg flex gap-md">
-                <!-- Empty container 1 -->
-                <div class="bg-neutral-300 p-lg flex-1">
-                    <!-- Content placeholder -->
+    <div id="desktop-sidebar" class="hidden tablet:block fixed inset-y-0 left-0 z-40 bg-neutral-200 transition-transform duration-300 ease-in-out" style="width: 400px; transform: translateX(-100%);">
+        <div class="w-full h-full flex flex-col">
+            <!-- Desktop Sidebar Header -->
+            <div class="flex items-center justify-between p-lg border-b border-neutral-300">
+                <!-- Left: Research Feed Box -->
+                <div>
+                    <a href="landingpage.html" class="bg-neutral-700 px-tag-x py-tag-y text-center">
+                        <span class="text-neutral-10 font-heading font-bold text-lg">Research Feed</span>
+                    </a>
                 </div>
                 
-                <!-- Empty container 2 -->
-                <div class="bg-neutral-300 p-lg flex-1">
-                    <!-- Content placeholder -->
-                </div>
-                
-                <!-- Empty container 3 -->
-                <div class="bg-neutral-300 p-lg flex-1">
-                    <!-- Content placeholder -->
-                </div>
-            </div>
-            
-            <!-- Desktop Menu Button in Bottom Left -->
-            <div class="absolute bottom-4 left-4">
-                <button id="desktop-menu-btn-sidebar" class="nav-button bg-transparent flex items-center justify-center" 
+                <!-- Right: Menu Button -->
+                <button id="desktop-close-btn" class="nav-button bg-transparent flex items-center justify-center button" 
                         style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
                         aria-label="Close Menu" onclick="closeDesktopMenu()">
                     <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
-                        <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
-                        <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                        <rect x="0" y="0" width="24" height="5" fill="#4F4E4B"/>
+                        <rect x="0" y="6.5" width="24" height="5" fill="#4F4E4B"/>
+                        <rect x="0" y="13" width="24" height="5" fill="#4F4E4B"/>
                     </svg>
                 </button>
+            </div>
+            
+            <!-- Desktop Sidebar Content -->
+            <div class="flex-1">
+                <!-- Empty content area -->
             </div>
         </div>
     </div>
@@ -370,13 +369,13 @@
         <!-- Desktop Header -->
         <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md relative">
             <!-- Menu Button - Positioned absolutely within header -->
-            <button id="desktop-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button bg-transparent flex items-center justify-center" 
+            <button id="desktop-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button bg-transparent flex items-center justify-center button" 
                     style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
                     aria-label="Open Menu" onclick="toggleDesktopMenu()">
                 <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="0" width="24" height="4" fill="#4F4E4B"/>
-                    <rect x="0" y="7" width="24" height="4" fill="#4F4E4B"/>
-                    <rect x="0" y="14" width="24" height="4" fill="#4F4E4B"/>
+                    <rect x="0" y="0" width="24" height="5" fill="#4F4E4B"/>
+                    <rect x="0" y="6.5" width="24" height="5" fill="#4F4E4B"/>
+                    <rect x="0" y="13" width="24" height="5" fill="#4F4E4B"/>
                 </svg>
             </button>
             
@@ -664,7 +663,7 @@
                 <article class="bg-neutral-200" role="article" aria-labelledby="${cardId}">
                     <!-- Title Section -->
                     <div class="p-md">
-                        <h2 id="${cardId}" class="text-neutral-70 font-heading font-bold text-xl">
+                        <h2 id="${cardId}" class="text-neutral-70 font-heading font-bold text-2xl">
                             <span class="mr-sm">${paperNumber}.</span><a href="${paper.pdf_url}" 
                                class="paper-title-link" 
                                target="_blank" 
@@ -679,17 +678,17 @@
                         <div class="flex flex-col gap-xs">
                             <!-- First row: arXiv ID and Publication Date -->
                             <div class="flex gap-xs">
-                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y">
                                     arXiv ID: <a href="${paper.arxiv_url}" target="_blank" rel="noopener noreferrer" class="text-neutral-10 underline hover:no-underline">${paper.id}</a>
                                 </span>
-                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y">
                                     Published: ${formatPublicationDate(paper.published_date)}
                                 </span>
                             </div>
                             
                             <!-- Second row: Authors -->
                             <div>
-                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y metadata-tag">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y metadata-tag">
                                     Authors: ${paper.h_index_status === 'completed' && paper.author_h_indexes && paper.author_h_indexes.length > 0 
                                         ? paper.author_h_indexes.map(author => `<a href="${author.profile_url}" target="_blank" rel="noopener noreferrer" class="text-neutral-10 underline hover:no-underline">${author.name}</a>`).join(', ')
                                         : paper.authors.join(', ')
@@ -699,7 +698,7 @@
                             
                             <!-- Third row: Categories -->
                             <div>
-                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-sm px-tag-x py-tag-y metadata-tag">
+                                <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y metadata-tag">
                                     Categories: ${paper.categories.join(', ')}
                                 </span>
                             </div>
@@ -1653,44 +1652,28 @@
 
         function openMobileMenu() {
             const sidebar = document.getElementById('mobile-sidebar');
-            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mainContainer = document.getElementById('mobile-main-container');
             
-            sidebar.classList.remove('translate-x-full');
-            sidebar.classList.add('translate-x-0');
+            // Move sidebar into view (full screen width)
+            sidebar.style.transform = 'translateX(0)';
             
             // Prevent body scrolling
-            document.body.classList.add('mobile-sidebar-open');
+            document.body.style.overflow = 'hidden';
             
             isMobileSidebarOpen = true;
-            
-            // Add click outside to close functionality
-            setTimeout(() => {
-                document.addEventListener('click', handleMobileOutsideClick);
-            }, 100);
         }
 
         function closeMobileMenu() {
             const sidebar = document.getElementById('mobile-sidebar');
+            const mainContainer = document.getElementById('mobile-main-container');
             
-            sidebar.classList.remove('translate-x-0');
-            sidebar.classList.add('translate-x-full');
+            // Move sidebar out of view
+            sidebar.style.transform = 'translateX(-100%)';
             
             // Re-enable body scrolling
-            document.body.classList.remove('mobile-sidebar-open');
+            document.body.style.overflow = '';
             
             isMobileSidebarOpen = false;
-            
-            // Remove click outside listener
-            document.removeEventListener('click', handleMobileOutsideClick);
-        }
-
-        function handleMobileOutsideClick(event) {
-            const sidebar = document.getElementById('mobile-sidebar');
-            const menuBtn = document.getElementById('mobile-menu-btn');
-            
-            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
-                closeMobileMenu();
-            }
         }
 
         function toggleDesktopMenu() {
@@ -1703,40 +1686,41 @@
 
         function openDesktopMenu() {
             const sidebar = document.getElementById('desktop-sidebar');
-            const menuBtn = document.getElementById('desktop-menu-btn');
+            const overlay = document.getElementById('desktop-sidebar-overlay');
             
-            sidebar.classList.remove('-translate-y-full');
-            sidebar.classList.add('translate-y-0');
+            // Show sidebar
+            sidebar.style.transform = 'translateX(0)';
+            
+            // Show overlay
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'auto';
             
             isDesktopSidebarOpen = true;
-            
-            // Add click outside to close functionality
-            setTimeout(() => {
-                document.addEventListener('click', handleDesktopOutsideClick);
-            }, 100);
         }
 
         function closeDesktopMenu() {
             const sidebar = document.getElementById('desktop-sidebar');
+            const overlay = document.getElementById('desktop-sidebar-overlay');
             
-            sidebar.classList.remove('translate-y-0');
-            sidebar.classList.add('-translate-y-full');
+            // Hide sidebar
+            sidebar.style.transform = 'translateX(-100%)';
+            
+            // Hide overlay
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
             
             isDesktopSidebarOpen = false;
-            
-            // Remove click outside listener
-            document.removeEventListener('click', handleDesktopOutsideClick);
         }
 
-        function handleDesktopOutsideClick(event) {
-            const sidebar = document.getElementById('desktop-sidebar');
-            const menuBtn = document.getElementById('desktop-menu-btn');
-            const sidebarMenuBtn = document.getElementById('desktop-menu-btn-sidebar');
-            
-            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && !sidebarMenuBtn.contains(event.target)) {
+        // Handle window resize to close mobile menu if switching to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768 && isMobileSidebarOpen) {
+                closeMobileMenu();
+            }
+            if (window.innerWidth < 768 && isDesktopSidebarOpen) {
                 closeDesktopMenu();
             }
-        }
+        });
 
         // Initialize page on load
         document.addEventListener('DOMContentLoaded', function() {

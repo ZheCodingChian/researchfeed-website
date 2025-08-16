@@ -123,6 +123,26 @@ def serve_page():
     """Serve the 2025-07-15 page"""
     return app.send_static_file('2025-07-15.html')
 
+@app.route('/favicon.png')
+def favicon():
+    """Serve the favicon"""
+    return app.send_static_file('favicon.png')
+
+@app.route('/favicon.ico')
+def favicon_ico():
+    """Serve the favicon as ICO (fallback)"""
+    return app.send_static_file('favicon.png')
+
+@app.route('/apple-touch-icon.png')
+def apple_touch_icon():
+    """Serve the Apple touch icon"""
+    return app.send_static_file('apple-touch-icon.png')
+
+@app.route('/apple-touch-icon-precomposed.png')
+def apple_touch_icon_precomposed():
+    """Serve the Apple touch icon precomposed"""
+    return app.send_static_file('apple-touch-icon-precomposed.png')
+
 @app.route('/api/papers/count')
 def get_papers_count():
     """Get total count of papers for a specific date"""
