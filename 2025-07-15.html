@@ -224,6 +224,12 @@
         .button, .interactive-element {
             touch-action: manipulation;
         }
+        
+        /* Research Feed button hover effect */
+        .research-feed-button:hover {
+            background-color: #4f4e4b !important; /* bg-neutral-700 */
+            color: #f5f2e7 !important; /* text-neutral-10 */
+        }
     </style>
 </head>
 
@@ -305,11 +311,11 @@
     <div id="mobile-sidebar" class="fixed inset-y-0 left-0 z-50 tablet:hidden bg-neutral-200 transition-transform duration-300 ease-in-out" style="width: 100vw; transform: translateX(-100%);">
         <div class="w-full h-full flex flex-col">
             <!-- Mobile Sidebar Header -->
-            <div class="flex items-center justify-between p-lg">
+            <div class="flex items-center justify-between pt-lg pr-lg pb-sm pl-lg">
                 <!-- Left: Research Feed Box -->
                 <div>
-                    <a href="landingpage.html" class="bg-neutral-700 px-tag-x py-tag-y text-center">
-                        <span class="text-neutral-10 font-heading font-bold text-lg">Research Feed</span>
+                    <a href="landingpage.html" class="research-feed-button text-center px-tag-x py-sm bg-neutral-600 transition-colors duration-200">
+                        <span class="text-neutral-20 font-heading font-bold text-xl">Research Feed</span>
                     </a>
                 </div>
                 
@@ -324,8 +330,41 @@
             </div>
             
             <!-- Mobile Sidebar Content -->
-            <div class="flex-1">
-                <!-- Empty content area -->
+            <div class="flex-1 pt-sm px-lg">
+                <div class="flex flex-col gap-lg">
+                    <!-- Section 1: Paper Count -->
+                    <div class="bg-transparent text-left">
+                        <span class="text-neutral-70 font-heading font-bold text-lg" id="mobile-paper-count">
+                            Showing: 0/0 Papers
+                        </span>
+                    </div>
+                    
+                    <!-- Section 2: Quick Filters -->
+                    <div class="flex flex-col gap-sm">
+                        <h3 class="text-neutral-60 font-heading font-bold text-xl text-left bg-transparent">Quick Filters</h3>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Must Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Should Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">RLHF</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Weak Supervision</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Distributed Training</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Datasets</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Reset To Default</button>
+                    </div>
+                    
+                    <!-- Section 3: Advanced Filters -->
+                    <div class="flex flex-col gap-sm">
+                        <h3 class="text-neutral-60 font-heading font-bold text-xl text-left bg-transparent">Advanced Filters</h3>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Scoring: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Recommendation: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Novelty: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Potential Impact: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Topics: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Relevance: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">H-index: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Sort By: Recommendation (Best First) ▼</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -334,14 +373,14 @@
     <div id="desktop-sidebar-overlay" class="hidden tablet:block fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out" onclick="closeDesktopMenu()"></div>
     
     <!-- Desktop Sidebar -->
-    <div id="desktop-sidebar" class="hidden tablet:block fixed inset-y-0 left-0 z-40 bg-neutral-200 transition-transform duration-300 ease-in-out" style="width: 400px; transform: translateX(-100%);">
+    <div id="desktop-sidebar" class="hidden tablet:block fixed inset-y-0 left-0 z-40 bg-neutral-200 transition-transform duration-300 ease-in-out" style="width: 500px; transform: translateX(-100%);">
         <div class="w-full h-full flex flex-col">
             <!-- Desktop Sidebar Header -->
-            <div class="flex items-center justify-between p-lg border-b border-neutral-300">
+            <div class="flex items-center justify-between pt-lg pr-lg pb-sm pl-lg">
                 <!-- Left: Research Feed Box -->
                 <div>
-                    <a href="landingpage.html" class="bg-neutral-700 px-tag-x py-tag-y text-center">
-                        <span class="text-neutral-10 font-heading font-bold text-lg">Research Feed</span>
+                    <a href="landingpage.html" class="research-feed-button text-center px-tag-x py-sm bg-neutral-600 transition-colors duration-200">
+                        <span class="text-neutral-20 font-heading font-bold text-2xl">Research Feed</span>
                     </a>
                 </div>
                 
@@ -358,8 +397,41 @@
             </div>
             
             <!-- Desktop Sidebar Content -->
-            <div class="flex-1">
-                <!-- Empty content area -->
+            <div class="flex-1 px-lg pt-lg">
+                <div class="flex flex-col gap-lg">
+                    <!-- Section 1: Paper Count -->
+                    <div class="bg-transparent">
+                        <span class="text-neutral-70 font-heading text-xl font-bold" id="desktop-paper-count">
+                            Showing: 0/0 Papers
+                        </span>
+                    </div>
+                    
+                    <!-- Section 2: Quick Filters -->
+                    <div class="flex flex-col gap-xs">
+                        <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Quick Filters</h3>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Must Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Should Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">RLHF</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Weak Supervision</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Distributed Training</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Datasets</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Reset To Default</button>
+                    </div>
+                    
+                    <!-- Section 3: Advanced Filters -->
+                    <div class="flex flex-col gap-xs">
+                        <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Advanced Filters</h3>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Scoring: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Recommendation: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Novelty: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Potential Impact: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Topics: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Relevance: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">H-index: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Sort By: Recommendation (Best First) ▼</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -452,6 +524,7 @@
         let totalPapers = 0;
         let totalPages = 0;
         let currentPapers = [];
+        let paperShown = -1;
 
         // API functions
         async function fetchPapersCount(date) {
@@ -502,6 +575,20 @@
             return date.toLocaleDateString('en-GB', options);
         }
 
+        // Update paper count display
+        function updatePaperCount() {
+            const mobileCount = document.getElementById('mobile-paper-count');
+            const desktopCount = document.getElementById('desktop-paper-count');
+            const countText = `Showing ${paperShown}/${totalPapers} Papers`;
+            
+            if (mobileCount) {
+                mobileCount.textContent = countText;
+            }
+            if (desktopCount) {
+                desktopCount.textContent = countText;
+            }
+        }
+
         // Initialize page
         async function initializePage() {
             console.log(`Initializing page for date: ${PAGE_DATE}`);
@@ -513,6 +600,9 @@
             totalPapers = await fetchPapersCount(PAGE_DATE);
             totalPages = Math.ceil(totalPapers / PAPERS_PER_PAGE);
             console.log(`Total papers for ${PAGE_DATE}: ${totalPapers}, Total pages: ${totalPages}`);
+            
+            // Update paper count display
+            updatePaperCount();
             
             // Update pagination UI
             updatePaginationUI();
