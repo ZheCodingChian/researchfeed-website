@@ -143,47 +143,10 @@ def apple_touch_icon_precomposed():
     """Serve the Apple touch icon precomposed"""
     return app.send_static_file('apple-touch-icon-precomposed.png')
 
-@app.route('/api/papers/count')
-def get_papers_count():
-    """Get total count of papers for a specific date"""
-    date = request.args.get('date')
-    
-    if not date:
-        return jsonify({"error": "Date parameter is required (YYYY-MM-DD format)"}), 400
-    
-    # Validate date format
-    try:
-        datetime.strptime(date, '%Y-%m-%d')
-    except ValueError:
-        return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
-    
-    conn = get_db_connection()
-    if not conn:
-        return jsonify({"error": "Database connection failed"}), 500
-    
-    try:
-        cursor = conn.cursor()
-        cursor.execute(
-            "SELECT COUNT(*) as total FROM papers WHERE DATE(published_date) = ?",
-            (date,)
-        )
-        result = cursor.fetchone()
-        total_papers = result['total']
-        
-        return jsonify({"total_papers": total_papers})
-        
-    except sqlite3.Error as e:
-        logger.error(f"Database query error: {e}")
-        return jsonify({"error": "Database query failed"}), 500
-    finally:
-        conn.close()
-
 @app.route('/api/papers')
 def get_papers():
-    """Get paginated papers for a specific date"""
+    """Get all papers for a specific date"""
     date = request.args.get('date')
-    page = request.args.get('page', 1, type=int)
-    limit = request.args.get('limit', 10, type=int)
     
     if not date:
         return jsonify({"error": "Date parameter is required (YYYY-MM-DD format)"}), 400
@@ -194,12 +157,6 @@ def get_papers():
     except ValueError:
         return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
     
-    # Validate pagination parameters
-    if page < 1:
-        return jsonify({"error": "Page must be >= 1"}), 400
-    if limit < 1 or limit > 100:
-        return jsonify({"error": "Limit must be between 1 and 100"}), 400
-    
     conn = get_db_connection()
     if not conn:
         return jsonify({"error": "Database connection failed"}), 500
@@ -207,7 +164,7 @@ def get_papers():
     try:
         cursor = conn.cursor()
         
-        # Get total count for pagination info
+        # Get total count first
         cursor.execute(
             "SELECT COUNT(*) as total FROM papers WHERE DATE(published_date) = ?",
             (date,)
@@ -217,23 +174,11 @@ def get_papers():
         if total_papers == 0:
             return jsonify({
                 "papers": [],
-                "page": page,
-                "limit": limit,
                 "total_papers": 0,
-                "total_pages": 0,
-                "has_next": False,
-                "has_prev": False
+                "date": date
             })
         
-        # Calculate pagination
-        total_pages = (total_papers + limit - 1) // limit  # Ceiling division
-        offset = (page - 1) * limit
-        
-        # Check if page is out of bounds
-        if page > total_pages:
-            return jsonify({"error": f"Page {page} is out of bounds. Total pages: {total_pages}"}), 400
-        
-        # Get papers for the requested page (ordered by arXiv ID)
+        # Get all papers for the date (ordered by arXiv ID ascending)
         query = """
         SELECT id, title, authors, categories, abstract, published_date, arxiv_url, pdf_url,
                scraper_status, intro_status, embedding_status, rlhf_score, weak_supervision_score,
@@ -248,11 +193,10 @@ def get_papers():
                author_h_indexes
         FROM papers 
         WHERE DATE(published_date) = ?
-        ORDER BY id
-        LIMIT ? OFFSET ?
+        ORDER BY id ASC
         """
         
-        cursor.execute(query, (date, limit, offset))
+        cursor.execute(query, (date,))
         rows = cursor.fetchall()
         
         # Format papers data
@@ -264,12 +208,8 @@ def get_papers():
         
         response = {
             "papers": papers,
-            "page": page,
-            "limit": limit,
             "total_papers": total_papers,
-            "total_pages": total_pages,
-            "has_next": page < total_pages,
-            "has_prev": page > 1
+            "date": date
         }
         
         return jsonify(response)
