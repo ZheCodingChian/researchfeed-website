@@ -263,7 +263,8 @@
         /* Custom checkbox styling */
         .custom-checkbox {
             position: relative;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
         }
         
         .custom-checkbox input[type="checkbox"] {
@@ -282,6 +283,7 @@
             border-radius: 4px; /* rounded corners */
             cursor: pointer;
             transition: background-color 0.2s ease, border-color 0.2s ease;
+            flex-shrink: 0;
         }
         
         .custom-checkbox input[type="checkbox"]:checked + label {
@@ -329,7 +331,7 @@
     <!-- Mobile Layout (visible < 768px) -->
     <div class="flex flex-col tablet:hidden" id="mobile-main-container">
         <!-- Mobile Header -->
-        <header class="bg-neutral-100 w-full flex items-center px-xs pt-xl pb-xl relative">
+        <header class="bg-neutral-100 w-full flex items-center px-xs pt-xl pb-md relative">
             <!-- Menu Button - Positioned absolutely within header -->
             <button id="mobile-menu-btn" class="absolute top-1/4 left-xs transform -translate-y-1/2 z-10 nav-button w-12 h-12 bg-transparent flex items-center justify-center button" aria-label="Open Menu" onclick="toggleMobileMenu()">
                 <svg width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
@@ -346,7 +348,7 @@
                 </h1>
                 
                 <!-- Mobile Pagination -->
-                <div class="flex items-center gap-sm">
+                <div class="flex items-center gap-sm mb-md">
                     <!-- Previous Arrow -->
                     <button id="mobile-prev-btn" class="pagination-arrow w-8 h-8 bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" onclick="goToPage(currentPage - 1)">
                         <span class="font-heading font-bold text-sm">‹</span>
@@ -362,6 +364,11 @@
                         <span class="font-heading font-bold text-sm">›</span>
                     </button>
                 </div>
+                
+                <!-- Mobile Paper Count -->
+                <p id="mobile-main-paper-count" class="text-neutral-60 font-heading font-bold text-lg">
+                    Showing 0 / 0 papers
+                </p>
             </div>
         </header>
         
@@ -447,7 +454,38 @@
                     <!-- Section 3: Advanced Filters -->
                     <div class="flex flex-col gap-sm">
                         <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Advanced Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Scoring: All Selected <span class="text-lg">▼</span></button>
+                        <!-- Scoring Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-scoring-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileScoringDropdown()">
+                                <span class="font-bold">Scoring:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            </button>
+                            <div id="mobile-scoring-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-md">
+                                    <!-- Section 1: Has Scoring and Summary Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-scoring-has" checked>
+                                            <label for="mobile-scoring-has"></label>
+                                        </div>
+                                        <label for="mobile-scoring-has" class="text-neutral-10 text-xl font-heading cursor-pointer">Completed</label>
+                                    </div>
+                                    
+                                    <!-- Section 2: Does not have Scoring and Summary Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-scoring-no" checked>
+                                            <label for="mobile-scoring-no"></label>
+                                        </div>
+                                        <label for="mobile-scoring-no" class="text-neutral-10 text-xl font-heading cursor-pointer">Not relevant enough</label>
+                                    </div>
+                                    
+                                    <!-- Section 3: Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyScoringFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Recommendation: All Selected <span class="text-lg">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Novelty: All Selected <span class="text-lg">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Potential Impact: All Selected <span class="text-lg">▼</span></button>
@@ -460,23 +498,23 @@
                                 H-index: All Selected <span class="text-lg">▼</span>
                             </button>
                             <div id="mobile-hindex-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
-                                <div class="flex flex-col gap-sm">
+                                <div class="flex flex-col gap-lg">
                                     <!-- Section 1: H-Index Found Checkbox -->
-                                    <div class="flex items-center gap-xs">
+                                    <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
                                             <input type="checkbox" id="mobile-hindex-found" checked onchange="toggleHIndexRanges()">
                                             <label for="mobile-hindex-found"></label>
                                         </div>
-                                        <label for="mobile-hindex-found" class="text-neutral-10 text-lg font-heading cursor-pointer">H-Index Found</label>
+                                        <label for="mobile-hindex-found" class="text-neutral-10 text-xl font-heading cursor-pointer">H-Index Found</label>
                                     </div>
                                     
                                     <!-- Section 2: H-Index Not Found Checkbox -->
-                                    <div class="flex items-center gap-xs">
+                                    <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
                                             <input type="checkbox" id="mobile-hindex-not-found" checked>
                                             <label for="mobile-hindex-not-found"></label>
                                         </div>
-                                        <label for="mobile-hindex-not-found" class="text-neutral-10 text-lg font-heading cursor-pointer">H-Index Not Found</label>
+                                        <label for="mobile-hindex-not-found" class="text-neutral-10 text-xl font-heading cursor-pointer">H-Index Not Found</label>
                                     </div>
                                     
                                     <!-- Section 3: Highest H-Index Range -->
@@ -513,13 +551,17 @@
                         
                         <!-- Sort By Dropdown -->
                         <div class="relative">
-                            <button id="mobile-sort-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x" onclick="toggleMobileSortDropdown()">
-                                Sort By: <span id="mobile-sort-text">Recommendation (Best First)</span> <span class="text-lg">▼</span>
+                            <button id="mobile-sort-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileSortDropdown()">
+                                <span class="font-bold">Sort By:</span> <span id="mobile-sort-text" class="font-normal">Recommendation (Best First)</span> <span class="text-base">▼</span>
                             </button>
                             <div id="mobile-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 py-xs">
                                 <div class="flex flex-col gap-xs">
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_desc')">Average H-Index (Descending)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
@@ -586,7 +628,38 @@
                     <!-- Section 3: Advanced Filters -->
                     <div class="flex flex-col gap-xs">
                         <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Advanced Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Scoring: All Selected <span class="text-md">▼</span></button>
+                        <!-- Scoring Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-scoring-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopScoringDropdown()">
+                                <span class="font-bold">Scoring:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-scoring-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Section 1: Has Scoring and Summary Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-scoring-has" checked>
+                                            <label for="desktop-scoring-has"></label>
+                                        </div>
+                                        <label for="desktop-scoring-has" class="text-neutral-10 text-lg font-heading cursor-pointer">Completed</label>
+                                    </div>
+                                    
+                                    <!-- Section 2: Does not have Scoring and Summary Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-scoring-no" checked>
+                                            <label for="desktop-scoring-no"></label>
+                                        </div>
+                                        <label for="desktop-scoring-no" class="text-neutral-10 text-lg font-heading cursor-pointer">Not relevant enough</label>
+                                    </div>
+                                    
+                                    <!-- Section 3: Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyScoringFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Recommendation: All Selected <span class="text-md">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Novelty: All Selected <span class="text-md">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Potential Impact: All Selected <span class="text-md">▼</span></button>
@@ -599,7 +672,7 @@
                                 H-index: All Selected <span class="text-md">▼</span>
                             </button>
                             <div id="desktop-hindex-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
-                                <div class="flex flex-col gap-sm">
+                                <div class="flex flex-col gap-lg">
                                     <!-- Section 1: H-Index Found Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
@@ -652,13 +725,17 @@
                         
                         <!-- Sort By Dropdown -->
                         <div class="relative">
-                            <button id="desktop-sort-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x" onclick="toggleDesktopSortDropdown()">
-                                Sort By: <span id="desktop-sort-text">Recommendation (Best First)</span> <span class="text-md">▼</span>
+                            <button id="desktop-sort-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopSortDropdown()">
+                                <span class="font-bold">Sort By:</span> <span id="desktop-sort-text" class="font-normal">Recommendation (Best First)</span> <span class="text-sm">▼</span>
                             </button>
-                            <div id="desktop-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 py-xs">
+                            <div id="desktop-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50">
                                 <div class="flex flex-col gap-xs">
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_desc')">Average H-Index (Descending)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
@@ -675,7 +752,7 @@
     <!-- Desktop Layout (visible ≥ 768px) -->
     <div class="hidden tablet:block">
         <!-- Desktop Header -->
-        <header class="bg-neutral-200 w-full flex items-center px-lg py-xl relative">
+        <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md relative">
             <!-- Menu Button - Positioned absolutely within header -->
             <button id="desktop-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button bg-transparent flex items-center justify-center button" 
                     style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
@@ -694,7 +771,7 @@
                 </h1>
                 
                 <!-- Desktop Pagination -->
-                <div class="flex items-center" style="gap: clamp(0.5rem, 1vw, 0.75rem);">
+                <div class="flex items-center mb-md" style="gap: clamp(0.5rem, 1vw, 0.75rem);">
                     <!-- Previous Arrow -->
                     <button id="desktop-prev-btn" class="pagination-arrow bg-transparent text-neutral-70 flex items-center justify-center hover:bg-neutral-300 cursor-pointer" 
                             style="width: clamp(1.5rem, 3vw, 1.875rem); height: clamp(1.5rem, 3vw, 1.875rem);" onclick="goToPage(currentPage - 1)">
@@ -712,6 +789,11 @@
                         <span class="font-heading font-bold text-md">›</span>
                     </button>
                 </div>
+                
+                <!-- Desktop Paper Count -->
+                <p id="desktop-main-paper-count" class="text-neutral-60 font-heading font-bold text-xl">
+                    Showing 0 / 0 papers
+                </p>
             </div>
         </header>
         
@@ -14956,6 +15038,18 @@
         let currentPagePapers = [];  // Store papers for current page display
         let currentSort = 'recommend_best';  // Default sort
         
+        // H-Index Filter State Management
+        let currentHIndexFilters = {
+            found: true,
+            notFound: true,
+            highestMin: 0,
+            highestMax: 1000,
+            averageMin: 0,
+            averageMax: 1000
+        };
+        
+        let pendingHIndexFilters = { ...currentHIndexFilters };
+        
         // Sidebar state variables
         let isMobileSidebarOpen = false;
         let isDesktopSidebarOpen = false;
@@ -14972,6 +15066,61 @@
         function setUrlParameter(name, value) {
             const url = new URL(window.location.href);
             url.searchParams.set(name, value);
+            window.history.pushState(null, '', url.toString());
+        }
+        
+        function updateHIndexFiltersFromURL() {
+            // Get H-Index filter parameters from URL
+            const hindexFound = getUrlParameter('hindex_found');
+            const hindexNotFound = getUrlParameter('hindex_not_found');
+            const highestMin = getUrlParameter('highest_min');
+            const highestMax = getUrlParameter('highest_max');
+            const averageMin = getUrlParameter('average_min');
+            const averageMax = getUrlParameter('average_max');
+            
+            // Update current filters if parameters exist
+            if (hindexFound !== null) currentHIndexFilters.found = hindexFound === 'true';
+            if (hindexNotFound !== null) currentHIndexFilters.notFound = hindexNotFound === 'true';
+            if (highestMin !== null) currentHIndexFilters.highestMin = parseInt(highestMin) || 0;
+            if (highestMax !== null) currentHIndexFilters.highestMax = parseInt(highestMax) || 1000;
+            if (averageMin !== null) currentHIndexFilters.averageMin = parseInt(averageMin) || 0;
+            if (averageMax !== null) currentHIndexFilters.averageMax = parseInt(averageMax) || 1000;
+            
+            // Sync pending filters
+            pendingHIndexFilters = { ...currentHIndexFilters };
+            
+            // Sync UI and update button text
+            syncHIndexUI();
+        }
+        
+        function updateURLWithHIndexFilters() {
+            const url = new URL(window.location.href);
+            
+            // Only set parameters if they differ from defaults
+            if (!currentHIndexFilters.found || !currentHIndexFilters.notFound) {
+                url.searchParams.set('hindex_found', currentHIndexFilters.found);
+                url.searchParams.set('hindex_not_found', currentHIndexFilters.notFound);
+            } else {
+                url.searchParams.delete('hindex_found');
+                url.searchParams.delete('hindex_not_found');
+            }
+            
+            if (currentHIndexFilters.highestMin !== 0 || currentHIndexFilters.highestMax !== 1000) {
+                url.searchParams.set('highest_min', currentHIndexFilters.highestMin);
+                url.searchParams.set('highest_max', currentHIndexFilters.highestMax);
+            } else {
+                url.searchParams.delete('highest_min');
+                url.searchParams.delete('highest_max');
+            }
+            
+            if (currentHIndexFilters.averageMin !== 0 || currentHIndexFilters.averageMax !== 1000) {
+                url.searchParams.set('average_min', currentHIndexFilters.averageMin);
+                url.searchParams.set('average_max', currentHIndexFilters.averageMax);
+            } else {
+                url.searchParams.delete('average_min');
+                url.searchParams.delete('average_max');
+            }
+            
             window.history.pushState(null, '', url.toString());
         }
 
@@ -15017,14 +15166,27 @@
         function updatePaperCount() {
             const mobileCount = document.getElementById('mobile-paper-count');
             const desktopCount = document.getElementById('desktop-paper-count');
-            const showing = filteredSortedPapers.length;
-            const countText = `Showing: ${showing}/${totalPapers} Papers`;
+            const mobileMainCount = document.getElementById('mobile-main-paper-count');
+            const desktopMainCount = document.getElementById('desktop-main-paper-count');
             
+            const showing = filteredSortedPapers.length;
+            const sidebarCountText = `Showing: ${showing}/${totalPapers} Papers`;
+            const mainCountText = `Showing ${showing} / ${totalPapers} papers`;
+            
+            // Update sidebar counts
             if (mobileCount) {
-                mobileCount.textContent = countText;
+                mobileCount.textContent = sidebarCountText;
             }
             if (desktopCount) {
-                desktopCount.textContent = countText;
+                desktopCount.textContent = sidebarCountText;
+            }
+            
+            // Update main header counts
+            if (mobileMainCount) {
+                mobileMainCount.textContent = mainCountText;
+            }
+            if (desktopMainCount) {
+                desktopMainCount.textContent = mainCountText;
             }
         }
 
@@ -15076,6 +15238,16 @@
             return score;
         }
         
+        function getHighestHIndex(paper) {
+            // Return the highest H-index value, or -1 if not available (so unavailable papers sort last)
+            return paper.highest_h_index !== undefined ? paper.highest_h_index : -1;
+        }
+        
+        function getAverageHIndex(paper) {
+            // Return the average H-index value, or -1 if not available (so unavailable papers sort last)
+            return paper.average_h_index !== undefined ? paper.average_h_index : -1;
+        }
+        
         function sortPapers(sortType) {
             switch (sortType) {
                 case 'recommend_best':
@@ -15083,6 +15255,18 @@
                     break;
                 case 'recommend_worst':
                     filteredSortedPapers.sort((a, b) => calculateRecommendationScore(a) - calculateRecommendationScore(b));
+                    break;
+                case 'highest_hindex_asc':
+                    filteredSortedPapers.sort((a, b) => getHighestHIndex(a) - getHighestHIndex(b));
+                    break;
+                case 'highest_hindex_desc':
+                    filteredSortedPapers.sort((a, b) => getHighestHIndex(b) - getHighestHIndex(a));
+                    break;
+                case 'average_hindex_asc':
+                    filteredSortedPapers.sort((a, b) => getAverageHIndex(a) - getAverageHIndex(b));
+                    break;
+                case 'average_hindex_desc':
+                    filteredSortedPapers.sort((a, b) => getAverageHIndex(b) - getAverageHIndex(a));
                     break;
                 case 'id_asc':
                     filteredSortedPapers.sort((a, b) => a.id.localeCompare(b.id));
@@ -15214,6 +15398,10 @@
             const sortNames = {
                 'recommend_best': 'Recommendation (Best First)',
                 'recommend_worst': 'Recommendation (Worst First)',
+                'highest_hindex_asc': 'Highest H-Index (Ascending)',
+                'highest_hindex_desc': 'Highest H-Index (Descending)',
+                'average_hindex_asc': 'Average H-Index (Ascending)',
+                'average_hindex_desc': 'Average H-Index (Descending)',
                 'id_asc': 'arXiv ID (Ascending)',
                 'id_desc': 'arXiv ID (Descending)',
                 'title_az': 'Title (A-Z)',
@@ -15292,6 +15480,12 @@
             
             const isEnabled = mobileFoundCheckbox.checked;
             
+            // Update pending filters
+            updatePendingHIndexFilters();
+            
+            // Update button text to reflect current state
+            updateHIndexButtonText();
+            
             // Toggle disabled state for range sections
             [mobileHighestRange, mobileAverageRange, desktopHighestRange, desktopAverageRange].forEach(range => {
                 if (range) {
@@ -15310,9 +15504,98 @@
             });
         }
         
+        function updatePendingHIndexFilters() {
+            // Read current UI state into pending filters
+            const mobileFoundCheckbox = document.getElementById('mobile-hindex-found');
+            const mobileNotFoundCheckbox = document.getElementById('mobile-hindex-not-found');
+            const mobileHighestMin = document.getElementById('mobile-highest-min');
+            const mobileHighestMax = document.getElementById('mobile-highest-max');
+            const mobileAverageMin = document.getElementById('mobile-average-min');
+            const mobileAverageMax = document.getElementById('mobile-average-max');
+            
+            pendingHIndexFilters = {
+                found: mobileFoundCheckbox.checked,
+                notFound: mobileNotFoundCheckbox.checked,
+                highestMin: parseInt(mobileHighestMin.value) || 0,
+                highestMax: parseInt(mobileHighestMax.value) || 1000,
+                averageMin: parseInt(mobileAverageMin.value) || 0,
+                averageMax: parseInt(mobileAverageMax.value) || 1000
+            };
+        }
+        
+        function resetPendingHIndexFilters() {
+            // Revert pending filters to current applied filters
+            pendingHIndexFilters = { ...currentHIndexFilters };
+            
+            // Update UI to reflect current filters
+            syncHIndexUI();
+        }
+        
+        function syncHIndexUI() {
+            // Update checkboxes
+            document.getElementById('mobile-hindex-found').checked = currentHIndexFilters.found;
+            document.getElementById('mobile-hindex-not-found').checked = currentHIndexFilters.notFound;
+            document.getElementById('desktop-hindex-found').checked = currentHIndexFilters.found;
+            document.getElementById('desktop-hindex-not-found').checked = currentHIndexFilters.notFound;
+            
+            // Update range inputs
+            document.getElementById('mobile-highest-min').value = currentHIndexFilters.highestMin;
+            document.getElementById('mobile-highest-max').value = currentHIndexFilters.highestMax;
+            document.getElementById('mobile-average-min').value = currentHIndexFilters.averageMin;
+            document.getElementById('mobile-average-max').value = currentHIndexFilters.averageMax;
+            document.getElementById('desktop-highest-min').value = currentHIndexFilters.highestMin;
+            document.getElementById('desktop-highest-max').value = currentHIndexFilters.highestMax;
+            document.getElementById('desktop-average-min').value = currentHIndexFilters.averageMin;
+            document.getElementById('desktop-average-max').value = currentHIndexFilters.averageMax;
+            
+            // Update disabled states
+            toggleHIndexRanges();
+            
+            // Update button text
+            updateHIndexButtonText();
+        }
+        
+        function updateHIndexButtonText() {
+            // Read the current checkbox states from the UI
+            const foundChecked = document.getElementById('mobile-hindex-found').checked;
+            const notFoundChecked = document.getElementById('mobile-hindex-not-found').checked;
+            
+            let selectionText;
+            if (foundChecked && notFoundChecked) {
+                selectionText = "All Selected";
+            } else if (foundChecked && !notFoundChecked) {
+                selectionText = "H-Index Found";
+            } else if (!foundChecked && notFoundChecked) {
+                selectionText = "H-Index Not Found";
+            } else {
+                selectionText = "None Selected";
+            }
+            
+            // Update mobile button
+            const mobileButton = document.getElementById('mobile-hindex-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">H-Index:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+            }
+            
+            // Update desktop button
+            const desktopButton = document.getElementById('desktop-hindex-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">H-Index:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
         function applyHIndexFilter() {
-            // For now, just close the dropdowns and show a console message
-            console.log('H-Index filter applied - functionality to be implemented');
+            // Update pending filters one final time
+            updatePendingHIndexFilters();
+            
+            // Apply pending filters as current filters
+            currentHIndexFilters = { ...pendingHIndexFilters };
+            
+            // Update URL with new filter state
+            updateURLWithHIndexFilters();
+            
+            // Update button text to reflect applied filters
+            updateHIndexButtonText();
             
             // Close both dropdowns
             const mobileDropdown = document.getElementById('mobile-hindex-dropdown');
@@ -15329,13 +15612,12 @@
             desktopButton.classList.remove('bg-neutral-600');
             desktopButton.classList.add('bg-neutral-500');
             
-            // Close the appropriate sidebar
-            if (isMobileSidebarOpen) {
-                closeMobileMenu();
-            }
-            if (isDesktopSidebarOpen) {
-                closeDesktopMenu();
-            }
+            // Don't close sidebar - just close dropdown
+            // (Sidebar should stay open for more filtering)
+            
+            // Apply new filtering and update display
+            applyFiltersAndSort();
+            displayCurrentPage();
         }
 
         // ============================================================================
@@ -15356,6 +15638,45 @@
             } else if (value > 1000) {
                 input.value = 1000;
             }
+            
+            // Auto-correct min/max relationships
+            enforceMinMaxConstraints(input);
+        }
+        
+        function enforceMinMaxConstraints(changedInput) {
+            const inputId = changedInput.id;
+            let minInput, maxInput;
+            
+            // Determine which min/max pair this input belongs to
+            if (inputId.includes('highest-min')) {
+                minInput = changedInput;
+                maxInput = document.getElementById(inputId.replace('min', 'max'));
+            } else if (inputId.includes('highest-max')) {
+                maxInput = changedInput;
+                minInput = document.getElementById(inputId.replace('max', 'min'));
+            } else if (inputId.includes('average-min')) {
+                minInput = changedInput;
+                maxInput = document.getElementById(inputId.replace('min', 'max'));
+            } else if (inputId.includes('average-max')) {
+                maxInput = changedInput;
+                minInput = document.getElementById(inputId.replace('max', 'min'));
+            }
+            
+            if (minInput && maxInput) {
+                const minVal = parseInt(minInput.value) || 0;
+                const maxVal = parseInt(maxInput.value) || 0;
+                
+                // If min > max, auto-correct
+                if (minVal > maxVal) {
+                    if (changedInput === minInput) {
+                        // User changed min to be > max, set max = min
+                        maxInput.value = minVal;
+                    } else {
+                        // User changed max to be < min, set min = max
+                        minInput.value = maxVal;
+                    }
+                }
+            }
         }
         
         // Add input validation when page loads
@@ -15371,7 +15692,10 @@
                 const input = document.getElementById(id);
                 if (input) {
                     // Validate on input (while typing) - but allow empty temporarily
-                    input.addEventListener('input', () => validateHIndexInput(input));
+                    input.addEventListener('input', () => {
+                        validateHIndexInput(input);
+                        updatePendingHIndexFilters(); // Update pending filters as user types
+                    });
                     
                     // Validate on blur (when user leaves field) - ensure it's not empty
                     input.addEventListener('blur', () => {
@@ -15379,6 +15703,7 @@
                             input.value = 0; // Set default if user leaves it empty
                         }
                         validateHIndexInput(input);
+                        updatePendingHIndexFilters(); // Update pending filters
                     });
                     
                     // Prevent non-numeric characters except for selection/deletion
@@ -15399,6 +15724,276 @@
                     });
                 }
             });
+            
+            // Add event listeners for checkboxes to update pending filters
+            document.getElementById('mobile-hindex-not-found').addEventListener('change', () => {
+                // Sync desktop checkbox
+                document.getElementById('desktop-hindex-not-found').checked = 
+                    document.getElementById('mobile-hindex-not-found').checked;
+                updatePendingHIndexFilters();
+                updateHIndexButtonText();
+            });
+            
+            document.getElementById('desktop-hindex-not-found').addEventListener('change', () => {
+                // Sync mobile checkbox
+                document.getElementById('mobile-hindex-not-found').checked = 
+                    document.getElementById('desktop-hindex-not-found').checked;
+                updatePendingHIndexFilters();
+                updateHIndexButtonText();
+            });
+            
+            // Add event listeners for scoring checkboxes to update pending filters
+            document.getElementById('mobile-scoring-has').addEventListener('change', () => {
+                // Sync desktop checkbox
+                document.getElementById('desktop-scoring-has').checked = 
+                    document.getElementById('mobile-scoring-has').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+            
+            document.getElementById('mobile-scoring-no').addEventListener('change', () => {
+                // Sync desktop checkbox
+                document.getElementById('desktop-scoring-no').checked = 
+                    document.getElementById('mobile-scoring-no').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+            
+            document.getElementById('desktop-scoring-has').addEventListener('change', () => {
+                // Sync mobile checkbox
+                document.getElementById('mobile-scoring-has').checked = 
+                    document.getElementById('desktop-scoring-has').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+            
+            document.getElementById('desktop-scoring-no').addEventListener('change', () => {
+                // Sync mobile checkbox
+                document.getElementById('mobile-scoring-no').checked = 
+                    document.getElementById('desktop-scoring-no').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+            
+            // Add event listeners for scoring checkboxes to update pending filters
+            document.getElementById('mobile-scoring-has').addEventListener('change', () => {
+                // Sync desktop checkbox
+                document.getElementById('desktop-scoring-has').checked = 
+                    document.getElementById('mobile-scoring-has').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+            
+            document.getElementById('desktop-scoring-has').addEventListener('change', () => {
+                // Sync mobile checkbox
+                document.getElementById('mobile-scoring-has').checked = 
+                    document.getElementById('desktop-scoring-has').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+            
+            document.getElementById('mobile-scoring-no').addEventListener('change', () => {
+                // Sync desktop checkbox
+                document.getElementById('desktop-scoring-no').checked = 
+                    document.getElementById('mobile-scoring-no').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+            
+            document.getElementById('desktop-scoring-no').addEventListener('change', () => {
+                // Sync mobile checkbox
+                document.getElementById('mobile-scoring-no').checked = 
+                    document.getElementById('desktop-scoring-no').checked;
+                updatePendingScoringFilters();
+                updateScoringButtonText();
+            });
+        }
+
+        // ============================================================================
+        // SCORING FILTER DROPDOWN FUNCTIONS
+        // ============================================================================
+        
+        // Current and pending scoring filter states
+        let currentScoringFilters = {
+            hasScoring: true,
+            noScoring: true
+        };
+        
+        let pendingScoringFilters = {
+            hasScoring: true,
+            noScoring: true
+        };
+        
+        function toggleMobileScoringDropdown() {
+            const button = document.getElementById('mobile-scoring-btn');
+            const dropdown = document.getElementById('mobile-scoring-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                // Set direction before showing
+                setDropdownDirection(button, dropdown);
+                // Change button to expanded state
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                // Change button back to normal state
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopScoringDropdown() {
+            const button = document.getElementById('desktop-scoring-btn');
+            const dropdown = document.getElementById('desktop-scoring-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                // Set direction before showing
+                setDropdownDirection(button, dropdown);
+                // Change button to expanded state
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                // Change button back to normal state
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        
+        function syncPendingScoringUI() {
+            // Update all checkboxes to match pending state
+            document.getElementById('mobile-scoring-has').checked = pendingScoringFilters.hasScoring;
+            document.getElementById('mobile-scoring-no').checked = pendingScoringFilters.noScoring;
+            document.getElementById('desktop-scoring-has').checked = pendingScoringFilters.hasScoring;
+            document.getElementById('desktop-scoring-no').checked = pendingScoringFilters.noScoring;
+        }
+        
+        function syncScoringUI() {
+            // Update checkboxes
+            document.getElementById('mobile-scoring-has').checked = currentScoringFilters.hasScoring;
+            document.getElementById('mobile-scoring-no').checked = currentScoringFilters.noScoring;
+            document.getElementById('desktop-scoring-has').checked = currentScoringFilters.hasScoring;
+            document.getElementById('desktop-scoring-no').checked = currentScoringFilters.noScoring;
+            
+            // Update button text
+            updateScoringButtonText();
+        }
+        
+        function updateScoringButtonText() {
+            // Read the current checkbox states from the UI
+            const hasChecked = document.getElementById('mobile-scoring-has').checked;
+            const noChecked = document.getElementById('mobile-scoring-no').checked;
+            
+            let selectionText;
+            if (hasChecked && noChecked) {
+                selectionText = "All Selected";
+            } else if (hasChecked && !noChecked) {
+                selectionText = "Completed";
+            } else if (!hasChecked && noChecked) {
+                selectionText = "Not relevant enough";
+            } else {
+                selectionText = "None Selected";
+            }
+            
+            // Update mobile button
+            const mobileButton = document.getElementById('mobile-scoring-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">Scoring:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+            }
+            
+            // Update desktop button
+            const desktopButton = document.getElementById('desktop-scoring-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">Scoring:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
+        function applyScoringFilter() {
+            // Update pending filters one final time
+            updatePendingScoringFilters();
+            
+            // Apply the pending filters as current filters
+            currentScoringFilters = { ...pendingScoringFilters };
+            
+            // Update UI to reflect current state
+            syncScoringUI();
+            
+            // Update URL with current filters
+            updateScoringFiltersInURL();
+            
+            // Close dropdown and apply filters
+            closeMobileScoringDropdown();
+            closeDesktopScoringDropdown();
+            
+            // Apply all filters and redisplay
+            applyFiltersAndSort();
+        }
+        
+        function updatePendingScoringFilters() {
+            // Read current UI state into pending filters
+            const mobileScoringHas = document.getElementById('mobile-scoring-has');
+            const mobileScoringNo = document.getElementById('mobile-scoring-no');
+            
+            if (mobileScoringHas && mobileScoringNo) {
+                pendingScoringFilters.hasScoring = mobileScoringHas.checked;
+                pendingScoringFilters.noScoring = mobileScoringNo.checked;
+            }
+        }
+        
+        function closeMobileScoringDropdown() {
+            const dropdown = document.getElementById('mobile-scoring-dropdown');
+            const button = document.getElementById('mobile-scoring-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function closeDesktopScoringDropdown() {
+            const dropdown = document.getElementById('desktop-scoring-dropdown');
+            const button = document.getElementById('desktop-scoring-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function updateScoringFiltersInURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Add scoring filter parameters
+            params.set('scoring_has', currentScoringFilters.hasScoring.toString());
+            params.set('scoring_no', currentScoringFilters.noScoring.toString());
+            
+            // Update URL without reload
+            const newURL = `${window.location.pathname}?${params.toString()}`;
+            window.history.pushState({}, '', newURL);
+        }
+        
+        function updateScoringFiltersFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Read scoring filter parameters from URL
+            const hasScoring = params.get('scoring_has');
+            const noScoring = params.get('scoring_no');
+            
+            if (hasScoring !== null) {
+                currentScoringFilters.hasScoring = hasScoring === 'true';
+                pendingScoringFilters.hasScoring = hasScoring === 'true';
+            }
+            
+            if (noScoring !== null) {
+                currentScoringFilters.noScoring = noScoring === 'true';
+                pendingScoringFilters.noScoring = noScoring === 'true';
+            }
+            
+            // Update UI to match loaded filters
+            syncScoringUI();
         }
 
         // ============================================================================
@@ -15406,8 +16001,11 @@
         // ============================================================================
         
         function applyFiltersAndSort() {
-            // For now, just copy all papers (we'll add filtering later)
-            filteredSortedPapers = [...allPapers];
+            // Apply H-Index filtering first
+            filteredSortedPapers = allPapers.filter(paper => passesHIndexFilter(paper));
+            
+            // Apply Scoring filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesScoringFilter(paper));
             
             // Apply current sorting
             sortPapers(currentSort);
@@ -15418,6 +16016,56 @@
             
             updatePaperCount();
             updatePaginationUI();
+        }
+        
+        function passesHIndexFilter(paper) {
+            const { found, notFound, highestMin, highestMax, averageMin, averageMax } = currentHIndexFilters;
+            
+            // Check H-Index status
+            const hasHIndex = paper.h_index_status === 'completed';
+            const noHIndex = paper.h_index_status === 'not_fetched';
+            
+            // If neither found nor not-found is checked, hide all papers
+            if (!found && !notFound) return false;
+            
+            // Check status inclusion
+            if (hasHIndex && !found) return false;
+            if (noHIndex && !notFound) return false;
+            
+            // For papers with H-Index data, check ranges (only if "found" is checked)
+            if (hasHIndex && found) {
+                // Treat null h-index values as 0
+                const paperHighest = paper.highest_h_index || 0;
+                const paperAverage = paper.average_h_index || 0;
+                
+                // Check if paper's H-Index values fall within ranges
+                if (paperHighest < highestMin || paperHighest > highestMax) return false;
+                if (paperAverage < averageMin || paperAverage > averageMax) return false;
+            }
+            
+            return true;
+        }
+        
+        function passesScoringFilter(paper) {
+            const { hasScoring, noScoring } = currentScoringFilters;
+            
+            // Check scoring status
+            const hasLLMScoring = paper.llm_score_status === 'completed';
+            const noLLMScoring = paper.llm_score_status === 'not_relevant_enough';
+            
+            // If neither hasScoring nor noScoring is checked, hide all papers
+            if (!hasScoring && !noScoring) return false;
+            
+            // Check status inclusion
+            if (hasLLMScoring && !hasScoring) return false;
+            if (noLLMScoring && !noScoring) return false;
+            
+            // Handle other statuses - if paper has a different status, only show if both filters are enabled
+            if (!hasLLMScoring && !noLLMScoring) {
+                return hasScoring && noScoring;
+            }
+            
+            return true;
         }
         
         function displayCurrentPage() {
@@ -16047,6 +16695,12 @@
             // Get sort parameter from URL, default to 'recommend_best'
             currentSort = getUrlParameter('sort') || 'recommend_best';
             
+            // Load H-Index filters from URL
+            updateHIndexFiltersFromURL();
+            
+            // Load Scoring filters from URL
+            updateScoringFiltersFromURL();
+            
             // Update page title and headers based on embedded date
             updatePageTitles(PAGE_DATE);
             
@@ -16055,6 +16709,9 @@
             
             // Setup H-Index input validation
             setupHIndexValidation();
+            
+            // Sync H-Index UI with loaded filters
+            syncHIndexUI();
             
             // Apply initial sorting and filtering
             applyFiltersAndSort();
@@ -16776,7 +17433,9 @@
                 { dropdown: document.getElementById('mobile-sort-dropdown'), button: document.getElementById('mobile-sort-btn') },
                 { dropdown: document.getElementById('desktop-sort-dropdown'), button: document.getElementById('desktop-sort-btn') },
                 { dropdown: document.getElementById('mobile-hindex-dropdown'), button: document.getElementById('mobile-hindex-btn') },
-                { dropdown: document.getElementById('desktop-hindex-dropdown'), button: document.getElementById('desktop-hindex-btn') }
+                { dropdown: document.getElementById('desktop-hindex-dropdown'), button: document.getElementById('desktop-hindex-btn') },
+                { dropdown: document.getElementById('mobile-scoring-dropdown'), button: document.getElementById('mobile-scoring-btn') },
+                { dropdown: document.getElementById('desktop-scoring-dropdown'), button: document.getElementById('desktop-scoring-btn') }
             ];
             
             dropdowns.forEach(({ dropdown, button }) => {
@@ -16791,6 +17450,11 @@
                         dropdown.classList.add('hidden');
                         button.classList.remove('bg-neutral-600');
                         button.classList.add('bg-neutral-500');
+                        
+                        // Reset pending filters for H-Index dropdowns
+                        if (dropdown.id.includes('hindex')) {
+                            resetPendingHIndexFilters();
+                        }
                     }
                 }
             });
