@@ -324,6 +324,15 @@
         .hindex-range-section.disabled input.bg-neutral-600:hover {
             background-color: #6b6a65 !important;
         }
+        
+        /* Advanced filter dropdowns disabled state */
+        .opacity-50 {
+            opacity: 0.5 !important;
+        }
+        
+        .cursor-not-allowed {
+            cursor: not-allowed !important;
+        }
     </style>
 </head>
 
@@ -486,9 +495,156 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Recommendation: All Selected <span class="text-lg">▼</span></button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Novelty: All Selected <span class="text-lg">▼</span></button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Potential Impact: All Selected <span class="text-lg">▼</span></button>
+                        <!-- Relevance Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-relevance-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRelevanceDropdown()">
+                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            </button>
+                            <div id="mobile-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-md">
+                                    <!-- Must Read Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-must" checked>
+                                            <label for="mobile-relevance-must"></label>
+                                        </div>
+                                        <label for="mobile-relevance-must" class="text-neutral-10 text-xl font-heading cursor-pointer">Must Read</label>
+                                    </div>
+                                    
+                                    <!-- Should Read Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-should" checked>
+                                            <label for="mobile-relevance-should"></label>
+                                        </div>
+                                        <label for="mobile-relevance-should" class="text-neutral-10 text-xl font-heading cursor-pointer">Should Read</label>
+                                    </div>
+                                    
+                                    <!-- Can Skip Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-skip" checked>
+                                            <label for="mobile-relevance-skip"></label>
+                                        </div>
+                                        <label for="mobile-relevance-skip" class="text-neutral-10 text-xl font-heading cursor-pointer">Can Skip</label>
+                                    </div>
+                                    
+                                    <!-- Ignore Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-ignore" checked>
+                                            <label for="mobile-relevance-ignore"></label>
+                                        </div>
+                                        <label for="mobile-relevance-ignore" class="text-neutral-10 text-xl font-heading cursor-pointer">Ignore</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Novelty Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-novelty-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileNoveltyDropdown()">
+                                <span class="font-bold">Novelty:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            </button>
+                            <div id="mobile-novelty-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-md">
+                                    <!-- High Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-novelty-high" checked>
+                                            <label for="mobile-novelty-high"></label>
+                                        </div>
+                                        <label for="mobile-novelty-high" class="text-neutral-10 text-xl font-heading cursor-pointer">High</label>
+                                    </div>
+                                    
+                                    <!-- Moderate Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-novelty-moderate" checked>
+                                            <label for="mobile-novelty-moderate"></label>
+                                        </div>
+                                        <label for="mobile-novelty-moderate" class="text-neutral-10 text-xl font-heading cursor-pointer">Moderate</label>
+                                    </div>
+                                    
+                                    <!-- Low Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-novelty-low" checked>
+                                            <label for="mobile-novelty-low"></label>
+                                        </div>
+                                        <label for="mobile-novelty-low" class="text-neutral-10 text-xl font-heading cursor-pointer">Low</label>
+                                    </div>
+                                    
+                                    <!-- None Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-novelty-none" checked>
+                                            <label for="mobile-novelty-none"></label>
+                                        </div>
+                                        <label for="mobile-novelty-none" class="text-neutral-10 text-xl font-heading cursor-pointer">None</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyNoveltyFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Potential Impact Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-impact-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileImpactDropdown()">
+                                <span class="font-bold">Potential Impact:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            </button>
+                            <div id="mobile-impact-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-md">
+                                    <!-- High Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-impact-high" checked>
+                                            <label for="mobile-impact-high"></label>
+                                        </div>
+                                        <label for="mobile-impact-high" class="text-neutral-10 text-xl font-heading cursor-pointer">High</label>
+                                    </div>
+                                    
+                                    <!-- Moderate Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-impact-moderate" checked>
+                                            <label for="mobile-impact-moderate"></label>
+                                        </div>
+                                        <label for="mobile-impact-moderate" class="text-neutral-10 text-xl font-heading cursor-pointer">Moderate</label>
+                                    </div>
+                                    
+                                    <!-- Low Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-impact-low" checked>
+                                            <label for="mobile-impact-low"></label>
+                                        </div>
+                                        <label for="mobile-impact-low" class="text-neutral-10 text-lg font-heading cursor-pointer">Low</label>
+                                    </div>
+                                    
+                                    <!-- Negligible Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-impact-negligible" checked>
+                                            <label for="mobile-impact-negligible"></label>
+                                        </div>
+                                        <label for="mobile-impact-negligible" class="text-neutral-10 text-xl font-heading cursor-pointer">Negligible</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyImpactFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-lg">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-lg">▼</span></button>
                         
@@ -660,9 +816,156 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Recommendation: All Selected <span class="text-md">▼</span></button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Novelty: All Selected <span class="text-md">▼</span></button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Potential Impact: All Selected <span class="text-md">▼</span></button>
+                        <!-- Relevance Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-relevance-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRelevanceDropdown()">
+                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Must Read Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-must" checked>
+                                            <label for="desktop-relevance-must"></label>
+                                        </div>
+                                        <label for="desktop-relevance-must" class="text-neutral-10 text-lg font-heading cursor-pointer">Must Read</label>
+                                    </div>
+                                    
+                                    <!-- Should Read Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-should" checked>
+                                            <label for="desktop-relevance-should"></label>
+                                        </div>
+                                        <label for="desktop-relevance-should" class="text-neutral-10 text-lg font-heading cursor-pointer">Should Read</label>
+                                    </div>
+                                    
+                                    <!-- Can Skip Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-skip" checked>
+                                            <label for="desktop-relevance-skip"></label>
+                                        </div>
+                                        <label for="desktop-relevance-skip" class="text-neutral-10 text-lg font-heading cursor-pointer">Can Skip</label>
+                                    </div>
+                                    
+                                    <!-- Ignore Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-ignore" checked>
+                                            <label for="desktop-relevance-ignore"></label>
+                                        </div>
+                                        <label for="desktop-relevance-ignore" class="text-neutral-10 text-lg font-heading cursor-pointer">Ignore</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Novelty Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-novelty-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopNoveltyDropdown()">
+                                <span class="font-bold">Novelty:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-novelty-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- High Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-novelty-high" checked>
+                                            <label for="desktop-novelty-high"></label>
+                                        </div>
+                                        <label for="desktop-novelty-high" class="text-neutral-10 text-lg font-heading cursor-pointer">High</label>
+                                    </div>
+                                    
+                                    <!-- Moderate Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-novelty-moderate" checked>
+                                            <label for="desktop-novelty-moderate"></label>
+                                        </div>
+                                        <label for="desktop-novelty-moderate" class="text-neutral-10 text-lg font-heading cursor-pointer">Moderate</label>
+                                    </div>
+                                    
+                                    <!-- Low Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-novelty-low" checked>
+                                            <label for="desktop-novelty-low"></label>
+                                        </div>
+                                        <label for="desktop-novelty-low" class="text-neutral-10 text-lg font-heading cursor-pointer">Low</label>
+                                    </div>
+                                    
+                                    <!-- None Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-novelty-none" checked>
+                                            <label for="desktop-novelty-none"></label>
+                                        </div>
+                                        <label for="desktop-novelty-none" class="text-neutral-10 text-lg font-heading cursor-pointer">None</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyNoveltyFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Potential Impact Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-impact-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopImpactDropdown()">
+                                <span class="font-bold">Potential Impact:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-impact-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- High Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-impact-high" checked>
+                                            <label for="desktop-impact-high"></label>
+                                        </div>
+                                        <label for="desktop-impact-high" class="text-neutral-10 text-lg font-heading cursor-pointer">High</label>
+                                    </div>
+                                    
+                                    <!-- Moderate Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-impact-moderate" checked>
+                                            <label for="desktop-impact-moderate"></label>
+                                        </div>
+                                        <label for="desktop-impact-moderate" class="text-neutral-10 text-lg font-heading cursor-pointer">Moderate</label>
+                                    </div>
+                                    
+                                    <!-- Low Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-impact-low" checked>
+                                            <label for="desktop-impact-low"></label>
+                                        </div>
+                                        <label for="desktop-impact-low" class="text-neutral-10 text-lg font-heading cursor-pointer">Low</label>
+                                    </div>
+                                    
+                                    <!-- Negligible Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-impact-negligible" checked>
+                                            <label for="desktop-impact-negligible"></label>
+                                        </div>
+                                        <label for="desktop-impact-negligible" class="text-neutral-10 text-lg font-heading cursor-pointer">Negligible</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyImpactFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-md">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-md">▼</span></button>
                         
@@ -11358,6 +11661,177 @@
                 updatePendingScoringFilters();
                 updateScoringButtonText();
             });
+            
+            // Add event listeners for relevance checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-relevance-must').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-must').checked = 
+                    document.getElementById('mobile-relevance-must').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-should').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-should').checked = 
+                    document.getElementById('mobile-relevance-should').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-skip').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-skip').checked = 
+                    document.getElementById('mobile-relevance-skip').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-ignore').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-ignore').checked = 
+                    document.getElementById('mobile-relevance-ignore').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-must').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-must').checked = 
+                    document.getElementById('desktop-relevance-must').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-should').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-should').checked = 
+                    document.getElementById('desktop-relevance-should').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-skip').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-skip').checked = 
+                    document.getElementById('desktop-relevance-skip').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-ignore').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-ignore').checked = 
+                    document.getElementById('desktop-relevance-ignore').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            // Add event listeners for novelty checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-novelty-high').addEventListener('change', () => {
+                document.getElementById('desktop-novelty-high').checked = 
+                    document.getElementById('mobile-novelty-high').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            document.getElementById('mobile-novelty-moderate').addEventListener('change', () => {
+                document.getElementById('desktop-novelty-moderate').checked = 
+                    document.getElementById('mobile-novelty-moderate').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            document.getElementById('mobile-novelty-low').addEventListener('change', () => {
+                document.getElementById('desktop-novelty-low').checked = 
+                    document.getElementById('mobile-novelty-low').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            document.getElementById('mobile-novelty-none').addEventListener('change', () => {
+                document.getElementById('desktop-novelty-none').checked = 
+                    document.getElementById('mobile-novelty-none').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            document.getElementById('desktop-novelty-high').addEventListener('change', () => {
+                document.getElementById('mobile-novelty-high').checked = 
+                    document.getElementById('desktop-novelty-high').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            document.getElementById('desktop-novelty-moderate').addEventListener('change', () => {
+                document.getElementById('mobile-novelty-moderate').checked = 
+                    document.getElementById('desktop-novelty-moderate').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            document.getElementById('desktop-novelty-low').addEventListener('change', () => {
+                document.getElementById('mobile-novelty-low').checked = 
+                    document.getElementById('desktop-novelty-low').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            document.getElementById('desktop-novelty-none').addEventListener('change', () => {
+                document.getElementById('mobile-novelty-none').checked = 
+                    document.getElementById('desktop-novelty-none').checked;
+                updatePendingNoveltyFilters();
+                updateNoveltyButtonText();
+            });
+            
+            // Add event listeners for impact checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-impact-high').addEventListener('change', () => {
+                document.getElementById('desktop-impact-high').checked = 
+                    document.getElementById('mobile-impact-high').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
+            
+            document.getElementById('mobile-impact-moderate').addEventListener('change', () => {
+                document.getElementById('desktop-impact-moderate').checked = 
+                    document.getElementById('mobile-impact-moderate').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
+            
+            document.getElementById('mobile-impact-low').addEventListener('change', () => {
+                document.getElementById('desktop-impact-low').checked = 
+                    document.getElementById('mobile-impact-low').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
+            
+            document.getElementById('mobile-impact-negligible').addEventListener('change', () => {
+                document.getElementById('desktop-impact-negligible').checked = 
+                    document.getElementById('mobile-impact-negligible').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
+            
+            document.getElementById('desktop-impact-high').addEventListener('change', () => {
+                document.getElementById('mobile-impact-high').checked = 
+                    document.getElementById('desktop-impact-high').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
+            
+            document.getElementById('desktop-impact-moderate').addEventListener('change', () => {
+                document.getElementById('mobile-impact-moderate').checked = 
+                    document.getElementById('desktop-impact-moderate').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
+            
+            document.getElementById('desktop-impact-low').addEventListener('change', () => {
+                document.getElementById('mobile-impact-low').checked = 
+                    document.getElementById('desktop-impact-low').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
+            
+            document.getElementById('desktop-impact-negligible').addEventListener('change', () => {
+                document.getElementById('mobile-impact-negligible').checked = 
+                    document.getElementById('desktop-impact-negligible').checked;
+                updatePendingImpactFilters();
+                updateImpactButtonText();
+            });
         }
 
         // ============================================================================
@@ -11479,6 +11953,9 @@
             closeMobileScoringDropdown();
             closeDesktopScoringDropdown();
             
+            // Update disabled state for advanced filters
+            updateAdvancedFiltersDisabledState();
+            
             // Apply all filters and redisplay
             applyFiltersAndSort();
         }
@@ -11545,11 +12022,584 @@
             
             // Update UI to match loaded filters
             syncScoringUI();
+            
+            // Update disabled state for advanced filters
+            updateAdvancedFiltersDisabledState();
+        }
+
+        // ============================================================================
+        // RELEVANCE FILTER DROPDOWN FUNCTIONS
+        // ============================================================================
+        
+        // Current and pending relevance filter states
+        let currentRelevanceFilters = {
+            mustRead: true,
+            shouldRead: true,
+            canSkip: true,
+            ignore: true
+        };
+        
+        let pendingRelevanceFilters = {
+            mustRead: true,
+            shouldRead: true,
+            canSkip: true,
+            ignore: true
+        };
+        
+        function toggleMobileRelevanceDropdown() {
+            const button = document.getElementById('mobile-relevance-btn');
+            const dropdown = document.getElementById('mobile-relevance-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopRelevanceDropdown() {
+            const button = document.getElementById('desktop-relevance-btn');
+            const dropdown = document.getElementById('desktop-relevance-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function syncPendingRelevanceUI() {
+            document.getElementById('mobile-relevance-must').checked = pendingRelevanceFilters.mustRead;
+            document.getElementById('mobile-relevance-should').checked = pendingRelevanceFilters.shouldRead;
+            document.getElementById('mobile-relevance-skip').checked = pendingRelevanceFilters.canSkip;
+            document.getElementById('mobile-relevance-ignore').checked = pendingRelevanceFilters.ignore;
+            document.getElementById('desktop-relevance-must').checked = pendingRelevanceFilters.mustRead;
+            document.getElementById('desktop-relevance-should').checked = pendingRelevanceFilters.shouldRead;
+            document.getElementById('desktop-relevance-skip').checked = pendingRelevanceFilters.canSkip;
+            document.getElementById('desktop-relevance-ignore').checked = pendingRelevanceFilters.ignore;
+        }
+        
+        function syncRelevanceUI() {
+            document.getElementById('mobile-relevance-must').checked = currentRelevanceFilters.mustRead;
+            document.getElementById('mobile-relevance-should').checked = currentRelevanceFilters.shouldRead;
+            document.getElementById('mobile-relevance-skip').checked = currentRelevanceFilters.canSkip;
+            document.getElementById('mobile-relevance-ignore').checked = currentRelevanceFilters.ignore;
+            document.getElementById('desktop-relevance-must').checked = currentRelevanceFilters.mustRead;
+            document.getElementById('desktop-relevance-should').checked = currentRelevanceFilters.shouldRead;
+            document.getElementById('desktop-relevance-skip').checked = currentRelevanceFilters.canSkip;
+            document.getElementById('desktop-relevance-ignore').checked = currentRelevanceFilters.ignore;
+            
+            updateRelevanceButtonText();
+        }
+        
+        function updateRelevanceButtonText() {
+            const mustChecked = document.getElementById('mobile-relevance-must').checked;
+            const shouldChecked = document.getElementById('mobile-relevance-should').checked;
+            const skipChecked = document.getElementById('mobile-relevance-skip').checked;
+            const ignoreChecked = document.getElementById('mobile-relevance-ignore').checked;
+            
+            const checkedCount = [mustChecked, shouldChecked, skipChecked, ignoreChecked].filter(Boolean).length;
+            
+            let selectionText;
+            if (checkedCount === 4) {
+                selectionText = "All Selected";
+            } else if (checkedCount === 0) {
+                selectionText = "None Selected";
+            } else {
+                selectionText = `${checkedCount} Selected`;
+            }
+            
+            const mobileButton = document.getElementById('mobile-relevance-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+            }
+            
+            const desktopButton = document.getElementById('desktop-relevance-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
+        function applyRelevanceFilter() {
+            updatePendingRelevanceFilters();
+            currentRelevanceFilters = { ...pendingRelevanceFilters };
+            syncRelevanceUI();
+            updateRelevanceFiltersInURL();
+            closeMobileRelevanceDropdown();
+            closeDesktopRelevanceDropdown();
+            applyFiltersAndSort();
+        }
+        
+        function updatePendingRelevanceFilters() {
+            pendingRelevanceFilters.mustRead = document.getElementById('mobile-relevance-must').checked;
+            pendingRelevanceFilters.shouldRead = document.getElementById('mobile-relevance-should').checked;
+            pendingRelevanceFilters.canSkip = document.getElementById('mobile-relevance-skip').checked;
+            pendingRelevanceFilters.ignore = document.getElementById('mobile-relevance-ignore').checked;
+        }
+        
+        function closeMobileRelevanceDropdown() {
+            const dropdown = document.getElementById('mobile-relevance-dropdown');
+            const button = document.getElementById('mobile-relevance-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function closeDesktopRelevanceDropdown() {
+            const dropdown = document.getElementById('desktop-relevance-dropdown');
+            const button = document.getElementById('desktop-relevance-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function updateRelevanceFiltersInURL() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('relevance_must', currentRelevanceFilters.mustRead.toString());
+            params.set('relevance_should', currentRelevanceFilters.shouldRead.toString());
+            params.set('relevance_skip', currentRelevanceFilters.canSkip.toString());
+            params.set('relevance_ignore', currentRelevanceFilters.ignore.toString());
+            const newURL = `${window.location.pathname}?${params.toString()}`;
+            window.history.pushState({}, '', newURL);
+        }
+        
+        function updateRelevanceFiltersFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            const mustRead = params.get('relevance_must');
+            const shouldRead = params.get('relevance_should');
+            const canSkip = params.get('relevance_skip');
+            const ignore = params.get('relevance_ignore');
+            
+            if (mustRead !== null) {
+                currentRelevanceFilters.mustRead = mustRead === 'true';
+                pendingRelevanceFilters.mustRead = mustRead === 'true';
+            }
+            if (shouldRead !== null) {
+                currentRelevanceFilters.shouldRead = shouldRead === 'true';
+                pendingRelevanceFilters.shouldRead = shouldRead === 'true';
+            }
+            if (canSkip !== null) {
+                currentRelevanceFilters.canSkip = canSkip === 'true';
+                pendingRelevanceFilters.canSkip = canSkip === 'true';
+            }
+            if (ignore !== null) {
+                currentRelevanceFilters.ignore = ignore === 'true';
+                pendingRelevanceFilters.ignore = ignore === 'true';
+            }
+            
+            syncRelevanceUI();
+        }
+
+        // ============================================================================
+        // NOVELTY FILTER DROPDOWN FUNCTIONS
+        // ============================================================================
+        
+        // Current and pending novelty filter states
+        let currentNoveltyFilters = {
+            high: true,
+            moderate: true,
+            low: true,
+            none: true
+        };
+        
+        let pendingNoveltyFilters = {
+            high: true,
+            moderate: true,
+            low: true,
+            none: true
+        };
+        
+        function toggleMobileNoveltyDropdown() {
+            const button = document.getElementById('mobile-novelty-btn');
+            const dropdown = document.getElementById('mobile-novelty-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopNoveltyDropdown() {
+            const button = document.getElementById('desktop-novelty-btn');
+            const dropdown = document.getElementById('desktop-novelty-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function syncPendingNoveltyUI() {
+            document.getElementById('mobile-novelty-high').checked = pendingNoveltyFilters.high;
+            document.getElementById('mobile-novelty-moderate').checked = pendingNoveltyFilters.moderate;
+            document.getElementById('mobile-novelty-low').checked = pendingNoveltyFilters.low;
+            document.getElementById('mobile-novelty-none').checked = pendingNoveltyFilters.none;
+            document.getElementById('desktop-novelty-high').checked = pendingNoveltyFilters.high;
+            document.getElementById('desktop-novelty-moderate').checked = pendingNoveltyFilters.moderate;
+            document.getElementById('desktop-novelty-low').checked = pendingNoveltyFilters.low;
+            document.getElementById('desktop-novelty-none').checked = pendingNoveltyFilters.none;
+        }
+        
+        function syncNoveltyUI() {
+            document.getElementById('mobile-novelty-high').checked = currentNoveltyFilters.high;
+            document.getElementById('mobile-novelty-moderate').checked = currentNoveltyFilters.moderate;
+            document.getElementById('mobile-novelty-low').checked = currentNoveltyFilters.low;
+            document.getElementById('mobile-novelty-none').checked = currentNoveltyFilters.none;
+            document.getElementById('desktop-novelty-high').checked = currentNoveltyFilters.high;
+            document.getElementById('desktop-novelty-moderate').checked = currentNoveltyFilters.moderate;
+            document.getElementById('desktop-novelty-low').checked = currentNoveltyFilters.low;
+            document.getElementById('desktop-novelty-none').checked = currentNoveltyFilters.none;
+            
+            updateNoveltyButtonText();
+        }
+        
+        function updateNoveltyButtonText() {
+            const highChecked = document.getElementById('mobile-novelty-high').checked;
+            const moderateChecked = document.getElementById('mobile-novelty-moderate').checked;
+            const lowChecked = document.getElementById('mobile-novelty-low').checked;
+            const noneChecked = document.getElementById('mobile-novelty-none').checked;
+            
+            const checkedCount = [highChecked, moderateChecked, lowChecked, noneChecked].filter(Boolean).length;
+            
+            let selectionText;
+            if (checkedCount === 4) {
+                selectionText = "All Selected";
+            } else if (checkedCount === 0) {
+                selectionText = "None Selected";
+            } else {
+                selectionText = `${checkedCount} Selected`;
+            }
+            
+            const mobileButton = document.getElementById('mobile-novelty-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">Novelty:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+            }
+            
+            const desktopButton = document.getElementById('desktop-novelty-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">Novelty:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
+        function applyNoveltyFilter() {
+            updatePendingNoveltyFilters();
+            currentNoveltyFilters = { ...pendingNoveltyFilters };
+            syncNoveltyUI();
+            updateNoveltyFiltersInURL();
+            closeMobileNoveltyDropdown();
+            closeDesktopNoveltyDropdown();
+            applyFiltersAndSort();
+        }
+        
+        function updatePendingNoveltyFilters() {
+            pendingNoveltyFilters.high = document.getElementById('mobile-novelty-high').checked;
+            pendingNoveltyFilters.moderate = document.getElementById('mobile-novelty-moderate').checked;
+            pendingNoveltyFilters.low = document.getElementById('mobile-novelty-low').checked;
+            pendingNoveltyFilters.none = document.getElementById('mobile-novelty-none').checked;
+        }
+        
+        function closeMobileNoveltyDropdown() {
+            const dropdown = document.getElementById('mobile-novelty-dropdown');
+            const button = document.getElementById('mobile-novelty-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function closeDesktopNoveltyDropdown() {
+            const dropdown = document.getElementById('desktop-novelty-dropdown');
+            const button = document.getElementById('desktop-novelty-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function updateNoveltyFiltersInURL() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('novelty_high', currentNoveltyFilters.high.toString());
+            params.set('novelty_moderate', currentNoveltyFilters.moderate.toString());
+            params.set('novelty_low', currentNoveltyFilters.low.toString());
+            params.set('novelty_none', currentNoveltyFilters.none.toString());
+            const newURL = `${window.location.pathname}?${params.toString()}`;
+            window.history.pushState({}, '', newURL);
+        }
+        
+        function updateNoveltyFiltersFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            const high = params.get('novelty_high');
+            const moderate = params.get('novelty_moderate');
+            const low = params.get('novelty_low');
+            const none = params.get('novelty_none');
+            
+            if (high !== null) {
+                currentNoveltyFilters.high = high === 'true';
+                pendingNoveltyFilters.high = high === 'true';
+            }
+            if (moderate !== null) {
+                currentNoveltyFilters.moderate = moderate === 'true';
+                pendingNoveltyFilters.moderate = moderate === 'true';
+            }
+            if (low !== null) {
+                currentNoveltyFilters.low = low === 'true';
+                pendingNoveltyFilters.low = low === 'true';
+            }
+            if (none !== null) {
+                currentNoveltyFilters.none = none === 'true';
+                pendingNoveltyFilters.none = none === 'true';
+            }
+            
+            syncNoveltyUI();
+        }
+
+        // ============================================================================
+        // POTENTIAL IMPACT FILTER DROPDOWN FUNCTIONS
+        // ============================================================================
+        
+        // Current and pending impact filter states
+        let currentImpactFilters = {
+            high: true,
+            moderate: true,
+            low: true,
+            negligible: true
+        };
+        
+        let pendingImpactFilters = {
+            high: true,
+            moderate: true,
+            low: true,
+            negligible: true
+        };
+        
+        function toggleMobileImpactDropdown() {
+            const button = document.getElementById('mobile-impact-btn');
+            const dropdown = document.getElementById('mobile-impact-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopImpactDropdown() {
+            const button = document.getElementById('desktop-impact-btn');
+            const dropdown = document.getElementById('desktop-impact-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function syncPendingImpactUI() {
+            document.getElementById('mobile-impact-high').checked = pendingImpactFilters.high;
+            document.getElementById('mobile-impact-moderate').checked = pendingImpactFilters.moderate;
+            document.getElementById('mobile-impact-low').checked = pendingImpactFilters.low;
+            document.getElementById('mobile-impact-negligible').checked = pendingImpactFilters.negligible;
+            document.getElementById('desktop-impact-high').checked = pendingImpactFilters.high;
+            document.getElementById('desktop-impact-moderate').checked = pendingImpactFilters.moderate;
+            document.getElementById('desktop-impact-low').checked = pendingImpactFilters.low;
+            document.getElementById('desktop-impact-negligible').checked = pendingImpactFilters.negligible;
+        }
+        
+        function syncImpactUI() {
+            document.getElementById('mobile-impact-high').checked = currentImpactFilters.high;
+            document.getElementById('mobile-impact-moderate').checked = currentImpactFilters.moderate;
+            document.getElementById('mobile-impact-low').checked = currentImpactFilters.low;
+            document.getElementById('mobile-impact-negligible').checked = currentImpactFilters.negligible;
+            document.getElementById('desktop-impact-high').checked = currentImpactFilters.high;
+            document.getElementById('desktop-impact-moderate').checked = currentImpactFilters.moderate;
+            document.getElementById('desktop-impact-low').checked = currentImpactFilters.low;
+            document.getElementById('desktop-impact-negligible').checked = currentImpactFilters.negligible;
+            
+            updateImpactButtonText();
+        }
+        
+        function updateImpactButtonText() {
+            const highChecked = document.getElementById('mobile-impact-high').checked;
+            const moderateChecked = document.getElementById('mobile-impact-moderate').checked;
+            const lowChecked = document.getElementById('mobile-impact-low').checked;
+            const negligibleChecked = document.getElementById('mobile-impact-negligible').checked;
+            
+            const checkedCount = [highChecked, moderateChecked, lowChecked, negligibleChecked].filter(Boolean).length;
+            
+            let selectionText;
+            if (checkedCount === 4) {
+                selectionText = "All Selected";
+            } else if (checkedCount === 0) {
+                selectionText = "None Selected";
+            } else {
+                selectionText = `${checkedCount} Selected`;
+            }
+            
+            const mobileButton = document.getElementById('mobile-impact-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">Potential Impact:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+            }
+            
+            const desktopButton = document.getElementById('desktop-impact-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">Potential Impact:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
+        function applyImpactFilter() {
+            updatePendingImpactFilters();
+            currentImpactFilters = { ...pendingImpactFilters };
+            syncImpactUI();
+            updateImpactFiltersInURL();
+            closeMobileImpactDropdown();
+            closeDesktopImpactDropdown();
+            applyFiltersAndSort();
+        }
+        
+        function updatePendingImpactFilters() {
+            pendingImpactFilters.high = document.getElementById('mobile-impact-high').checked;
+            pendingImpactFilters.moderate = document.getElementById('mobile-impact-moderate').checked;
+            pendingImpactFilters.low = document.getElementById('mobile-impact-low').checked;
+            pendingImpactFilters.negligible = document.getElementById('mobile-impact-negligible').checked;
+        }
+        
+        function closeMobileImpactDropdown() {
+            const dropdown = document.getElementById('mobile-impact-dropdown');
+            const button = document.getElementById('mobile-impact-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function closeDesktopImpactDropdown() {
+            const dropdown = document.getElementById('desktop-impact-dropdown');
+            const button = document.getElementById('desktop-impact-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function updateImpactFiltersInURL() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('impact_high', currentImpactFilters.high.toString());
+            params.set('impact_moderate', currentImpactFilters.moderate.toString());
+            params.set('impact_low', currentImpactFilters.low.toString());
+            params.set('impact_negligible', currentImpactFilters.negligible.toString());
+            const newURL = `${window.location.pathname}?${params.toString()}`;
+            window.history.pushState({}, '', newURL);
+        }
+        
+        function updateImpactFiltersFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            const high = params.get('impact_high');
+            const moderate = params.get('impact_moderate');
+            const low = params.get('impact_low');
+            const negligible = params.get('impact_negligible');
+            
+            if (high !== null) {
+                currentImpactFilters.high = high === 'true';
+                pendingImpactFilters.high = high === 'true';
+            }
+            if (moderate !== null) {
+                currentImpactFilters.moderate = moderate === 'true';
+                pendingImpactFilters.moderate = moderate === 'true';
+            }
+            if (low !== null) {
+                currentImpactFilters.low = low === 'true';
+                pendingImpactFilters.low = low === 'true';
+            }
+            if (negligible !== null) {
+                currentImpactFilters.negligible = negligible === 'true';
+                pendingImpactFilters.negligible = negligible === 'true';
+            }
+            
+            syncImpactUI();
         }
 
         // ============================================================================
         // FILTERING AND DISPLAY FUNCTIONS
         // ============================================================================
+        
+        function shouldDisableAdvancedFilters() {
+            return !currentScoringFilters.hasScoring && currentScoringFilters.noScoring;
+        }
+        
+        function updateDropdownDisabledState(buttonId, dropdownId, shouldDisable) {
+            const button = document.getElementById(buttonId);
+            const dropdown = document.getElementById(dropdownId);
+            
+            if (button && dropdown) {
+                if (shouldDisable) {
+                    button.classList.add('opacity-50', 'cursor-not-allowed');
+                    button.style.pointerEvents = 'none';
+                    dropdown.classList.add('hidden'); // Close if open
+                } else {
+                    button.classList.remove('opacity-50', 'cursor-not-allowed');
+                    button.style.pointerEvents = 'auto';
+                }
+            }
+        }
+        
+        function updateAdvancedFiltersDisabledState() {
+            const shouldDisable = shouldDisableAdvancedFilters();
+            
+            // Update Relevance
+            updateDropdownDisabledState('mobile-relevance-btn', 'mobile-relevance-dropdown', shouldDisable);
+            updateDropdownDisabledState('desktop-relevance-btn', 'desktop-relevance-dropdown', shouldDisable);
+            
+            // Update Novelty  
+            updateDropdownDisabledState('mobile-novelty-btn', 'mobile-novelty-dropdown', shouldDisable);
+            updateDropdownDisabledState('desktop-novelty-btn', 'desktop-novelty-dropdown', shouldDisable);
+            
+            // Update Impact
+            updateDropdownDisabledState('mobile-impact-btn', 'mobile-impact-dropdown', shouldDisable);
+            updateDropdownDisabledState('desktop-impact-btn', 'desktop-impact-dropdown', shouldDisable);
+        }
         
         function applyFiltersAndSort() {
             // Apply H-Index filtering first
@@ -11557,6 +12607,15 @@
             
             // Apply Scoring filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesScoringFilter(paper));
+            
+            // Apply Relevance filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRelevanceFilter(paper));
+            
+            // Apply Novelty filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesNoveltyFilter(paper));
+            
+            // Apply Impact filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesImpactFilter(paper));
             
             // Apply current sorting
             sortPapers(currentSort);
@@ -11567,6 +12626,7 @@
             
             updatePaperCount();
             updatePaginationUI();
+            displayCurrentPage();
         }
         
         function passesHIndexFilter(paper) {
@@ -11614,6 +12674,72 @@
             // Handle other statuses - if paper has a different status, only show if both filters are enabled
             if (!hasLLMScoring && !noLLMScoring) {
                 return hasScoring && noScoring;
+            }
+            
+            return true;
+        }
+        
+        function passesRelevanceFilter(paper) {
+            const { mustRead, shouldRead, canSkip, ignore } = currentRelevanceFilters;
+            
+            // If no filters are selected, hide all papers
+            if (!mustRead && !shouldRead && !canSkip && !ignore) return false;
+            
+            // Check recommendation score
+            const score = paper.recommendation_score;
+            
+            if (score === 'Must Read' && !mustRead) return false;
+            if (score === 'Should Read' && !shouldRead) return false;
+            if (score === 'Can Skip' && !canSkip) return false;
+            if (score === 'Ignore' && !ignore) return false;
+            
+            // If paper has a different/null score, only show if all filters are enabled
+            if (!['Must Read', 'Should Read', 'Can Skip', 'Ignore'].includes(score)) {
+                return mustRead && shouldRead && canSkip && ignore;
+            }
+            
+            return true;
+        }
+        
+        function passesNoveltyFilter(paper) {
+            const { high, moderate, low, none } = currentNoveltyFilters;
+            
+            // If no filters are selected, hide all papers
+            if (!high && !moderate && !low && !none) return false;
+            
+            // Check novelty score
+            const score = paper.novelty_score;
+            
+            if (score === 'High' && !high) return false;
+            if (score === 'Moderate' && !moderate) return false;
+            if (score === 'Low' && !low) return false;
+            if ((score === null || score === undefined) && !none) return false;
+            
+            // If paper has a different score, only show if all filters are enabled
+            if (score && !['High', 'Moderate', 'Low'].includes(score)) {
+                return high && moderate && low && none;
+            }
+            
+            return true;
+        }
+        
+        function passesImpactFilter(paper) {
+            const { high, moderate, low, negligible } = currentImpactFilters;
+            
+            // If no filters are selected, hide all papers
+            if (!high && !moderate && !low && !negligible) return false;
+            
+            // Check impact score
+            const score = paper.impact_score;
+            
+            if (score === 'High' && !high) return false;
+            if (score === 'Moderate' && !moderate) return false;
+            if (score === 'Low' && !low) return false;
+            if (score === 'Negligible' && !negligible) return false;
+            
+            // If paper has a different/null score, only show if all filters are enabled
+            if (!['High', 'Moderate', 'Low', 'Negligible'].includes(score)) {
+                return high && moderate && low && negligible;
             }
             
             return true;
@@ -12251,6 +13377,18 @@
             
             // Load Scoring filters from URL
             updateScoringFiltersFromURL();
+            
+            // Load Relevance filters from URL
+            updateRelevanceFiltersFromURL();
+            
+            // Load Novelty filters from URL
+            updateNoveltyFiltersFromURL();
+            
+            // Load Impact filters from URL
+            updateImpactFiltersFromURL();
+            
+            // Update disabled state for advanced filters after loading scoring filters
+            updateAdvancedFiltersDisabledState();
             
             // Update page title and headers based on embedded date
             updatePageTitles(PAGE_DATE);
