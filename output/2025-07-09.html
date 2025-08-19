@@ -183,6 +183,17 @@
             overflow: hidden;
         }
         
+        /* Dropdown positioning */
+        .dropdown-up {
+            bottom: 100% !important;
+            top: auto !important;
+        }
+        
+        .dropdown-down {
+            top: 100% !important;
+            bottom: auto !important;
+        }
+        
         /* Mobile active states */
         @media (hover: none) {
             /* Remove button animation */
@@ -233,7 +244,12 @@
             overflow-y: hidden;
         }
         
-        /* Prevent double tap to zoom on mobile */
+        /* Prevent double tap to zoom on mobile - Global */
+        * {
+            touch-action: manipulation;
+        }
+        
+        /* Prevent double tap to zoom on mobile - Specific elements (keeping for compatibility) */
         .button, .interactive-element {
             touch-action: manipulation;
         }
@@ -242,6 +258,69 @@
         .research-feed-button:hover {
             background-color: #4f4e4b !important; /* bg-neutral-700 */
             color: #f5f2e7 !important; /* text-neutral-10 */
+        }
+        
+        /* Custom checkbox styling */
+        .custom-checkbox {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .custom-checkbox input[type="checkbox"] {
+            opacity: 0;
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+        
+        .custom-checkbox label {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #86857f; /* bg-neutral-500 */
+            border: 2px solid #f5f2e7; /* border-neutral-100 */
+            border-radius: 4px; /* rounded corners */
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .custom-checkbox input[type="checkbox"]:checked + label {
+            background-color: #f5f2e7; /* bg-neutral-100 */
+            border-color: #f5f2e7;
+        }
+        
+        .custom-checkbox input[type="checkbox"]:checked + label::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 6px;
+            height: 10px;
+            border: solid #86857f;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        /* H-Index range section styling */
+        .hindex-range-section {
+            transition: opacity 0.2s ease;
+        }
+        
+        .hindex-range-section.disabled {
+            opacity: 0.5;
+        }
+        
+        .hindex-range-section.disabled input {
+            cursor: not-allowed !important;
+        }
+        
+        .hindex-range-section.disabled input:hover {
+            background-color: #6b6a65 !important; /* Keep original bg when disabled */
+        }
+        
+        /* Override any Tailwind hover effects on disabled inputs */
+        .hindex-range-section.disabled input.bg-neutral-600:hover {
+            background-color: #6b6a65 !important;
         }
     </style>
 </head>
@@ -328,7 +407,7 @@
                 <!-- Left: Research Feed Home Button -->
                 <div>
                     <a href="landingpage.html" class="research-feed-button text-center px-tag-x py-sm bg-neutral-600 transition-colors duration-200">
-                        <span class="text-neutral-10 font-heading font-bold text-xl">Research Feed</span>
+                        <span class="text-neutral-10 font-heading font-bold text-2xl">Research Feed</span>
                     </a>
                 </div>
                 
@@ -347,47 +426,105 @@
                 <div class="flex flex-col gap-lg gap-lg">
                     <!-- Section 1: Paper Count -->
                     <div class="bg-transparent text-left">
-                        <span class="text-neutral-70 font-heading font-bold text-lg" id="mobile-paper-count">
+                        <span class="text-neutral-70 font-heading font-bold text-2xl" id="mobile-paper-count">
                             Showing: 0/0 Papers
                         </span>
                     </div>
                     
                     <!-- Section 2: Quick Filters -->
                     <div class="flex flex-col gap-sm">
-                        <h3 class="text-neutral-60 font-heading font-bold text-xl text-left bg-transparent">Quick Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Must Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Should Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">RLHF</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Weak Supervision</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Distributed Training</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Datasets</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Reset To Default</button>
+                        <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Quick Filters</h3>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Must Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Should Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">RLHF</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Weak Supervision</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Distributed Training</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Datasets</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Reset To Default</button>
                     </div>
                     
                     <!-- Section 3: Advanced Filters -->
                     <div class="flex flex-col gap-sm">
-                        <h3 class="text-neutral-60 font-heading font-bold text-xl text-left bg-transparent">Advanced Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Scoring: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Recommendation: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Novelty: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Potential Impact: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Topics: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Relevance: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">H-index: All Selected ▼</button>
+                        <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Advanced Filters</h3>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Scoring: All Selected <span class="text-lg">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Recommendation: All Selected <span class="text-lg">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Novelty: All Selected <span class="text-lg">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Potential Impact: All Selected <span class="text-lg">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-lg">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-lg">▼</span></button>
+                        
+                        <!-- H-Index Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-hindex-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileHIndexDropdown()">
+                                H-index: All Selected <span class="text-lg">▼</span>
+                            </button>
+                            <div id="mobile-hindex-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-sm">
+                                    <!-- Section 1: H-Index Found Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-hindex-found" checked onchange="toggleHIndexRanges()">
+                                            <label for="mobile-hindex-found"></label>
+                                        </div>
+                                        <label for="mobile-hindex-found" class="text-neutral-10 text-lg font-heading cursor-pointer">H-Index Found</label>
+                                    </div>
+                                    
+                                    <!-- Section 2: H-Index Not Found Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-hindex-not-found" checked>
+                                            <label for="mobile-hindex-not-found"></label>
+                                        </div>
+                                        <label for="mobile-hindex-not-found" class="text-neutral-10 text-lg font-heading cursor-pointer">H-Index Not Found</label>
+                                    </div>
+                                    
+                                    <!-- Section 3: Highest H-Index Range -->
+                                    <div id="mobile-highest-range" class="hindex-range-section">
+                                        <div class="text-neutral-10 text-lg font-heading mb-2xs">Highest H-Index Range:</div>
+                                        <div class="flex items-center gap-xs">
+                                            <span class="text-neutral-10 text-lg font-heading">Min:</span>
+                                            <input type="number" id="mobile-highest-min" min="0" max="1000" value="0" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                            <span class="text-neutral-10 text-lg font-heading">-</span>
+                                            <span class="text-neutral-10 text-lg font-heading">Max:</span>
+                                            <input type="number" id="mobile-highest-max" min="0" max="1000" value="1000" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Section 4: Average H-Index Range -->
+                                    <div id="mobile-average-range" class="hindex-range-section">
+                                        <div class="text-neutral-10 text-lg font-heading mb-2xs">Average H-Index Range:</div>
+                                        <div class="flex items-center gap-xs">
+                                            <span class="text-neutral-10 text-lg font-heading">Min:</span>
+                                            <input type="number" id="mobile-average-min" min="0" max="1000" value="0" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                            <span class="text-neutral-10 text-lg font-heading">-</span>
+                                            <span class="text-neutral-10 text-lg font-heading">Max:</span>
+                                            <input type="number" id="mobile-average-max" min="0" max="1000" value="1000" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Section 5: Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyHIndexFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- Sort By Dropdown -->
                         <div class="relative">
-                            <button id="mobile-sort-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left" onclick="toggleMobileSortDropdown()">
-                                Sort By: <span id="mobile-sort-text">Recommendation (Best First)</span> ▼
+                            <button id="mobile-sort-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x" onclick="toggleMobileSortDropdown()">
+                                Sort By: <span id="mobile-sort-text">Recommendation (Best First)</span> <span class="text-lg">▼</span>
                             </button>
-                            <div id="mobile-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-500 z-50">
-                                <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
+                            <div id="mobile-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 py-xs">
+                                <div class="flex flex-col gap-xs">
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -400,7 +537,7 @@
     <div id="desktop-sidebar-overlay" class="hidden tablet:block fixed inset-0 bg-black bg-opacity-50 z-30 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out" onclick="closeDesktopMenu()"></div>
     
     <!-- Desktop Sidebar -->
-    <div id="desktop-sidebar" class="hidden tablet:block fixed inset-y-0 left-0 z-40 bg-neutral-200 transition-transform duration-300 ease-in-out" style="width: 500px; transform: translateX(-100%);">
+    <div id="desktop-sidebar" class="hidden tablet:block fixed inset-y-0 left-0 z-40 bg-neutral-200 transition-transform duration-300 ease-in-out overflow-y-auto" style="width: 500px; transform: translateX(-100%);">
         <div class="w-full h-full flex flex-col">
             <!-- Desktop Sidebar Header -->
             <div class="flex items-center justify-between pt-lg pr-lg pb-sm pl-lg">
@@ -436,39 +573,97 @@
                     <!-- Section 2: Quick Filters -->
                     <div class="flex flex-col gap-xs">
                         <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Quick Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Must Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Should Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">RLHF</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Weak Supervision</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Distributed Training</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Datasets</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Reset To Default</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Must Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Should Read</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">RLHF</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Weak Supervision</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Distributed Training</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Datasets</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Reset To Default</button>
                     </div>
                     
                     <!-- Section 3: Advanced Filters -->
                     <div class="flex flex-col gap-xs">
                         <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Advanced Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Scoring: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Recommendation: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Novelty: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Potential Impact: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Topics: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Relevance: All Selected ▼</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">H-index: All Selected ▼</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Scoring: All Selected <span class="text-md">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Recommendation: All Selected <span class="text-md">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Novelty: All Selected <span class="text-md">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Potential Impact: All Selected <span class="text-md">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-md">▼</span></button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-md">▼</span></button>
+                        
+                        <!-- H-Index Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-hindex-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopHIndexDropdown()">
+                                H-index: All Selected <span class="text-md">▼</span>
+                            </button>
+                            <div id="desktop-hindex-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-sm">
+                                    <!-- Section 1: H-Index Found Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-hindex-found" checked onchange="toggleHIndexRanges()">
+                                            <label for="desktop-hindex-found"></label>
+                                        </div>
+                                        <label for="desktop-hindex-found" class="text-neutral-10 text-lg font-heading cursor-pointer">H-Index Found</label>
+                                    </div>
+                                    
+                                    <!-- Section 2: H-Index Not Found Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-hindex-not-found" checked>
+                                            <label for="desktop-hindex-not-found"></label>
+                                        </div>
+                                        <label for="desktop-hindex-not-found" class="text-neutral-10 text-lg font-heading cursor-pointer">H-Index Not Found</label>
+                                    </div>
+                                    
+                                    <!-- Section 3: Highest H-Index Range -->
+                                    <div id="desktop-highest-range" class="hindex-range-section">
+                                        <div class="text-neutral-10 text-lg font-heading mb-2xs">Highest H-Index Range:</div>
+                                        <div class="flex items-center gap-xs">
+                                            <span class="text-neutral-10 text-lg font-heading">Min:</span>
+                                            <input type="number" id="desktop-highest-min" min="0" max="1000" value="0" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                            <span class="text-neutral-10 text-lg font-heading">-</span>
+                                            <span class="text-neutral-10 text-lg font-heading">Max:</span>
+                                            <input type="number" id="desktop-highest-max" min="0" max="1000" value="1000" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Section 4: Average H-Index Range -->
+                                    <div id="desktop-average-range" class="hindex-range-section">
+                                        <div class="text-neutral-10 text-lg font-heading mb-2xs">Average H-Index Range:</div>
+                                        <div class="flex items-center gap-xs">
+                                            <span class="text-neutral-10 text-lg font-heading">Min:</span>
+                                            <input type="number" id="desktop-average-min" min="0" max="1000" value="0" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                            <span class="text-neutral-10 text-lg font-heading">-</span>
+                                            <span class="text-neutral-10 text-lg font-heading">Max:</span>
+                                            <input type="number" id="desktop-average-max" min="0" max="1000" value="1000" class="bg-neutral-600 text-neutral-10 px-2xs py-2xs text-lg font-heading w-16 rounded">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Section 5: Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyHIndexFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- Sort By Dropdown -->
                         <div class="relative">
-                            <button id="desktop-sort-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left" onclick="toggleDesktopSortDropdown()">
-                                Sort By: <span id="desktop-sort-text">Recommendation (Best First)</span> ▼
+                            <button id="desktop-sort-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x" onclick="toggleDesktopSortDropdown()">
+                                Sort By: <span id="desktop-sort-text">Recommendation (Best First)</span> <span class="text-md">▼</span>
                             </button>
-                            <div id="desktop-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-500 z-50">
-                                <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
-                                <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 hover:bg-neutral-600 text-left" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
+                            <div id="desktop-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 py-xs">
+                                <div class="flex flex-col gap-xs">
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -480,7 +675,7 @@
     <!-- Desktop Layout (visible ≥ 768px) -->
     <div class="hidden tablet:block">
         <!-- Desktop Header -->
-        <header class="bg-neutral-200 w-full flex items-center px-lg pt-xl pb-md relative">
+        <header class="bg-neutral-200 w-full flex items-center px-lg py-xl relative">
             <!-- Menu Button - Positioned absolutely within header -->
             <button id="desktop-menu-btn" class="absolute top-1/2 left-lg transform -translate-y-1/2 z-10 nav-button bg-transparent flex items-center justify-center button" 
                     style="width: clamp(3rem, 6vw, 3.125rem); height: clamp(3rem, 6vw, 3.125rem);" 
@@ -13087,16 +13282,72 @@
         }
 
         // ============================================================================
+        // DROPDOWN DIRECTION FUNCTIONS
+        // ============================================================================
+        
+        function setDropdownDirection(button, dropdown) {
+            const buttonRect = button.getBoundingClientRect();
+            const sidebar = button.closest('#mobile-sidebar, #desktop-sidebar');
+            const sidebarRect = sidebar.getBoundingClientRect();
+            
+            // Calculate available space
+            const spaceBelow = sidebarRect.bottom - buttonRect.bottom;
+            const spaceAbove = buttonRect.top - sidebarRect.top;
+            
+            // Estimate dropdown height (roughly 6 items * 40px each)
+            const estimatedDropdownHeight = 240;
+            
+            // Determine direction based on available space
+            if (spaceBelow >= estimatedDropdownHeight || spaceBelow >= spaceAbove) {
+                // Dropdown goes down
+                dropdown.classList.remove('dropdown-up');
+                dropdown.classList.add('dropdown-down');
+            } else {
+                // Dropdown goes up
+                dropdown.classList.remove('dropdown-down');
+                dropdown.classList.add('dropdown-up');
+            }
+        }
+
+        // ============================================================================
         // SORTING DROPDOWN FUNCTIONS
         // ============================================================================
         
         function toggleMobileSortDropdown() {
+            const button = document.getElementById('mobile-sort-btn');
             const dropdown = document.getElementById('mobile-sort-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                // Set direction before showing
+                setDropdownDirection(button, dropdown);
+                // Change button to expanded state
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                // Change button back to normal state
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
             dropdown.classList.toggle('hidden');
         }
         
         function toggleDesktopSortDropdown() {
+            const button = document.getElementById('desktop-sort-btn');
             const dropdown = document.getElementById('desktop-sort-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                // Set direction before showing
+                setDropdownDirection(button, dropdown);
+                // Change button to expanded state
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                // Change button back to normal state
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
             dropdown.classList.toggle('hidden');
         }
         
@@ -13110,9 +13361,28 @@
             // Update dropdown text
             updateSortDropdownUI();
             
-            // Close dropdowns
-            document.getElementById('mobile-sort-dropdown').classList.add('hidden');
-            document.getElementById('desktop-sort-dropdown').classList.add('hidden');
+            // Close dropdowns and reset button states
+            const mobileDropdown = document.getElementById('mobile-sort-dropdown');
+            const desktopDropdown = document.getElementById('desktop-sort-dropdown');
+            const mobileButton = document.getElementById('mobile-sort-btn');
+            const desktopButton = document.getElementById('desktop-sort-btn');
+            
+            mobileDropdown.classList.add('hidden');
+            desktopDropdown.classList.add('hidden');
+            
+            // Reset button states to normal
+            mobileButton.classList.remove('bg-neutral-600');
+            mobileButton.classList.add('bg-neutral-500');
+            desktopButton.classList.remove('bg-neutral-600');
+            desktopButton.classList.add('bg-neutral-500');
+            
+            // Close the appropriate sidebar
+            if (isMobileSidebarOpen) {
+                closeMobileMenu();
+            }
+            if (isDesktopSidebarOpen) {
+                closeDesktopMenu();
+            }
             
             // Apply new sorting
             applyFiltersAndSort();
@@ -13140,6 +13410,174 @@
             if (desktopText) {
                 desktopText.textContent = sortName;
             }
+        }
+
+        // ============================================================================
+        // H-INDEX FILTER DROPDOWN FUNCTIONS
+        // ============================================================================
+        
+        function toggleMobileHIndexDropdown() {
+            const button = document.getElementById('mobile-hindex-btn');
+            const dropdown = document.getElementById('mobile-hindex-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                // Set direction before showing
+                setDropdownDirection(button, dropdown);
+                // Change button to expanded state
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                // Change button back to normal state
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopHIndexDropdown() {
+            const button = document.getElementById('desktop-hindex-btn');
+            const dropdown = document.getElementById('desktop-hindex-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                // Set direction before showing
+                setDropdownDirection(button, dropdown);
+                // Change button to expanded state
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                // Change button back to normal state
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleHIndexRanges() {
+            const mobileFoundCheckbox = document.getElementById('mobile-hindex-found');
+            const desktopFoundCheckbox = document.getElementById('desktop-hindex-found');
+            const mobileHighestRange = document.getElementById('mobile-highest-range');
+            const mobileAverageRange = document.getElementById('mobile-average-range');
+            const desktopHighestRange = document.getElementById('desktop-highest-range');
+            const desktopAverageRange = document.getElementById('desktop-average-range');
+            
+            // Sync the checkboxes
+            if (event.target.id === 'mobile-hindex-found') {
+                desktopFoundCheckbox.checked = mobileFoundCheckbox.checked;
+            } else if (event.target.id === 'desktop-hindex-found') {
+                mobileFoundCheckbox.checked = desktopFoundCheckbox.checked;
+            }
+            
+            const isEnabled = mobileFoundCheckbox.checked;
+            
+            // Toggle disabled state for range sections
+            [mobileHighestRange, mobileAverageRange, desktopHighestRange, desktopAverageRange].forEach(range => {
+                if (range) {
+                    if (isEnabled) {
+                        range.classList.remove('disabled');
+                        range.querySelectorAll('input').forEach(input => {
+                            input.disabled = false;
+                        });
+                    } else {
+                        range.classList.add('disabled');
+                        range.querySelectorAll('input').forEach(input => {
+                            input.disabled = true;
+                        });
+                    }
+                }
+            });
+        }
+        
+        function applyHIndexFilter() {
+            // For now, just close the dropdowns and show a console message
+            console.log('H-Index filter applied - functionality to be implemented');
+            
+            // Close both dropdowns
+            const mobileDropdown = document.getElementById('mobile-hindex-dropdown');
+            const desktopDropdown = document.getElementById('desktop-hindex-dropdown');
+            const mobileButton = document.getElementById('mobile-hindex-btn');
+            const desktopButton = document.getElementById('desktop-hindex-btn');
+            
+            mobileDropdown.classList.add('hidden');
+            desktopDropdown.classList.add('hidden');
+            
+            // Reset button states to normal
+            mobileButton.classList.remove('bg-neutral-600');
+            mobileButton.classList.add('bg-neutral-500');
+            desktopButton.classList.remove('bg-neutral-600');
+            desktopButton.classList.add('bg-neutral-500');
+            
+            // Close the appropriate sidebar
+            if (isMobileSidebarOpen) {
+                closeMobileMenu();
+            }
+            if (isDesktopSidebarOpen) {
+                closeDesktopMenu();
+            }
+        }
+
+        // ============================================================================
+        // INPUT VALIDATION FOR H-INDEX RANGES
+        // ============================================================================
+        
+        function validateHIndexInput(input) {
+            // Allow empty input temporarily (user might be typing)
+            if (input.value === '') {
+                return;
+            }
+            
+            let value = parseInt(input.value);
+            
+            // Ensure value is within 0-1000 range
+            if (isNaN(value) || value < 0) {
+                input.value = 0;
+            } else if (value > 1000) {
+                input.value = 1000;
+            }
+        }
+        
+        // Add input validation when page loads
+        function setupHIndexValidation() {
+            const inputs = [
+                'mobile-highest-min', 'mobile-highest-max',
+                'mobile-average-min', 'mobile-average-max',
+                'desktop-highest-min', 'desktop-highest-max',
+                'desktop-average-min', 'desktop-average-max'
+            ];
+            
+            inputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    // Validate on input (while typing) - but allow empty temporarily
+                    input.addEventListener('input', () => validateHIndexInput(input));
+                    
+                    // Validate on blur (when user leaves field) - ensure it's not empty
+                    input.addEventListener('blur', () => {
+                        if (input.value === '') {
+                            input.value = 0; // Set default if user leaves it empty
+                        }
+                        validateHIndexInput(input);
+                    });
+                    
+                    // Prevent non-numeric characters except for selection/deletion
+                    input.addEventListener('keydown', (e) => {
+                        // Allow: backspace, delete, tab, escape, enter, and numbers
+                        if ([8, 9, 27, 13, 46].includes(e.keyCode) || 
+                            // Allow Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                            (e.keyCode === 65 && e.ctrlKey) || 
+                            (e.keyCode === 67 && e.ctrlKey) || 
+                            (e.keyCode === 86 && e.ctrlKey) || 
+                            (e.keyCode === 88 && e.ctrlKey) ||
+                            // Allow numbers (0-9) on main keyboard and numpad
+                            (e.keyCode >= 48 && e.keyCode <= 57) ||
+                            (e.keyCode >= 96 && e.keyCode <= 105)) {
+                            return;
+                        }
+                        e.preventDefault();
+                    });
+                }
+            });
         }
 
         // ============================================================================
@@ -13383,7 +13821,11 @@
                             <div>
                                 <span class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md px-tag-x py-tag-y metadata-tag">
                                     Authors: ${paper.h_index_status === 'completed' && paper.author_h_indexes && paper.author_h_indexes.length > 0 
-                                        ? paper.author_h_indexes.map(author => `<a href="${author.profile_url}" target="_blank" rel="noopener noreferrer" class="text-neutral-10 underline hover:no-underline">${author.name}</a>`).join(', ')
+                                        ? paper.author_h_indexes.map(author => 
+                                            author.profile_url && author.profile_url !== null && author.profile_url !== '' 
+                                                ? `<a href="${author.profile_url}" target="_blank" rel="noopener noreferrer" class="text-neutral-10 underline hover:no-underline">${author.name}</a>`
+                                                : author.name
+                                        ).join(', ')
                                         : paper.authors.join(', ')
                                     }
                                 </span>
@@ -13755,9 +14197,11 @@
                                                 ${paper.author_h_indexes && paper.author_h_indexes.length > 0 ? 
                                                     paper.author_h_indexes.map(author => `
                                                         <div class="flex justify-between items-center py-xs">
-                                                            <a href="${author.profile_url}" target="_blank" rel="noopener noreferrer" 
-                                                               class="text-neutral-20 font-mono text-md underline hover:no-underline">${author.name}:</a>
-                                                            <span class="text-neutral-20 font-mono text-md">${author.h_index}</span>
+                                                            ${author.profile_url && author.profile_url !== null && author.profile_url !== '' 
+                                                                ? `<a href="${author.profile_url}" target="_blank" rel="noopener noreferrer" class="text-neutral-20 font-mono text-md underline hover:no-underline">${author.name}:</a>`
+                                                                : `<span class="text-neutral-20 font-mono text-md">${author.name}:</span>`
+                                                            }
+                                                            <span class="text-neutral-20 font-mono text-md">${author.h_index !== null && author.h_index !== undefined ? author.h_index : 'N/A'}</span>
                                                         </div>
                                                     `).join('') 
                                                     : '<div class="text-center text-neutral-20">No individual author data available</div>'
@@ -13787,6 +14231,9 @@
             
             // Update sort dropdown UI
             updateSortDropdownUI();
+            
+            // Setup H-Index input validation
+            setupHIndexValidation();
             
             // Apply initial sorting and filtering
             applyFiltersAndSort();
@@ -14495,6 +14942,37 @@
             if (window.innerWidth < 768 && isDesktopSidebarOpen) {
                 closeDesktopMenu();
             }
+        });
+
+        // ============================================================================
+        // CLICK OUTSIDE TO CLOSE DROPDOWNS
+        // ============================================================================
+        
+        // Add click outside listener to close dropdowns
+        document.addEventListener('click', function(event) {
+            // List of all dropdown containers
+            const dropdowns = [
+                { dropdown: document.getElementById('mobile-sort-dropdown'), button: document.getElementById('mobile-sort-btn') },
+                { dropdown: document.getElementById('desktop-sort-dropdown'), button: document.getElementById('desktop-sort-btn') },
+                { dropdown: document.getElementById('mobile-hindex-dropdown'), button: document.getElementById('mobile-hindex-btn') },
+                { dropdown: document.getElementById('desktop-hindex-dropdown'), button: document.getElementById('desktop-hindex-btn') }
+            ];
+            
+            dropdowns.forEach(({ dropdown, button }) => {
+                if (!dropdown || !button) return;
+                
+                // Check if dropdown is open and click is outside
+                if (!dropdown.classList.contains('hidden')) {
+                    const dropdownContainer = dropdown.parentElement; // The relative container
+                    
+                    // Check if click is outside the dropdown container
+                    if (!dropdownContainer.contains(event.target)) {
+                        dropdown.classList.add('hidden');
+                        button.classList.remove('bg-neutral-600');
+                        button.classList.add('bg-neutral-500');
+                    }
+                }
+            });
         });
 
         // Initialize page on load
