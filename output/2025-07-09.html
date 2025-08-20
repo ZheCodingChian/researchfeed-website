@@ -495,51 +495,51 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Relevance Filter Dropdown -->
+                        <!-- Recommendation Filter Dropdown -->
                         <div class="relative">
-                            <button id="mobile-relevance-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRelevanceDropdown()">
-                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            <button id="mobile-recommendation-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRecommendationDropdown()">
+                                <span class="font-bold">Recommendation:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
                             </button>
-                            <div id="mobile-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                            <div id="mobile-recommendation-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
                                 <div class="flex flex-col gap-md">
                                     <!-- Must Read Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-must" checked>
-                                            <label for="mobile-relevance-must"></label>
+                                            <input type="checkbox" id="mobile-recommendation-must" checked>
+                                            <label for="mobile-recommendation-must"></label>
                                         </div>
-                                        <label for="mobile-relevance-must" class="text-neutral-10 text-xl font-heading cursor-pointer">Must Read</label>
+                                        <label for="mobile-recommendation-must" class="text-neutral-10 text-xl font-heading cursor-pointer">Must Read</label>
                                     </div>
                                     
                                     <!-- Should Read Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-should" checked>
-                                            <label for="mobile-relevance-should"></label>
+                                            <input type="checkbox" id="mobile-recommendation-should" checked>
+                                            <label for="mobile-recommendation-should"></label>
                                         </div>
-                                        <label for="mobile-relevance-should" class="text-neutral-10 text-xl font-heading cursor-pointer">Should Read</label>
+                                        <label for="mobile-recommendation-should" class="text-neutral-10 text-xl font-heading cursor-pointer">Should Read</label>
                                     </div>
                                     
                                     <!-- Can Skip Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-skip" checked>
-                                            <label for="mobile-relevance-skip"></label>
+                                            <input type="checkbox" id="mobile-recommendation-skip" checked>
+                                            <label for="mobile-recommendation-skip"></label>
                                         </div>
-                                        <label for="mobile-relevance-skip" class="text-neutral-10 text-xl font-heading cursor-pointer">Can Skip</label>
+                                        <label for="mobile-recommendation-skip" class="text-neutral-10 text-xl font-heading cursor-pointer">Can Skip</label>
                                     </div>
                                     
                                     <!-- Ignore Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-ignore" checked>
-                                            <label for="mobile-relevance-ignore"></label>
+                                            <input type="checkbox" id="mobile-recommendation-ignore" checked>
+                                            <label for="mobile-recommendation-ignore"></label>
                                         </div>
-                                        <label for="mobile-relevance-ignore" class="text-neutral-10 text-xl font-heading cursor-pointer">Ignore</label>
+                                        <label for="mobile-recommendation-ignore" class="text-neutral-10 text-xl font-heading cursor-pointer">Ignore</label>
                                     </div>
                                     
                                     <!-- Apply Filter Button -->
-                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRecommendationFilter()">
                                         Apply Filter
                                     </button>
                                 </div>
@@ -646,8 +646,67 @@
                             </div>
                         </div>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-lg">▼</span></button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-lg">▼</span></button>
                         
+                        <!-- Relevance Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-relevance-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRelevanceDropdown()">
+                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-lg">▼</span>
+                            </button>
+                            <div id="mobile-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-md">
+                                    <!-- RLHF Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-rlhf" checked>
+                                            <label for="mobile-relevance-rlhf"></label>
+                                        </div>
+                                        <label for="mobile-relevance-rlhf" class="text-neutral-10 text-xl font-heading cursor-pointer">RLHF</label>
+                                    </div>
+                                    
+                                    <!-- Weak Supervision Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-weak" checked>
+                                            <label for="mobile-relevance-weak"></label>
+                                        </div>
+                                        <label for="mobile-relevance-weak" class="text-neutral-10 text-xl font-heading cursor-pointer">Weak Supervision</label>
+                                    </div>
+                                    
+                                    <!-- Diffusion Reasoning Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-diffusion" checked>
+                                            <label for="mobile-relevance-diffusion"></label>
+                                        </div>
+                                        <label for="mobile-relevance-diffusion" class="text-neutral-10 text-xl font-heading cursor-pointer">Diffusion Reasoning</label>
+                                    </div>
+                                    
+                                    <!-- Distributed Training Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-distributed" checked>
+                                            <label for="mobile-relevance-distributed"></label>
+                                        </div>
+                                        <label for="mobile-relevance-distributed" class="text-neutral-10 text-xl font-heading cursor-pointer">Distributed Training</label>
+                                    </div>
+                                    
+                                    <!-- Datasets Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-datasets" checked>
+                                            <label for="mobile-relevance-datasets"></label>
+                                        </div>
+                                        <label for="mobile-relevance-datasets" class="text-neutral-10 text-xl font-heading cursor-pointer">Datasets</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+        
                         <!-- H-Index Filter Dropdown -->
                         <div class="relative">
                             <button id="mobile-hindex-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileHIndexDropdown()">
@@ -816,51 +875,51 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Relevance Filter Dropdown -->
+                        <!-- Recommendation Filter Dropdown -->
                         <div class="relative">
-                            <button id="desktop-relevance-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRelevanceDropdown()">
-                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            <button id="desktop-recommendation-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRecommendationDropdown()">
+                                <span class="font-bold">Recommendation:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
                             </button>
-                            <div id="desktop-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                            <div id="desktop-recommendation-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Must Read Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-must" checked>
-                                            <label for="desktop-relevance-must"></label>
+                                            <input type="checkbox" id="desktop-recommendation-must" checked>
+                                            <label for="desktop-recommendation-must"></label>
                                         </div>
-                                        <label for="desktop-relevance-must" class="text-neutral-10 text-lg font-heading cursor-pointer">Must Read</label>
+                                        <label for="desktop-recommendation-must" class="text-neutral-10 text-lg font-heading cursor-pointer">Must Read</label>
                                     </div>
                                     
                                     <!-- Should Read Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-should" checked>
-                                            <label for="desktop-relevance-should"></label>
+                                            <input type="checkbox" id="desktop-recommendation-should" checked>
+                                            <label for="desktop-recommendation-should"></label>
                                         </div>
-                                        <label for="desktop-relevance-should" class="text-neutral-10 text-lg font-heading cursor-pointer">Should Read</label>
+                                        <label for="desktop-recommendation-should" class="text-neutral-10 text-lg font-heading cursor-pointer">Should Read</label>
                                     </div>
                                     
                                     <!-- Can Skip Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-skip" checked>
-                                            <label for="desktop-relevance-skip"></label>
+                                            <input type="checkbox" id="desktop-recommendation-skip" checked>
+                                            <label for="desktop-recommendation-skip"></label>
                                         </div>
-                                        <label for="desktop-relevance-skip" class="text-neutral-10 text-lg font-heading cursor-pointer">Can Skip</label>
+                                        <label for="desktop-recommendation-skip" class="text-neutral-10 text-lg font-heading cursor-pointer">Can Skip</label>
                                     </div>
                                     
                                     <!-- Ignore Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-ignore" checked>
-                                            <label for="desktop-relevance-ignore"></label>
+                                            <input type="checkbox" id="desktop-recommendation-ignore" checked>
+                                            <label for="desktop-recommendation-ignore"></label>
                                         </div>
-                                        <label for="desktop-relevance-ignore" class="text-neutral-10 text-lg font-heading cursor-pointer">Ignore</label>
+                                        <label for="desktop-recommendation-ignore" class="text-neutral-10 text-lg font-heading cursor-pointer">Ignore</label>
                                     </div>
                                     
                                     <!-- Apply Filter Button -->
-                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRecommendationFilter()">
                                         Apply Filter
                                     </button>
                                 </div>
@@ -967,8 +1026,67 @@
                             </div>
                         </div>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-md">▼</span></button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-md">▼</span></button>
                         
+                        <!-- Relevance Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-relevance-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRelevanceDropdown()">
+                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- RLHF Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-rlhf" checked>
+                                            <label for="desktop-relevance-rlhf"></label>
+                                        </div>
+                                        <label for="desktop-relevance-rlhf" class="text-neutral-10 text-lg font-heading cursor-pointer">RLHF</label>
+                                    </div>
+                                    
+                                    <!-- Weak Supervision Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-weak" checked>
+                                            <label for="desktop-relevance-weak"></label>
+                                        </div>
+                                        <label for="desktop-relevance-weak" class="text-neutral-10 text-lg font-heading cursor-pointer">Weak Supervision</label>
+                                    </div>
+                                    
+                                    <!-- Diffusion Reasoning Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-diffusion" checked>
+                                            <label for="desktop-relevance-diffusion"></label>
+                                        </div>
+                                        <label for="desktop-relevance-diffusion" class="text-neutral-10 text-lg font-heading cursor-pointer">Diffusion Reasoning</label>
+                                    </div>
+                                    
+                                    <!-- Distributed Training Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-distributed" checked>
+                                            <label for="desktop-relevance-distributed"></label>
+                                        </div>
+                                        <label for="desktop-relevance-distributed" class="text-neutral-10 text-lg font-heading cursor-pointer">Distributed Training</label>
+                                    </div>
+                                    
+                                    <!-- Datasets Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-datasets" checked>
+                                            <label for="desktop-relevance-datasets"></label>
+                                        </div>
+                                        <label for="desktop-relevance-datasets" class="text-neutral-10 text-lg font-heading cursor-pointer">Datasets</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+        
                         <!-- H-Index Filter Dropdown -->
                         <div class="relative">
                             <button id="desktop-hindex-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopHIndexDropdown()">
@@ -14290,61 +14408,61 @@
                 updateScoringButtonText();
             });
             
-            // Add event listeners for relevance checkboxes to sync between mobile and desktop
-            document.getElementById('mobile-relevance-must').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-must').checked = 
-                    document.getElementById('mobile-relevance-must').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            // Add event listeners for recommendation checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-recommendation-must').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-must').checked = 
+                    document.getElementById('mobile-recommendation-must').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-should').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-should').checked = 
-                    document.getElementById('mobile-relevance-should').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-should').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-should').checked = 
+                    document.getElementById('mobile-recommendation-should').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-skip').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-skip').checked = 
-                    document.getElementById('mobile-relevance-skip').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-skip').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-skip').checked = 
+                    document.getElementById('mobile-recommendation-skip').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-ignore').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-ignore').checked = 
-                    document.getElementById('mobile-relevance-ignore').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-ignore').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-ignore').checked = 
+                    document.getElementById('mobile-recommendation-ignore').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-must').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-must').checked = 
-                    document.getElementById('desktop-relevance-must').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-must').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-must').checked = 
+                    document.getElementById('desktop-recommendation-must').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-should').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-should').checked = 
-                    document.getElementById('desktop-relevance-should').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-should').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-should').checked = 
+                    document.getElementById('desktop-recommendation-should').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-skip').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-skip').checked = 
-                    document.getElementById('desktop-relevance-skip').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-skip').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-skip').checked = 
+                    document.getElementById('desktop-recommendation-skip').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-ignore').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-ignore').checked = 
-                    document.getElementById('desktop-relevance-ignore').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-ignore').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-ignore').checked = 
+                    document.getElementById('desktop-recommendation-ignore').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
             // Add event listeners for novelty checkboxes to sync between mobile and desktop
@@ -14459,6 +14577,77 @@
                     document.getElementById('desktop-impact-negligible').checked;
                 updatePendingImpactFilters();
                 updateImpactButtonText();
+            });
+            
+            // Relevance Filter Event Listeners
+            document.getElementById('mobile-relevance-rlhf').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-rlhf').checked = 
+                    document.getElementById('mobile-relevance-rlhf').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-weak').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-weak').checked = 
+                    document.getElementById('mobile-relevance-weak').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-diffusion').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-diffusion').checked = 
+                    document.getElementById('mobile-relevance-diffusion').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-distributed').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-distributed').checked = 
+                    document.getElementById('mobile-relevance-distributed').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-datasets').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-datasets').checked = 
+                    document.getElementById('mobile-relevance-datasets').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-rlhf').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-rlhf').checked = 
+                    document.getElementById('desktop-relevance-rlhf').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-weak').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-weak').checked = 
+                    document.getElementById('desktop-relevance-weak').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-diffusion').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-diffusion').checked = 
+                    document.getElementById('desktop-relevance-diffusion').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-distributed').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-distributed').checked = 
+                    document.getElementById('desktop-relevance-distributed').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-datasets').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-datasets').checked = 
+                    document.getElementById('desktop-relevance-datasets').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
             });
         }
 
@@ -14656,27 +14845,27 @@
         }
 
         // ============================================================================
-        // RELEVANCE FILTER DROPDOWN FUNCTIONS
+        // RECOMMENDATION FILTER DROPDOWN FUNCTIONS
         // ============================================================================
         
-        // Current and pending relevance filter states
-        let currentRelevanceFilters = {
+        // Current and pending recommendation filter states
+        let currentRecommendationFilters = {
             mustRead: true,
             shouldRead: true,
             canSkip: true,
             ignore: true
         };
         
-        let pendingRelevanceFilters = {
+        let pendingRecommendationFilters = {
             mustRead: true,
             shouldRead: true,
             canSkip: true,
             ignore: true
         };
         
-        function toggleMobileRelevanceDropdown() {
-            const button = document.getElementById('mobile-relevance-btn');
-            const dropdown = document.getElementById('mobile-relevance-dropdown');
+        function toggleMobileRecommendationDropdown() {
+            const button = document.getElementById('mobile-recommendation-btn');
+            const dropdown = document.getElementById('mobile-recommendation-dropdown');
             
             if (dropdown.classList.contains('hidden')) {
                 setDropdownDirection(button, dropdown);
@@ -14690,9 +14879,9 @@
             dropdown.classList.toggle('hidden');
         }
         
-        function toggleDesktopRelevanceDropdown() {
-            const button = document.getElementById('desktop-relevance-btn');
-            const dropdown = document.getElementById('desktop-relevance-dropdown');
+        function toggleDesktopRecommendationDropdown() {
+            const button = document.getElementById('desktop-recommendation-btn');
+            const dropdown = document.getElementById('desktop-recommendation-dropdown');
             
             if (dropdown.classList.contains('hidden')) {
                 setDropdownDirection(button, dropdown);
@@ -14706,35 +14895,35 @@
             dropdown.classList.toggle('hidden');
         }
         
-        function syncPendingRelevanceUI() {
-            document.getElementById('mobile-relevance-must').checked = pendingRelevanceFilters.mustRead;
-            document.getElementById('mobile-relevance-should').checked = pendingRelevanceFilters.shouldRead;
-            document.getElementById('mobile-relevance-skip').checked = pendingRelevanceFilters.canSkip;
-            document.getElementById('mobile-relevance-ignore').checked = pendingRelevanceFilters.ignore;
-            document.getElementById('desktop-relevance-must').checked = pendingRelevanceFilters.mustRead;
-            document.getElementById('desktop-relevance-should').checked = pendingRelevanceFilters.shouldRead;
-            document.getElementById('desktop-relevance-skip').checked = pendingRelevanceFilters.canSkip;
-            document.getElementById('desktop-relevance-ignore').checked = pendingRelevanceFilters.ignore;
+        function syncPendingRecommendationUI() {
+            document.getElementById('mobile-recommendation-must').checked = pendingRecommendationFilters.mustRead;
+            document.getElementById('mobile-recommendation-should').checked = pendingRecommendationFilters.shouldRead;
+            document.getElementById('mobile-recommendation-skip').checked = pendingRecommendationFilters.canSkip;
+            document.getElementById('mobile-recommendation-ignore').checked = pendingRecommendationFilters.ignore;
+            document.getElementById('desktop-recommendation-must').checked = pendingRecommendationFilters.mustRead;
+            document.getElementById('desktop-recommendation-should').checked = pendingRecommendationFilters.shouldRead;
+            document.getElementById('desktop-recommendation-skip').checked = pendingRecommendationFilters.canSkip;
+            document.getElementById('desktop-recommendation-ignore').checked = pendingRecommendationFilters.ignore;
         }
         
-        function syncRelevanceUI() {
-            document.getElementById('mobile-relevance-must').checked = currentRelevanceFilters.mustRead;
-            document.getElementById('mobile-relevance-should').checked = currentRelevanceFilters.shouldRead;
-            document.getElementById('mobile-relevance-skip').checked = currentRelevanceFilters.canSkip;
-            document.getElementById('mobile-relevance-ignore').checked = currentRelevanceFilters.ignore;
-            document.getElementById('desktop-relevance-must').checked = currentRelevanceFilters.mustRead;
-            document.getElementById('desktop-relevance-should').checked = currentRelevanceFilters.shouldRead;
-            document.getElementById('desktop-relevance-skip').checked = currentRelevanceFilters.canSkip;
-            document.getElementById('desktop-relevance-ignore').checked = currentRelevanceFilters.ignore;
+        function syncRecommendationUI() {
+            document.getElementById('mobile-recommendation-must').checked = currentRecommendationFilters.mustRead;
+            document.getElementById('mobile-recommendation-should').checked = currentRecommendationFilters.shouldRead;
+            document.getElementById('mobile-recommendation-skip').checked = currentRecommendationFilters.canSkip;
+            document.getElementById('mobile-recommendation-ignore').checked = currentRecommendationFilters.ignore;
+            document.getElementById('desktop-recommendation-must').checked = currentRecommendationFilters.mustRead;
+            document.getElementById('desktop-recommendation-should').checked = currentRecommendationFilters.shouldRead;
+            document.getElementById('desktop-recommendation-skip').checked = currentRecommendationFilters.canSkip;
+            document.getElementById('desktop-recommendation-ignore').checked = currentRecommendationFilters.ignore;
             
-            updateRelevanceButtonText();
+            updateRecommendationButtonText();
         }
         
-        function updateRelevanceButtonText() {
-            const mustChecked = document.getElementById('mobile-relevance-must').checked;
-            const shouldChecked = document.getElementById('mobile-relevance-should').checked;
-            const skipChecked = document.getElementById('mobile-relevance-skip').checked;
-            const ignoreChecked = document.getElementById('mobile-relevance-ignore').checked;
+        function updateRecommendationButtonText() {
+            const mustChecked = document.getElementById('mobile-recommendation-must').checked;
+            const shouldChecked = document.getElementById('mobile-recommendation-should').checked;
+            const skipChecked = document.getElementById('mobile-recommendation-skip').checked;
+            const ignoreChecked = document.getElementById('mobile-recommendation-ignore').checked;
             
             const checkedCount = [mustChecked, shouldChecked, skipChecked, ignoreChecked].filter(Boolean).length;
             
@@ -14747,37 +14936,37 @@
                 selectionText = `${checkedCount} Selected`;
             }
             
-            const mobileButton = document.getElementById('mobile-relevance-btn');
+            const mobileButton = document.getElementById('mobile-recommendation-btn');
             if (mobileButton) {
-                mobileButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+                mobileButton.innerHTML = `<span class="font-bold">Recommendation:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
             }
             
-            const desktopButton = document.getElementById('desktop-relevance-btn');
+            const desktopButton = document.getElementById('desktop-recommendation-btn');
             if (desktopButton) {
-                desktopButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+                desktopButton.innerHTML = `<span class="font-bold">Recommendation:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
             }
         }
         
-        function applyRelevanceFilter() {
-            updatePendingRelevanceFilters();
-            currentRelevanceFilters = { ...pendingRelevanceFilters };
-            syncRelevanceUI();
-            updateRelevanceFiltersInURL();
-            closeMobileRelevanceDropdown();
-            closeDesktopRelevanceDropdown();
+        function applyRecommendationFilter() {
+            updatePendingRecommendationFilters();
+            currentRecommendationFilters = { ...pendingRecommendationFilters };
+            syncRecommendationUI();
+            updateRecommendationFiltersInURL();
+            closeMobileRecommendationDropdown();
+            closeDesktopRecommendationDropdown();
             applyFiltersAndSort();
         }
         
-        function updatePendingRelevanceFilters() {
-            pendingRelevanceFilters.mustRead = document.getElementById('mobile-relevance-must').checked;
-            pendingRelevanceFilters.shouldRead = document.getElementById('mobile-relevance-should').checked;
-            pendingRelevanceFilters.canSkip = document.getElementById('mobile-relevance-skip').checked;
-            pendingRelevanceFilters.ignore = document.getElementById('mobile-relevance-ignore').checked;
+        function updatePendingRecommendationFilters() {
+            pendingRecommendationFilters.mustRead = document.getElementById('mobile-recommendation-must').checked;
+            pendingRecommendationFilters.shouldRead = document.getElementById('mobile-recommendation-should').checked;
+            pendingRecommendationFilters.canSkip = document.getElementById('mobile-recommendation-skip').checked;
+            pendingRecommendationFilters.ignore = document.getElementById('mobile-recommendation-ignore').checked;
         }
         
-        function closeMobileRelevanceDropdown() {
-            const dropdown = document.getElementById('mobile-relevance-dropdown');
-            const button = document.getElementById('mobile-relevance-btn');
+        function closeMobileRecommendationDropdown() {
+            const dropdown = document.getElementById('mobile-recommendation-dropdown');
+            const button = document.getElementById('mobile-recommendation-btn');
             if (dropdown && !dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
                 button.classList.remove('bg-neutral-600');
@@ -14785,9 +14974,9 @@
             }
         }
         
-        function closeDesktopRelevanceDropdown() {
-            const dropdown = document.getElementById('desktop-relevance-dropdown');
-            const button = document.getElementById('desktop-relevance-btn');
+        function closeDesktopRecommendationDropdown() {
+            const dropdown = document.getElementById('desktop-recommendation-dropdown');
+            const button = document.getElementById('desktop-recommendation-btn');
             if (dropdown && !dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
                 button.classList.remove('bg-neutral-600');
@@ -14795,42 +14984,42 @@
             }
         }
         
-        function updateRelevanceFiltersInURL() {
+        function updateRecommendationFiltersInURL() {
             const params = new URLSearchParams(window.location.search);
-            params.set('relevance_must', currentRelevanceFilters.mustRead.toString());
-            params.set('relevance_should', currentRelevanceFilters.shouldRead.toString());
-            params.set('relevance_skip', currentRelevanceFilters.canSkip.toString());
-            params.set('relevance_ignore', currentRelevanceFilters.ignore.toString());
+            params.set('recommendation_must', currentRecommendationFilters.mustRead.toString());
+            params.set('recommendation_should', currentRecommendationFilters.shouldRead.toString());
+            params.set('recommendation_skip', currentRecommendationFilters.canSkip.toString());
+            params.set('recommendation_ignore', currentRecommendationFilters.ignore.toString());
             const newURL = `${window.location.pathname}?${params.toString()}`;
             window.history.pushState({}, '', newURL);
         }
         
-        function updateRelevanceFiltersFromURL() {
+        function updateRecommendationFiltersFromURL() {
             const params = new URLSearchParams(window.location.search);
             
-            const mustRead = params.get('relevance_must');
-            const shouldRead = params.get('relevance_should');
-            const canSkip = params.get('relevance_skip');
-            const ignore = params.get('relevance_ignore');
+            const mustRead = params.get('recommendation_must');
+            const shouldRead = params.get('recommendation_should');
+            const canSkip = params.get('recommendation_skip');
+            const ignore = params.get('recommendation_ignore');
             
             if (mustRead !== null) {
-                currentRelevanceFilters.mustRead = mustRead === 'true';
-                pendingRelevanceFilters.mustRead = mustRead === 'true';
+                currentRecommendationFilters.mustRead = mustRead === 'true';
+                pendingRecommendationFilters.mustRead = mustRead === 'true';
             }
             if (shouldRead !== null) {
-                currentRelevanceFilters.shouldRead = shouldRead === 'true';
-                pendingRelevanceFilters.shouldRead = shouldRead === 'true';
+                currentRecommendationFilters.shouldRead = shouldRead === 'true';
+                pendingRecommendationFilters.shouldRead = shouldRead === 'true';
             }
             if (canSkip !== null) {
-                currentRelevanceFilters.canSkip = canSkip === 'true';
-                pendingRelevanceFilters.canSkip = canSkip === 'true';
+                currentRecommendationFilters.canSkip = canSkip === 'true';
+                pendingRecommendationFilters.canSkip = canSkip === 'true';
             }
             if (ignore !== null) {
-                currentRelevanceFilters.ignore = ignore === 'true';
-                pendingRelevanceFilters.ignore = ignore === 'true';
+                currentRecommendationFilters.ignore = ignore === 'true';
+                pendingRecommendationFilters.ignore = ignore === 'true';
             }
             
-            syncRelevanceUI();
+            syncRecommendationUI();
         }
 
         // ============================================================================
@@ -15190,6 +15379,207 @@
         }
 
         // ============================================================================
+        // RELEVANCE FILTER DROPDOWN FUNCTIONS
+        // ============================================================================
+        
+        // Current and pending relevance filter states
+        let currentRelevanceFilters = {
+            rlhf: true,
+            weakSupervision: true,
+            diffusionReasoning: true,
+            distributedTraining: true,
+            datasets: true
+        };
+        
+        let pendingRelevanceFilters = {
+            rlhf: true,
+            weakSupervision: true,
+            diffusionReasoning: true,
+            distributedTraining: true,
+            datasets: true
+        };
+        
+        // Per-paper toggle states (not URL-persisted)
+        let paperToggleStates = {};
+        
+        function toggleMobileRelevanceDropdown() {
+            const button = document.getElementById('mobile-relevance-btn');
+            const dropdown = document.getElementById('mobile-relevance-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopRelevanceDropdown() {
+            const button = document.getElementById('desktop-relevance-btn');
+            const dropdown = document.getElementById('desktop-relevance-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function syncPendingRelevanceUI() {
+            document.getElementById('mobile-relevance-rlhf').checked = pendingRelevanceFilters.rlhf;
+            document.getElementById('mobile-relevance-weak').checked = pendingRelevanceFilters.weakSupervision;
+            document.getElementById('mobile-relevance-diffusion').checked = pendingRelevanceFilters.diffusionReasoning;
+            document.getElementById('mobile-relevance-distributed').checked = pendingRelevanceFilters.distributedTraining;
+            document.getElementById('mobile-relevance-datasets').checked = pendingRelevanceFilters.datasets;
+            document.getElementById('desktop-relevance-rlhf').checked = pendingRelevanceFilters.rlhf;
+            document.getElementById('desktop-relevance-weak').checked = pendingRelevanceFilters.weakSupervision;
+            document.getElementById('desktop-relevance-diffusion').checked = pendingRelevanceFilters.diffusionReasoning;
+            document.getElementById('desktop-relevance-distributed').checked = pendingRelevanceFilters.distributedTraining;
+            document.getElementById('desktop-relevance-datasets').checked = pendingRelevanceFilters.datasets;
+        }
+        
+        function syncRelevanceUI() {
+            document.getElementById('mobile-relevance-rlhf').checked = currentRelevanceFilters.rlhf;
+            document.getElementById('mobile-relevance-weak').checked = currentRelevanceFilters.weakSupervision;
+            document.getElementById('mobile-relevance-diffusion').checked = currentRelevanceFilters.diffusionReasoning;
+            document.getElementById('mobile-relevance-distributed').checked = currentRelevanceFilters.distributedTraining;
+            document.getElementById('mobile-relevance-datasets').checked = currentRelevanceFilters.datasets;
+            document.getElementById('desktop-relevance-rlhf').checked = currentRelevanceFilters.rlhf;
+            document.getElementById('desktop-relevance-weak').checked = currentRelevanceFilters.weakSupervision;
+            document.getElementById('desktop-relevance-diffusion').checked = currentRelevanceFilters.diffusionReasoning;
+            document.getElementById('desktop-relevance-distributed').checked = currentRelevanceFilters.distributedTraining;
+            document.getElementById('desktop-relevance-datasets').checked = currentRelevanceFilters.datasets;
+            
+            updateRelevanceButtonText();
+        }
+        
+        function updateRelevanceButtonText() {
+            const rlhfChecked = document.getElementById('mobile-relevance-rlhf').checked;
+            const weakChecked = document.getElementById('mobile-relevance-weak').checked;
+            const diffusionChecked = document.getElementById('mobile-relevance-diffusion').checked;
+            const distributedChecked = document.getElementById('mobile-relevance-distributed').checked;
+            const datasetsChecked = document.getElementById('mobile-relevance-datasets').checked;
+            
+            const checkedCount = [rlhfChecked, weakChecked, diffusionChecked, distributedChecked, datasetsChecked].filter(Boolean).length;
+            
+            let selectionText;
+            if (checkedCount === 5) {
+                selectionText = "All Selected";
+            } else if (checkedCount === 0) {
+                selectionText = "None Selected";
+            } else if (checkedCount === 1) {
+                selectionText = "1 Selected";
+            } else {
+                selectionText = `${checkedCount} Selected`;
+            }
+            
+            const mobileButton = document.getElementById('mobile-relevance-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-lg">▼</span>`;
+            }
+            
+            const desktopButton = document.getElementById('desktop-relevance-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
+        function applyRelevanceFilter() {
+            updatePendingRelevanceFilters();
+            currentRelevanceFilters = { ...pendingRelevanceFilters };
+            syncRelevanceUI();
+            updateRelevanceFiltersInURL();
+            closeMobileRelevanceDropdown();
+            closeDesktopRelevanceDropdown();
+            
+            // Reset all paper toggle states to default (hidden)
+            paperToggleStates = {};
+            
+            applyFiltersAndSort();
+        }
+        
+        function updatePendingRelevanceFilters() {
+            pendingRelevanceFilters.rlhf = document.getElementById('mobile-relevance-rlhf').checked;
+            pendingRelevanceFilters.weakSupervision = document.getElementById('mobile-relevance-weak').checked;
+            pendingRelevanceFilters.diffusionReasoning = document.getElementById('mobile-relevance-diffusion').checked;
+            pendingRelevanceFilters.distributedTraining = document.getElementById('mobile-relevance-distributed').checked;
+            pendingRelevanceFilters.datasets = document.getElementById('mobile-relevance-datasets').checked;
+        }
+        
+        function closeMobileRelevanceDropdown() {
+            const dropdown = document.getElementById('mobile-relevance-dropdown');
+            const button = document.getElementById('mobile-relevance-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function closeDesktopRelevanceDropdown() {
+            const dropdown = document.getElementById('desktop-relevance-dropdown');
+            const button = document.getElementById('desktop-relevance-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function updateRelevanceFiltersInURL() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('relevance_rlhf', currentRelevanceFilters.rlhf.toString());
+            params.set('relevance_weak', currentRelevanceFilters.weakSupervision.toString());
+            params.set('relevance_diffusion', currentRelevanceFilters.diffusionReasoning.toString());
+            params.set('relevance_distributed', currentRelevanceFilters.distributedTraining.toString());
+            params.set('relevance_datasets', currentRelevanceFilters.datasets.toString());
+            const newURL = `${window.location.pathname}?${params.toString()}`;
+            window.history.pushState({}, '', newURL);
+        }
+        
+        function updateRelevanceFiltersFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            const rlhf = params.get('relevance_rlhf');
+            const weak = params.get('relevance_weak');
+            const diffusion = params.get('relevance_diffusion');
+            const distributed = params.get('relevance_distributed');
+            const datasets = params.get('relevance_datasets');
+            
+            if (rlhf !== null) {
+                currentRelevanceFilters.rlhf = rlhf === 'true';
+                pendingRelevanceFilters.rlhf = rlhf === 'true';
+            }
+            if (weak !== null) {
+                currentRelevanceFilters.weakSupervision = weak === 'true';
+                pendingRelevanceFilters.weakSupervision = weak === 'true';
+            }
+            if (diffusion !== null) {
+                currentRelevanceFilters.diffusionReasoning = diffusion === 'true';
+                pendingRelevanceFilters.diffusionReasoning = diffusion === 'true';
+            }
+            if (distributed !== null) {
+                currentRelevanceFilters.distributedTraining = distributed === 'true';
+                pendingRelevanceFilters.distributedTraining = distributed === 'true';
+            }
+            if (datasets !== null) {
+                currentRelevanceFilters.datasets = datasets === 'true';
+                pendingRelevanceFilters.datasets = datasets === 'true';
+            }
+            
+            syncRelevanceUI();
+        }
+
+        // ============================================================================
         // FILTERING AND DISPLAY FUNCTIONS
         // ============================================================================
         
@@ -15216,9 +15606,9 @@
         function updateAdvancedFiltersDisabledState() {
             const shouldDisable = shouldDisableAdvancedFilters();
             
-            // Update Relevance
-            updateDropdownDisabledState('mobile-relevance-btn', 'mobile-relevance-dropdown', shouldDisable);
-            updateDropdownDisabledState('desktop-relevance-btn', 'desktop-relevance-dropdown', shouldDisable);
+            // Update Recommendation (was old Relevance)
+            updateDropdownDisabledState('mobile-recommendation-btn', 'mobile-recommendation-dropdown', shouldDisable);
+            updateDropdownDisabledState('desktop-recommendation-btn', 'desktop-recommendation-dropdown', shouldDisable);
             
             // Update Novelty  
             updateDropdownDisabledState('mobile-novelty-btn', 'mobile-novelty-dropdown', shouldDisable);
@@ -15236,14 +15626,17 @@
             // Apply Scoring filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesScoringFilter(paper));
             
-            // Apply Relevance filtering
-            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRelevanceFilter(paper));
+            // Apply Recommendation filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRecommendationFilter(paper));
             
             // Apply Novelty filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesNoveltyFilter(paper));
             
             // Apply Impact filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesImpactFilter(paper));
+            
+            // Apply Relevance (topic) filtering and update paper displays
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRelevanceFilter(paper));
             
             // Apply current sorting
             sortPapers(currentSort);
@@ -15307,8 +15700,8 @@
             return true;
         }
         
-        function passesRelevanceFilter(paper) {
-            const { mustRead, shouldRead, canSkip, ignore } = currentRelevanceFilters;
+        function passesRecommendationFilter(paper) {
+            const { mustRead, shouldRead, canSkip, ignore } = currentRecommendationFilters;
             
             // If no filters are selected, hide all papers
             if (!mustRead && !shouldRead && !canSkip && !ignore) return false;
@@ -15371,6 +15764,114 @@
             }
             
             return true;
+        }
+
+        function passesRelevanceFilter(paper) {
+            const { rlhf, weakSupervision, diffusionReasoning, distributedTraining, datasets } = currentRelevanceFilters;
+            
+            // If no filters are selected, hide all papers
+            if (!rlhf && !weakSupervision && !diffusionReasoning && !distributedTraining && !datasets) return false;
+            
+            // Get paper topics for both similarity and topic relevance modules
+            const similarityTopics = getTopicsFromModule(paper, 'similarity_topics') || [];
+            const topicTopics = getTopicsFromModule(paper, 'topic_relevance') || [];
+            const allTopics = [...similarityTopics, ...topicTopics];
+            
+            // Check if paper has any of the selected topics
+            let hasSelectedTopic = false;
+            
+            if (rlhf && hasTopicVariant(allTopics, 'RLHF')) hasSelectedTopic = true;
+            if (weakSupervision && hasTopicVariant(allTopics, 'Weak Supervision')) hasSelectedTopic = true;
+            if (diffusionReasoning && hasTopicVariant(allTopics, 'Diffusion Reasoning')) hasSelectedTopic = true;
+            if (distributedTraining && hasTopicVariant(allTopics, 'Distributed Training')) hasSelectedTopic = true;
+            if (datasets && hasTopicVariant(allTopics, 'Datasets')) hasSelectedTopic = true;
+            
+            return hasSelectedTopic;
+        }
+        
+        function getTopicsFromModule(paper, moduleType) {
+            if (!paper.modules || !Array.isArray(paper.modules)) return [];
+            
+            const module = paper.modules.find(m => m.type === moduleType);
+            if (!module || !module.content || !Array.isArray(module.content.topics)) return [];
+            
+            return module.content.topics;
+        }
+        
+        function hasTopicVariant(topics, targetTopic) {
+            if (!Array.isArray(topics)) return false;
+            
+            return topics.some(topic => {
+                if (typeof topic === 'string') {
+                    return topic.toLowerCase().includes(targetTopic.toLowerCase());
+                }
+                if (topic && typeof topic.name === 'string') {
+                    return topic.name.toLowerCase().includes(targetTopic.toLowerCase());
+                }
+                return false;
+            });
+        }
+        
+        function shouldShowTopic(topicKey) {
+            return currentRelevanceFilters[topicKey];
+        }
+        
+        function getToggleState(paperId, moduleType) {
+            if (!paperToggleStates[paperId]) {
+                paperToggleStates[paperId] = {};
+            }
+            if (!paperToggleStates[paperId][moduleType]) {
+                paperToggleStates[paperId][moduleType] = false; // default hidden
+            }
+            return paperToggleStates[paperId][moduleType];
+        }
+        
+        function toggleTopicsVisibility(paperId, moduleType) {
+            if (!paperToggleStates[paperId]) {
+                paperToggleStates[paperId] = {};
+            }
+            paperToggleStates[paperId][moduleType] = !paperToggleStates[paperId][moduleType];
+            
+            // Re-render just this paper's display
+            refreshPaperDisplay(paperId);
+        }
+        
+        function refreshPaperDisplay(paperId) {
+            // Find the paper data
+            const paper = currentPagePapers.find(p => p.id === paperId);
+            if (!paper) return;
+            
+            // Find the paper number
+            const paperNumber = getCurrentPaperNumber(paperId);
+            if (!paperNumber) return;
+            
+            // Get current paper card elements
+            const mobileCards = document.querySelectorAll(`[data-paper-id="${paperId}"]`);
+            const desktopCards = document.querySelectorAll(`[data-paper-id="${paperId}"]`);
+            
+            // Re-generate and replace the paper card
+            const newCardHTML = createPaperCard(paper, paperNumber);
+            
+            // Replace in both mobile and desktop containers
+            const allCards = [...mobileCards, ...desktopCards];
+            allCards.forEach(card => {
+                const articleElement = card.closest('article');
+                if (articleElement) {
+                    articleElement.outerHTML = newCardHTML;
+                }
+            });
+            
+            // Re-setup functionality for the refreshed card
+            setTimeout(() => {
+                setupAbstractTruncation();
+                setupInitialProgressBars();
+            }, 50);
+        }
+        
+        function getCurrentPaperNumber(paperId) {
+            const startIndex = (currentPage - 1) * PAPERS_PER_PAGE;
+            const paperIndex = currentPagePapers.findIndex(p => p.id === paperId);
+            return paperIndex !== -1 ? startIndex + paperIndex + 1 : null;
         }
         
         function displayCurrentPage() {
@@ -15730,7 +16231,8 @@
                                     <!-- Scores Section -->
                                     <div class="flex flex-col gap-xs">
                                         <!-- RLHF Score Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('rlhf') || getToggleState(paper.id, 'similarity') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('rlhf') ? '' : 'similarity-hidden-topic'}" style="${shouldShowTopic('rlhf') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">RLHF:</span>
                                             </div>
@@ -15744,9 +16246,11 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Weak Supervision Score Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('weakSupervision') || getToggleState(paper.id, 'similarity') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('weakSupervision') ? '' : 'similarity-hidden-topic'}" style="${shouldShowTopic('weakSupervision') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision:</span>
                                             </div>
@@ -15760,9 +16264,11 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Diffusion Reasoning Score Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('diffusionReasoning') || getToggleState(paper.id, 'similarity') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('diffusionReasoning') ? '' : 'similarity-hidden-topic'}" style="${shouldShowTopic('diffusionReasoning') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning:</span>
                                             </div>
@@ -15776,9 +16282,11 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Distributed Training Score Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('distributedTraining') || getToggleState(paper.id, 'similarity') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('distributedTraining') ? '' : 'similarity-hidden-topic'}" style="${shouldShowTopic('distributedTraining') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training:</span>
                                             </div>
@@ -15792,9 +16300,11 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Datasets Score Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('datasets') || getToggleState(paper.id, 'similarity') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('datasets') ? '' : 'similarity-hidden-topic'}" style="${shouldShowTopic('datasets') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Datasets:</span>
                                             </div>
@@ -15808,9 +16318,20 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        ` : ''}
                                     </div>
                                     
-                                    <!-- Button Section -->
+                                    <!-- Toggle Button Section (Show if some topics are hidden) -->
+                                    ${(!shouldShowTopic('rlhf') || !shouldShowTopic('weakSupervision') || !shouldShowTopic('diffusionReasoning') || !shouldShowTopic('distributedTraining') || !shouldShowTopic('datasets')) ? `
+                                    <div>
+                                        <button class="bg-neutral-600 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center" 
+                                                onclick="toggleTopicsVisibility('${paper.id}', 'similarity')">
+                                            ${getToggleState(paper.id, 'similarity') ? 'Hide Other Topics' : 'Show Other Topics'}
+                                        </button>
+                                    </div>
+                                    ` : ''}
+                                    
+                                    <!-- Normalized Scores Button Section -->
                                     <div>
                                         <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center" onclick="toggleSimilarityScores(this)">
                                             Show Normalized Scores ⇄
@@ -15830,7 +16351,8 @@
                                     <!-- Scores Section -->
                                     <div class="flex flex-col gap-xs">
                                         <!-- RLHF Relevance Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('rlhf') || getToggleState(paper.id, 'relevance') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('rlhf') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('rlhf') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">RLHF:</span>
                                             </div>
@@ -15838,9 +16360,11 @@
                                                 ${getRelevanceDisplayText(paper.rlhf_relevance)}
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Weak Supervision Relevance Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('weakSupervision') || getToggleState(paper.id, 'relevance') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('weakSupervision') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('weakSupervision') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision:</span>
                                             </div>
@@ -15848,9 +16372,11 @@
                                                 ${getRelevanceDisplayText(paper.weak_supervision_relevance)}
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Diffusion Reasoning Relevance Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('diffusionReasoning') || getToggleState(paper.id, 'relevance') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('diffusionReasoning') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('diffusionReasoning') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning:</span>
                                             </div>
@@ -15858,9 +16384,11 @@
                                                 ${getRelevanceDisplayText(paper.diffusion_reasoning_relevance)}
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Distributed Training Relevance Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('distributedTraining') || getToggleState(paper.id, 'relevance') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('distributedTraining') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('distributedTraining') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training:</span>
                                             </div>
@@ -15868,9 +16396,11 @@
                                                 ${getRelevanceDisplayText(paper.distributed_training_relevance)}
                                             </div>
                                         </div>
+                                        ` : ''}
                                         
                                         <!-- Datasets Relevance Row -->
-                                        <div class="flex flex-col">
+                                        ${shouldShowTopic('datasets') || getToggleState(paper.id, 'relevance') ? `
+                                        <div class="flex flex-col ${shouldShowTopic('datasets') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('datasets') ? '' : 'display: none;'}">
                                             <div class="text-left">
                                                 <span class="text-neutral-70 font-heading font-bold text-lg">Datasets:</span>
                                             </div>
@@ -15878,7 +16408,18 @@
                                                 ${getRelevanceDisplayText(paper.datasets_relevance)}
                                             </div>
                                         </div>
+                                        ` : ''}
                                     </div>
+                                    
+                                    <!-- Toggle Button Section (Show if some topics are hidden) -->
+                                    ${(!shouldShowTopic('rlhf') || !shouldShowTopic('weakSupervision') || !shouldShowTopic('diffusionReasoning') || !shouldShowTopic('distributedTraining') || !shouldShowTopic('datasets')) ? `
+                                    <div>
+                                        <button class="bg-neutral-600 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center" 
+                                                onclick="toggleTopicsVisibility('${paper.id}', 'relevance')">
+                                            ${getToggleState(paper.id, 'relevance') ? 'Hide Other Topics' : 'Show Other Topics'}
+                                        </button>
+                                    </div>
+                                    ` : ''}
                                     
                                     <!-- Justification Section -->
                                     <div class="w-full relevance-justification-section" data-paper-id="${paper.id}">
@@ -15887,26 +16428,45 @@
                                             Show Justification <span class="text-xs">▲</span>
                                         </button>
                                         <div class="justification-text hidden text-neutral-20 font-mono text-md px-tag-x py-tag-y bg-neutral-500 transition-all duration-300 ease-in-out flex flex-col gap-sm">
-                                            <div>
+                                            <!-- RLHF Justification -->
+                                            ${shouldShowTopic('rlhf') || getToggleState(paper.id, 'relevance') ? `
+                                            <div class="${shouldShowTopic('rlhf') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('rlhf') ? '' : 'display: none;'}">
                                                 <div class="font-heading font-bold">RLHF:</div>
                                                 <div>${getJustificationText(paper.rlhf_justification)}</div>
                                             </div>
-                                            <div>
+                                            ` : ''}
+                                            
+                                            <!-- Weak Supervision Justification -->
+                                            ${shouldShowTopic('weakSupervision') || getToggleState(paper.id, 'relevance') ? `
+                                            <div class="${shouldShowTopic('weakSupervision') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('weakSupervision') ? '' : 'display: none;'}">
                                                 <div class="font-heading font-bold">Weak Supervision:</div>
                                                 <div>${getJustificationText(paper.weak_supervision_justification)}</div>
                                             </div>
-                                            <div>
+                                            ` : ''}
+                                            
+                                            <!-- Diffusion Reasoning Justification -->
+                                            ${shouldShowTopic('diffusionReasoning') || getToggleState(paper.id, 'relevance') ? `
+                                            <div class="${shouldShowTopic('diffusionReasoning') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('diffusionReasoning') ? '' : 'display: none;'}">
                                                 <div class="font-heading font-bold">Diffusion Reasoning:</div>
                                                 <div>${getJustificationText(paper.diffusion_reasoning_justification)}</div>
                                             </div>
-                                            <div>
+                                            ` : ''}
+                                            
+                                            <!-- Distributed Training Justification -->
+                                            ${shouldShowTopic('distributedTraining') || getToggleState(paper.id, 'relevance') ? `
+                                            <div class="${shouldShowTopic('distributedTraining') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('distributedTraining') ? '' : 'display: none;'}">
                                                 <div class="font-heading font-bold">Distributed Training:</div>
                                                 <div>${getJustificationText(paper.distributed_training_justification)}</div>
                                             </div>
-                                            <div>
+                                            ` : ''}
+                                            
+                                            <!-- Datasets Justification -->
+                                            ${shouldShowTopic('datasets') || getToggleState(paper.id, 'relevance') ? `
+                                            <div class="${shouldShowTopic('datasets') ? '' : 'relevance-hidden-topic'}" style="${shouldShowTopic('datasets') ? '' : 'display: none;'}">
                                                 <div class="font-heading font-bold">Datasets:</div>
                                                 <div>${getJustificationText(paper.datasets_justification)}</div>
                                             </div>
+                                            ` : ''}
                                         </div>
                                     </div>
                                 </div>
@@ -16006,14 +16566,17 @@
             // Load Scoring filters from URL
             updateScoringFiltersFromURL();
             
-            // Load Relevance filters from URL
-            updateRelevanceFiltersFromURL();
+            // Load Recommendation filters from URL
+            updateRecommendationFiltersFromURL();
             
             // Load Novelty filters from URL
             updateNoveltyFiltersFromURL();
             
             // Load Impact filters from URL
             updateImpactFiltersFromURL();
+            
+            // Load Relevance filters from URL
+            updateRelevanceFiltersFromURL();
             
             // Update disabled state for advanced filters after loading scoring filters
             updateAdvancedFiltersDisabledState();

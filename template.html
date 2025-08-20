@@ -495,51 +495,51 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Relevance Filter Dropdown -->
+                        <!-- Recommendation Filter Dropdown -->
                         <div class="relative">
-                            <button id="mobile-relevance-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRelevanceDropdown()">
-                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            <button id="mobile-recommendation-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRecommendationDropdown()">
+                                <span class="font-bold">Recommendation:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
                             </button>
-                            <div id="mobile-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                            <div id="mobile-recommendation-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
                                 <div class="flex flex-col gap-md">
                                     <!-- Must Read Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-must" checked>
-                                            <label for="mobile-relevance-must"></label>
+                                            <input type="checkbox" id="mobile-recommendation-must" checked>
+                                            <label for="mobile-recommendation-must"></label>
                                         </div>
-                                        <label for="mobile-relevance-must" class="text-neutral-10 text-xl font-heading cursor-pointer">Must Read</label>
+                                        <label for="mobile-recommendation-must" class="text-neutral-10 text-xl font-heading cursor-pointer">Must Read</label>
                                     </div>
                                     
                                     <!-- Should Read Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-should" checked>
-                                            <label for="mobile-relevance-should"></label>
+                                            <input type="checkbox" id="mobile-recommendation-should" checked>
+                                            <label for="mobile-recommendation-should"></label>
                                         </div>
-                                        <label for="mobile-relevance-should" class="text-neutral-10 text-xl font-heading cursor-pointer">Should Read</label>
+                                        <label for="mobile-recommendation-should" class="text-neutral-10 text-xl font-heading cursor-pointer">Should Read</label>
                                     </div>
                                     
                                     <!-- Can Skip Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-skip" checked>
-                                            <label for="mobile-relevance-skip"></label>
+                                            <input type="checkbox" id="mobile-recommendation-skip" checked>
+                                            <label for="mobile-recommendation-skip"></label>
                                         </div>
-                                        <label for="mobile-relevance-skip" class="text-neutral-10 text-xl font-heading cursor-pointer">Can Skip</label>
+                                        <label for="mobile-recommendation-skip" class="text-neutral-10 text-xl font-heading cursor-pointer">Can Skip</label>
                                     </div>
                                     
                                     <!-- Ignore Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-ignore" checked>
-                                            <label for="mobile-relevance-ignore"></label>
+                                            <input type="checkbox" id="mobile-recommendation-ignore" checked>
+                                            <label for="mobile-recommendation-ignore"></label>
                                         </div>
-                                        <label for="mobile-relevance-ignore" class="text-neutral-10 text-xl font-heading cursor-pointer">Ignore</label>
+                                        <label for="mobile-recommendation-ignore" class="text-neutral-10 text-xl font-heading cursor-pointer">Ignore</label>
                                     </div>
                                     
                                     <!-- Apply Filter Button -->
-                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRecommendationFilter()">
                                         Apply Filter
                                     </button>
                                 </div>
@@ -816,51 +816,51 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Relevance Filter Dropdown -->
+                        <!-- Recommendation Filter Dropdown -->
                         <div class="relative">
-                            <button id="desktop-relevance-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRelevanceDropdown()">
-                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            <button id="desktop-recommendation-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRecommendationDropdown()">
+                                <span class="font-bold">Recommendation:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
                             </button>
-                            <div id="desktop-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                            <div id="desktop-recommendation-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Must Read Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-must" checked>
-                                            <label for="desktop-relevance-must"></label>
+                                            <input type="checkbox" id="desktop-recommendation-must" checked>
+                                            <label for="desktop-recommendation-must"></label>
                                         </div>
-                                        <label for="desktop-relevance-must" class="text-neutral-10 text-lg font-heading cursor-pointer">Must Read</label>
+                                        <label for="desktop-recommendation-must" class="text-neutral-10 text-lg font-heading cursor-pointer">Must Read</label>
                                     </div>
                                     
                                     <!-- Should Read Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-should" checked>
-                                            <label for="desktop-relevance-should"></label>
+                                            <input type="checkbox" id="desktop-recommendation-should" checked>
+                                            <label for="desktop-recommendation-should"></label>
                                         </div>
-                                        <label for="desktop-relevance-should" class="text-neutral-10 text-lg font-heading cursor-pointer">Should Read</label>
+                                        <label for="desktop-recommendation-should" class="text-neutral-10 text-lg font-heading cursor-pointer">Should Read</label>
                                     </div>
                                     
                                     <!-- Can Skip Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-skip" checked>
-                                            <label for="desktop-relevance-skip"></label>
+                                            <input type="checkbox" id="desktop-recommendation-skip" checked>
+                                            <label for="desktop-recommendation-skip"></label>
                                         </div>
-                                        <label for="desktop-relevance-skip" class="text-neutral-10 text-lg font-heading cursor-pointer">Can Skip</label>
+                                        <label for="desktop-recommendation-skip" class="text-neutral-10 text-lg font-heading cursor-pointer">Can Skip</label>
                                     </div>
                                     
                                     <!-- Ignore Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-ignore" checked>
-                                            <label for="desktop-relevance-ignore"></label>
+                                            <input type="checkbox" id="desktop-recommendation-ignore" checked>
+                                            <label for="desktop-recommendation-ignore"></label>
                                         </div>
-                                        <label for="desktop-relevance-ignore" class="text-neutral-10 text-lg font-heading cursor-pointer">Ignore</label>
+                                        <label for="desktop-recommendation-ignore" class="text-neutral-10 text-lg font-heading cursor-pointer">Ignore</label>
                                     </div>
                                     
                                     <!-- Apply Filter Button -->
-                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRecommendationFilter()">
                                         Apply Filter
                                     </button>
                                 </div>
@@ -1979,61 +1979,61 @@
                 updateScoringButtonText();
             });
             
-            // Add event listeners for relevance checkboxes to sync between mobile and desktop
-            document.getElementById('mobile-relevance-must').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-must').checked = 
-                    document.getElementById('mobile-relevance-must').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            // Add event listeners for recommendation checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-recommendation-must').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-must').checked = 
+                    document.getElementById('mobile-recommendation-must').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-should').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-should').checked = 
-                    document.getElementById('mobile-relevance-should').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-should').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-should').checked = 
+                    document.getElementById('mobile-recommendation-should').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-skip').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-skip').checked = 
-                    document.getElementById('mobile-relevance-skip').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-skip').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-skip').checked = 
+                    document.getElementById('mobile-recommendation-skip').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-ignore').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-ignore').checked = 
-                    document.getElementById('mobile-relevance-ignore').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-ignore').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-ignore').checked = 
+                    document.getElementById('mobile-recommendation-ignore').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-must').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-must').checked = 
-                    document.getElementById('desktop-relevance-must').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-must').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-must').checked = 
+                    document.getElementById('desktop-recommendation-must').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-should').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-should').checked = 
-                    document.getElementById('desktop-relevance-should').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-should').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-should').checked = 
+                    document.getElementById('desktop-recommendation-should').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-skip').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-skip').checked = 
-                    document.getElementById('desktop-relevance-skip').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-skip').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-skip').checked = 
+                    document.getElementById('desktop-recommendation-skip').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-ignore').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-ignore').checked = 
-                    document.getElementById('desktop-relevance-ignore').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-ignore').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-ignore').checked = 
+                    document.getElementById('desktop-recommendation-ignore').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
             // Add event listeners for novelty checkboxes to sync between mobile and desktop
@@ -2345,27 +2345,27 @@
         }
 
         // ============================================================================
-        // RELEVANCE FILTER DROPDOWN FUNCTIONS
+        // RECOMMENDATION FILTER DROPDOWN FUNCTIONS
         // ============================================================================
         
-        // Current and pending relevance filter states
-        let currentRelevanceFilters = {
+        // Current and pending recommendation filter states
+        let currentRecommendationFilters = {
             mustRead: true,
             shouldRead: true,
             canSkip: true,
             ignore: true
         };
         
-        let pendingRelevanceFilters = {
+        let pendingRecommendationFilters = {
             mustRead: true,
             shouldRead: true,
             canSkip: true,
             ignore: true
         };
         
-        function toggleMobileRelevanceDropdown() {
-            const button = document.getElementById('mobile-relevance-btn');
-            const dropdown = document.getElementById('mobile-relevance-dropdown');
+        function toggleMobileRecommendationDropdown() {
+            const button = document.getElementById('mobile-recommendation-btn');
+            const dropdown = document.getElementById('mobile-recommendation-dropdown');
             
             if (dropdown.classList.contains('hidden')) {
                 setDropdownDirection(button, dropdown);
@@ -2379,9 +2379,9 @@
             dropdown.classList.toggle('hidden');
         }
         
-        function toggleDesktopRelevanceDropdown() {
-            const button = document.getElementById('desktop-relevance-btn');
-            const dropdown = document.getElementById('desktop-relevance-dropdown');
+        function toggleDesktopRecommendationDropdown() {
+            const button = document.getElementById('desktop-recommendation-btn');
+            const dropdown = document.getElementById('desktop-recommendation-dropdown');
             
             if (dropdown.classList.contains('hidden')) {
                 setDropdownDirection(button, dropdown);
@@ -2395,35 +2395,35 @@
             dropdown.classList.toggle('hidden');
         }
         
-        function syncPendingRelevanceUI() {
-            document.getElementById('mobile-relevance-must').checked = pendingRelevanceFilters.mustRead;
-            document.getElementById('mobile-relevance-should').checked = pendingRelevanceFilters.shouldRead;
-            document.getElementById('mobile-relevance-skip').checked = pendingRelevanceFilters.canSkip;
-            document.getElementById('mobile-relevance-ignore').checked = pendingRelevanceFilters.ignore;
-            document.getElementById('desktop-relevance-must').checked = pendingRelevanceFilters.mustRead;
-            document.getElementById('desktop-relevance-should').checked = pendingRelevanceFilters.shouldRead;
-            document.getElementById('desktop-relevance-skip').checked = pendingRelevanceFilters.canSkip;
-            document.getElementById('desktop-relevance-ignore').checked = pendingRelevanceFilters.ignore;
+        function syncPendingRecommendationUI() {
+            document.getElementById('mobile-recommendation-must').checked = pendingRecommendationFilters.mustRead;
+            document.getElementById('mobile-recommendation-should').checked = pendingRecommendationFilters.shouldRead;
+            document.getElementById('mobile-recommendation-skip').checked = pendingRecommendationFilters.canSkip;
+            document.getElementById('mobile-recommendation-ignore').checked = pendingRecommendationFilters.ignore;
+            document.getElementById('desktop-recommendation-must').checked = pendingRecommendationFilters.mustRead;
+            document.getElementById('desktop-recommendation-should').checked = pendingRecommendationFilters.shouldRead;
+            document.getElementById('desktop-recommendation-skip').checked = pendingRecommendationFilters.canSkip;
+            document.getElementById('desktop-recommendation-ignore').checked = pendingRecommendationFilters.ignore;
         }
         
-        function syncRelevanceUI() {
-            document.getElementById('mobile-relevance-must').checked = currentRelevanceFilters.mustRead;
-            document.getElementById('mobile-relevance-should').checked = currentRelevanceFilters.shouldRead;
-            document.getElementById('mobile-relevance-skip').checked = currentRelevanceFilters.canSkip;
-            document.getElementById('mobile-relevance-ignore').checked = currentRelevanceFilters.ignore;
-            document.getElementById('desktop-relevance-must').checked = currentRelevanceFilters.mustRead;
-            document.getElementById('desktop-relevance-should').checked = currentRelevanceFilters.shouldRead;
-            document.getElementById('desktop-relevance-skip').checked = currentRelevanceFilters.canSkip;
-            document.getElementById('desktop-relevance-ignore').checked = currentRelevanceFilters.ignore;
+        function syncRecommendationUI() {
+            document.getElementById('mobile-recommendation-must').checked = currentRecommendationFilters.mustRead;
+            document.getElementById('mobile-recommendation-should').checked = currentRecommendationFilters.shouldRead;
+            document.getElementById('mobile-recommendation-skip').checked = currentRecommendationFilters.canSkip;
+            document.getElementById('mobile-recommendation-ignore').checked = currentRecommendationFilters.ignore;
+            document.getElementById('desktop-recommendation-must').checked = currentRecommendationFilters.mustRead;
+            document.getElementById('desktop-recommendation-should').checked = currentRecommendationFilters.shouldRead;
+            document.getElementById('desktop-recommendation-skip').checked = currentRecommendationFilters.canSkip;
+            document.getElementById('desktop-recommendation-ignore').checked = currentRecommendationFilters.ignore;
             
-            updateRelevanceButtonText();
+            updateRecommendationButtonText();
         }
         
-        function updateRelevanceButtonText() {
-            const mustChecked = document.getElementById('mobile-relevance-must').checked;
-            const shouldChecked = document.getElementById('mobile-relevance-should').checked;
-            const skipChecked = document.getElementById('mobile-relevance-skip').checked;
-            const ignoreChecked = document.getElementById('mobile-relevance-ignore').checked;
+        function updateRecommendationButtonText() {
+            const mustChecked = document.getElementById('mobile-recommendation-must').checked;
+            const shouldChecked = document.getElementById('mobile-recommendation-should').checked;
+            const skipChecked = document.getElementById('mobile-recommendation-skip').checked;
+            const ignoreChecked = document.getElementById('mobile-recommendation-ignore').checked;
             
             const checkedCount = [mustChecked, shouldChecked, skipChecked, ignoreChecked].filter(Boolean).length;
             
@@ -2436,37 +2436,37 @@
                 selectionText = `${checkedCount} Selected`;
             }
             
-            const mobileButton = document.getElementById('mobile-relevance-btn');
+            const mobileButton = document.getElementById('mobile-recommendation-btn');
             if (mobileButton) {
-                mobileButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+                mobileButton.innerHTML = `<span class="font-bold">Recommendation:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
             }
             
-            const desktopButton = document.getElementById('desktop-relevance-btn');
+            const desktopButton = document.getElementById('desktop-recommendation-btn');
             if (desktopButton) {
-                desktopButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+                desktopButton.innerHTML = `<span class="font-bold">Recommendation:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
             }
         }
         
-        function applyRelevanceFilter() {
-            updatePendingRelevanceFilters();
-            currentRelevanceFilters = { ...pendingRelevanceFilters };
-            syncRelevanceUI();
-            updateRelevanceFiltersInURL();
-            closeMobileRelevanceDropdown();
-            closeDesktopRelevanceDropdown();
+        function applyRecommendationFilter() {
+            updatePendingRecommendationFilters();
+            currentRecommendationFilters = { ...pendingRecommendationFilters };
+            syncRecommendationUI();
+            updateRecommendationFiltersInURL();
+            closeMobileRecommendationDropdown();
+            closeDesktopRecommendationDropdown();
             applyFiltersAndSort();
         }
         
-        function updatePendingRelevanceFilters() {
-            pendingRelevanceFilters.mustRead = document.getElementById('mobile-relevance-must').checked;
-            pendingRelevanceFilters.shouldRead = document.getElementById('mobile-relevance-should').checked;
-            pendingRelevanceFilters.canSkip = document.getElementById('mobile-relevance-skip').checked;
-            pendingRelevanceFilters.ignore = document.getElementById('mobile-relevance-ignore').checked;
+        function updatePendingRecommendationFilters() {
+            pendingRecommendationFilters.mustRead = document.getElementById('mobile-recommendation-must').checked;
+            pendingRecommendationFilters.shouldRead = document.getElementById('mobile-recommendation-should').checked;
+            pendingRecommendationFilters.canSkip = document.getElementById('mobile-recommendation-skip').checked;
+            pendingRecommendationFilters.ignore = document.getElementById('mobile-recommendation-ignore').checked;
         }
         
-        function closeMobileRelevanceDropdown() {
-            const dropdown = document.getElementById('mobile-relevance-dropdown');
-            const button = document.getElementById('mobile-relevance-btn');
+        function closeMobileRecommendationDropdown() {
+            const dropdown = document.getElementById('mobile-recommendation-dropdown');
+            const button = document.getElementById('mobile-recommendation-btn');
             if (dropdown && !dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
                 button.classList.remove('bg-neutral-600');
@@ -2474,9 +2474,9 @@
             }
         }
         
-        function closeDesktopRelevanceDropdown() {
-            const dropdown = document.getElementById('desktop-relevance-dropdown');
-            const button = document.getElementById('desktop-relevance-btn');
+        function closeDesktopRecommendationDropdown() {
+            const dropdown = document.getElementById('desktop-recommendation-dropdown');
+            const button = document.getElementById('desktop-recommendation-btn');
             if (dropdown && !dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
                 button.classList.remove('bg-neutral-600');
@@ -2484,42 +2484,42 @@
             }
         }
         
-        function updateRelevanceFiltersInURL() {
+        function updateRecommendationFiltersInURL() {
             const params = new URLSearchParams(window.location.search);
-            params.set('relevance_must', currentRelevanceFilters.mustRead.toString());
-            params.set('relevance_should', currentRelevanceFilters.shouldRead.toString());
-            params.set('relevance_skip', currentRelevanceFilters.canSkip.toString());
-            params.set('relevance_ignore', currentRelevanceFilters.ignore.toString());
+            params.set('recommendation_must', currentRecommendationFilters.mustRead.toString());
+            params.set('recommendation_should', currentRecommendationFilters.shouldRead.toString());
+            params.set('recommendation_skip', currentRecommendationFilters.canSkip.toString());
+            params.set('recommendation_ignore', currentRecommendationFilters.ignore.toString());
             const newURL = `${window.location.pathname}?${params.toString()}`;
             window.history.pushState({}, '', newURL);
         }
         
-        function updateRelevanceFiltersFromURL() {
+        function updateRecommendationFiltersFromURL() {
             const params = new URLSearchParams(window.location.search);
             
-            const mustRead = params.get('relevance_must');
-            const shouldRead = params.get('relevance_should');
-            const canSkip = params.get('relevance_skip');
-            const ignore = params.get('relevance_ignore');
+            const mustRead = params.get('recommendation_must');
+            const shouldRead = params.get('recommendation_should');
+            const canSkip = params.get('recommendation_skip');
+            const ignore = params.get('recommendation_ignore');
             
             if (mustRead !== null) {
-                currentRelevanceFilters.mustRead = mustRead === 'true';
-                pendingRelevanceFilters.mustRead = mustRead === 'true';
+                currentRecommendationFilters.mustRead = mustRead === 'true';
+                pendingRecommendationFilters.mustRead = mustRead === 'true';
             }
             if (shouldRead !== null) {
-                currentRelevanceFilters.shouldRead = shouldRead === 'true';
-                pendingRelevanceFilters.shouldRead = shouldRead === 'true';
+                currentRecommendationFilters.shouldRead = shouldRead === 'true';
+                pendingRecommendationFilters.shouldRead = shouldRead === 'true';
             }
             if (canSkip !== null) {
-                currentRelevanceFilters.canSkip = canSkip === 'true';
-                pendingRelevanceFilters.canSkip = canSkip === 'true';
+                currentRecommendationFilters.canSkip = canSkip === 'true';
+                pendingRecommendationFilters.canSkip = canSkip === 'true';
             }
             if (ignore !== null) {
-                currentRelevanceFilters.ignore = ignore === 'true';
-                pendingRelevanceFilters.ignore = ignore === 'true';
+                currentRecommendationFilters.ignore = ignore === 'true';
+                pendingRecommendationFilters.ignore = ignore === 'true';
             }
             
-            syncRelevanceUI();
+            syncRecommendationUI();
         }
 
         // ============================================================================
@@ -2905,9 +2905,9 @@
         function updateAdvancedFiltersDisabledState() {
             const shouldDisable = shouldDisableAdvancedFilters();
             
-            // Update Relevance
-            updateDropdownDisabledState('mobile-relevance-btn', 'mobile-relevance-dropdown', shouldDisable);
-            updateDropdownDisabledState('desktop-relevance-btn', 'desktop-relevance-dropdown', shouldDisable);
+            // Update Recommendation (was old Relevance)
+            updateDropdownDisabledState('mobile-recommendation-btn', 'mobile-recommendation-dropdown', shouldDisable);
+            updateDropdownDisabledState('desktop-recommendation-btn', 'desktop-recommendation-dropdown', shouldDisable);
             
             // Update Novelty  
             updateDropdownDisabledState('mobile-novelty-btn', 'mobile-novelty-dropdown', shouldDisable);
@@ -2925,8 +2925,8 @@
             // Apply Scoring filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesScoringFilter(paper));
             
-            // Apply Relevance filtering
-            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRelevanceFilter(paper));
+            // Apply Recommendation filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRecommendationFilter(paper));
             
             // Apply Novelty filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesNoveltyFilter(paper));
@@ -2996,8 +2996,8 @@
             return true;
         }
         
-        function passesRelevanceFilter(paper) {
-            const { mustRead, shouldRead, canSkip, ignore } = currentRelevanceFilters;
+        function passesRecommendationFilter(paper) {
+            const { mustRead, shouldRead, canSkip, ignore } = currentRecommendationFilters;
             
             // If no filters are selected, hide all papers
             if (!mustRead && !shouldRead && !canSkip && !ignore) return false;
@@ -3695,8 +3695,8 @@
             // Load Scoring filters from URL
             updateScoringFiltersFromURL();
             
-            // Load Relevance filters from URL
-            updateRelevanceFiltersFromURL();
+            // Load Recommendation filters from URL
+            updateRecommendationFiltersFromURL();
             
             // Load Novelty filters from URL
             updateNoveltyFiltersFromURL();
