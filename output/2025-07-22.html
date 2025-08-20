@@ -495,51 +495,51 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Relevance Filter Dropdown -->
+                        <!-- Recommendation Filter Dropdown -->
                         <div class="relative">
-                            <button id="mobile-relevance-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRelevanceDropdown()">
-                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            <button id="mobile-recommendation-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRecommendationDropdown()">
+                                <span class="font-bold">Recommendation:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
                             </button>
-                            <div id="mobile-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                            <div id="mobile-recommendation-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
                                 <div class="flex flex-col gap-md">
                                     <!-- Must Read Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-must" checked>
-                                            <label for="mobile-relevance-must"></label>
+                                            <input type="checkbox" id="mobile-recommendation-must" checked>
+                                            <label for="mobile-recommendation-must"></label>
                                         </div>
-                                        <label for="mobile-relevance-must" class="text-neutral-10 text-xl font-heading cursor-pointer">Must Read</label>
+                                        <label for="mobile-recommendation-must" class="text-neutral-10 text-xl font-heading cursor-pointer">Must Read</label>
                                     </div>
                                     
                                     <!-- Should Read Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-should" checked>
-                                            <label for="mobile-relevance-should"></label>
+                                            <input type="checkbox" id="mobile-recommendation-should" checked>
+                                            <label for="mobile-recommendation-should"></label>
                                         </div>
-                                        <label for="mobile-relevance-should" class="text-neutral-10 text-xl font-heading cursor-pointer">Should Read</label>
+                                        <label for="mobile-recommendation-should" class="text-neutral-10 text-xl font-heading cursor-pointer">Should Read</label>
                                     </div>
                                     
                                     <!-- Can Skip Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-skip" checked>
-                                            <label for="mobile-relevance-skip"></label>
+                                            <input type="checkbox" id="mobile-recommendation-skip" checked>
+                                            <label for="mobile-recommendation-skip"></label>
                                         </div>
-                                        <label for="mobile-relevance-skip" class="text-neutral-10 text-xl font-heading cursor-pointer">Can Skip</label>
+                                        <label for="mobile-recommendation-skip" class="text-neutral-10 text-xl font-heading cursor-pointer">Can Skip</label>
                                     </div>
                                     
                                     <!-- Ignore Checkbox -->
                                     <div class="flex items-center gap-md">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="mobile-relevance-ignore" checked>
-                                            <label for="mobile-relevance-ignore"></label>
+                                            <input type="checkbox" id="mobile-recommendation-ignore" checked>
+                                            <label for="mobile-recommendation-ignore"></label>
                                         </div>
-                                        <label for="mobile-relevance-ignore" class="text-neutral-10 text-xl font-heading cursor-pointer">Ignore</label>
+                                        <label for="mobile-recommendation-ignore" class="text-neutral-10 text-xl font-heading cursor-pointer">Ignore</label>
                                     </div>
                                     
                                     <!-- Apply Filter Button -->
-                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRecommendationFilter()">
                                         Apply Filter
                                     </button>
                                 </div>
@@ -645,8 +645,67 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-lg">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-lg">▼</span></button>
+                        
+                        <!-- Topic Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-topic-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileTopicDropdown()">
+                                <span class="font-bold">Topics:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            </button>
+                            <div id="mobile-topic-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-md">
+                                    <!-- RLHF Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-topic-rlhf" checked>
+                                            <label for="mobile-topic-rlhf"></label>
+                                        </div>
+                                        <label for="mobile-topic-rlhf" class="text-neutral-10 text-xl font-heading cursor-pointer">RLHF</label>
+                                    </div>
+                                    
+                                    <!-- Weak Supervision Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-topic-weak-supervision" checked>
+                                            <label for="mobile-topic-weak-supervision"></label>
+                                        </div>
+                                        <label for="mobile-topic-weak-supervision" class="text-neutral-10 text-xl font-heading cursor-pointer">Weak Supervision</label>
+                                    </div>
+                                    
+                                    <!-- Diffusion Reasoning Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-topic-diffusion-reasoning" checked>
+                                            <label for="mobile-topic-diffusion-reasoning"></label>
+                                        </div>
+                                        <label for="mobile-topic-diffusion-reasoning" class="text-neutral-10 text-xl font-heading cursor-pointer">Diffusion Reasoning</label>
+                                    </div>
+                                    
+                                    <!-- Distributed Training Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-topic-distributed-training" checked>
+                                            <label for="mobile-topic-distributed-training"></label>
+                                        </div>
+                                        <label for="mobile-topic-distributed-training" class="text-neutral-10 text-xl font-heading cursor-pointer">Distributed Training</label>
+                                    </div>
+                                    
+                                    <!-- Datasets Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-topic-datasets" checked>
+                                            <label for="mobile-topic-datasets"></label>
+                                        </div>
+                                        <label for="mobile-topic-datasets" class="text-neutral-10 text-xl font-heading cursor-pointer">Datasets</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyTopicFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- H-Index Filter Dropdown -->
                         <div class="relative">
@@ -816,51 +875,51 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Relevance Filter Dropdown -->
+                        <!-- Recommendation Filter Dropdown -->
                         <div class="relative">
-                            <button id="desktop-relevance-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRelevanceDropdown()">
-                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            <button id="desktop-recommendation-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRecommendationDropdown()">
+                                <span class="font-bold">Recommendation:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
                             </button>
-                            <div id="desktop-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                            <div id="desktop-recommendation-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Must Read Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-must" checked>
-                                            <label for="desktop-relevance-must"></label>
+                                            <input type="checkbox" id="desktop-recommendation-must" checked>
+                                            <label for="desktop-recommendation-must"></label>
                                         </div>
-                                        <label for="desktop-relevance-must" class="text-neutral-10 text-lg font-heading cursor-pointer">Must Read</label>
+                                        <label for="desktop-recommendation-must" class="text-neutral-10 text-lg font-heading cursor-pointer">Must Read</label>
                                     </div>
                                     
                                     <!-- Should Read Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-should" checked>
-                                            <label for="desktop-relevance-should"></label>
+                                            <input type="checkbox" id="desktop-recommendation-should" checked>
+                                            <label for="desktop-recommendation-should"></label>
                                         </div>
-                                        <label for="desktop-relevance-should" class="text-neutral-10 text-lg font-heading cursor-pointer">Should Read</label>
+                                        <label for="desktop-recommendation-should" class="text-neutral-10 text-lg font-heading cursor-pointer">Should Read</label>
                                     </div>
                                     
                                     <!-- Can Skip Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-skip" checked>
-                                            <label for="desktop-relevance-skip"></label>
+                                            <input type="checkbox" id="desktop-recommendation-skip" checked>
+                                            <label for="desktop-recommendation-skip"></label>
                                         </div>
-                                        <label for="desktop-relevance-skip" class="text-neutral-10 text-lg font-heading cursor-pointer">Can Skip</label>
+                                        <label for="desktop-recommendation-skip" class="text-neutral-10 text-lg font-heading cursor-pointer">Can Skip</label>
                                     </div>
                                     
                                     <!-- Ignore Checkbox -->
                                     <div class="flex items-center gap-xs">
                                         <div class="custom-checkbox">
-                                            <input type="checkbox" id="desktop-relevance-ignore" checked>
-                                            <label for="desktop-relevance-ignore"></label>
+                                            <input type="checkbox" id="desktop-recommendation-ignore" checked>
+                                            <label for="desktop-recommendation-ignore"></label>
                                         </div>
-                                        <label for="desktop-relevance-ignore" class="text-neutral-10 text-lg font-heading cursor-pointer">Ignore</label>
+                                        <label for="desktop-recommendation-ignore" class="text-neutral-10 text-lg font-heading cursor-pointer">Ignore</label>
                                     </div>
                                     
                                     <!-- Apply Filter Button -->
-                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRecommendationFilter()">
                                         Apply Filter
                                     </button>
                                 </div>
@@ -966,8 +1025,67 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Topics: All Selected <span class="text-md">▼</span></button>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-md">▼</span></button>
+                        
+                        <!-- Topic Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-topic-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopTopicDropdown()">
+                                <span class="font-bold">Topics:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-topic-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- RLHF Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-topic-rlhf" checked>
+                                            <label for="desktop-topic-rlhf"></label>
+                                        </div>
+                                        <label for="desktop-topic-rlhf" class="text-neutral-10 text-lg font-heading cursor-pointer">RLHF</label>
+                                    </div>
+                                    
+                                    <!-- Weak Supervision Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-topic-weak-supervision" checked>
+                                            <label for="desktop-topic-weak-supervision"></label>
+                                        </div>
+                                        <label for="desktop-topic-weak-supervision" class="text-neutral-10 text-lg font-heading cursor-pointer">Weak Supervision</label>
+                                    </div>
+                                    
+                                    <!-- Diffusion Reasoning Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-topic-diffusion-reasoning" checked>
+                                            <label for="desktop-topic-diffusion-reasoning"></label>
+                                        </div>
+                                        <label for="desktop-topic-diffusion-reasoning" class="text-neutral-10 text-lg font-heading cursor-pointer">Diffusion Reasoning</label>
+                                    </div>
+                                    
+                                    <!-- Distributed Training Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-topic-distributed-training" checked>
+                                            <label for="desktop-topic-distributed-training"></label>
+                                        </div>
+                                        <label for="desktop-topic-distributed-training" class="text-neutral-10 text-lg font-heading cursor-pointer">Distributed Training</label>
+                                    </div>
+                                    
+                                    <!-- Datasets Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-topic-datasets" checked>
+                                            <label for="desktop-topic-datasets"></label>
+                                        </div>
+                                        <label for="desktop-topic-datasets" class="text-neutral-10 text-lg font-heading cursor-pointer">Datasets</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyTopicFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- H-Index Filter Dropdown -->
                         <div class="relative">
@@ -15353,6 +15471,17 @@
         
         let pendingHIndexFilters = { ...currentHIndexFilters };
         
+        // Topic Filter State Management
+        let currentTopicFilters = {
+            rlhf: true,
+            weakSupervision: true,
+            diffusionReasoning: true,
+            distributedTraining: true,
+            datasets: true
+        };
+        
+        let pendingTopicFilters = { ...currentTopicFilters };
+        
         // Sidebar state variables
         let isMobileSidebarOpen = false;
         let isDesktopSidebarOpen = false;
@@ -15596,16 +15725,19 @@
         function setDropdownDirection(button, dropdown) {
             const buttonRect = button.getBoundingClientRect();
             const sidebar = button.closest('#mobile-sidebar, #desktop-sidebar');
-            const sidebarRect = sidebar.getBoundingClientRect();
             
-            // Calculate available space
-            const spaceBelow = sidebarRect.bottom - buttonRect.bottom;
-            const spaceAbove = buttonRect.top - sidebarRect.top;
+            // Get the sidebar content area instead of the entire sidebar
+            const sidebarContent = sidebar.querySelector('.flex-1');
+            const sidebarContentRect = sidebarContent ? sidebarContent.getBoundingClientRect() : sidebar.getBoundingClientRect();
+            
+            // Calculate available space within the entire sidebar content area
+            const spaceBelow = sidebarContentRect.bottom - buttonRect.bottom;
+            const spaceAbove = buttonRect.top - sidebarContentRect.top;
             
             // Estimate dropdown height (roughly 6 items * 40px each)
             const estimatedDropdownHeight = 240;
             
-            // Determine direction based on available space
+            // Determine direction based on available space in the whole sidebar content
             if (spaceBelow >= estimatedDropdownHeight || spaceBelow >= spaceAbove) {
                 // Dropdown goes down
                 dropdown.classList.remove('dropdown-up');
@@ -15832,6 +15964,22 @@
             
             // Update UI to reflect current filters
             syncHIndexUI();
+        }
+        
+        function resetPendingNoveltyFilters() {
+            // Revert pending filters to current applied filters
+            pendingNoveltyFilters = { ...currentNoveltyFilters };
+            
+            // Update UI to reflect current filters
+            syncPendingNoveltyUI();
+        }
+        
+        function resetPendingImpactFilters() {
+            // Revert pending filters to current applied filters
+            pendingImpactFilters = { ...currentImpactFilters };
+            
+            // Update UI to reflect current filters
+            syncPendingImpactUI();
         }
         
         function syncHIndexUI() {
@@ -16111,61 +16259,61 @@
                 updateScoringButtonText();
             });
             
-            // Add event listeners for relevance checkboxes to sync between mobile and desktop
-            document.getElementById('mobile-relevance-must').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-must').checked = 
-                    document.getElementById('mobile-relevance-must').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            // Add event listeners for recommendation checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-recommendation-must').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-must').checked = 
+                    document.getElementById('mobile-recommendation-must').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-should').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-should').checked = 
-                    document.getElementById('mobile-relevance-should').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-should').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-should').checked = 
+                    document.getElementById('mobile-recommendation-should').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-skip').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-skip').checked = 
-                    document.getElementById('mobile-relevance-skip').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-skip').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-skip').checked = 
+                    document.getElementById('mobile-recommendation-skip').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('mobile-relevance-ignore').addEventListener('change', () => {
-                document.getElementById('desktop-relevance-ignore').checked = 
-                    document.getElementById('mobile-relevance-ignore').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('mobile-recommendation-ignore').addEventListener('change', () => {
+                document.getElementById('desktop-recommendation-ignore').checked = 
+                    document.getElementById('mobile-recommendation-ignore').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-must').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-must').checked = 
-                    document.getElementById('desktop-relevance-must').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-must').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-must').checked = 
+                    document.getElementById('desktop-recommendation-must').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-should').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-should').checked = 
-                    document.getElementById('desktop-relevance-should').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-should').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-should').checked = 
+                    document.getElementById('desktop-recommendation-should').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-skip').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-skip').checked = 
-                    document.getElementById('desktop-relevance-skip').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-skip').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-skip').checked = 
+                    document.getElementById('desktop-recommendation-skip').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
-            document.getElementById('desktop-relevance-ignore').addEventListener('change', () => {
-                document.getElementById('mobile-relevance-ignore').checked = 
-                    document.getElementById('desktop-relevance-ignore').checked;
-                updatePendingRelevanceFilters();
-                updateRelevanceButtonText();
+            document.getElementById('desktop-recommendation-ignore').addEventListener('change', () => {
+                document.getElementById('mobile-recommendation-ignore').checked = 
+                    document.getElementById('desktop-recommendation-ignore').checked;
+                updatePendingRecommendationFilters();
+                updateRecommendationButtonText();
             });
             
             // Add event listeners for novelty checkboxes to sync between mobile and desktop
@@ -16280,6 +16428,77 @@
                     document.getElementById('desktop-impact-negligible').checked;
                 updatePendingImpactFilters();
                 updateImpactButtonText();
+            });
+            
+            // Add event listeners for topic checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-topic-rlhf').addEventListener('change', () => {
+                document.getElementById('desktop-topic-rlhf').checked = 
+                    document.getElementById('mobile-topic-rlhf').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('mobile-topic-weak-supervision').addEventListener('change', () => {
+                document.getElementById('desktop-topic-weak-supervision').checked = 
+                    document.getElementById('mobile-topic-weak-supervision').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('mobile-topic-diffusion-reasoning').addEventListener('change', () => {
+                document.getElementById('desktop-topic-diffusion-reasoning').checked = 
+                    document.getElementById('mobile-topic-diffusion-reasoning').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('mobile-topic-distributed-training').addEventListener('change', () => {
+                document.getElementById('desktop-topic-distributed-training').checked = 
+                    document.getElementById('mobile-topic-distributed-training').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('mobile-topic-datasets').addEventListener('change', () => {
+                document.getElementById('desktop-topic-datasets').checked = 
+                    document.getElementById('mobile-topic-datasets').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('desktop-topic-rlhf').addEventListener('change', () => {
+                document.getElementById('mobile-topic-rlhf').checked = 
+                    document.getElementById('desktop-topic-rlhf').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('desktop-topic-weak-supervision').addEventListener('change', () => {
+                document.getElementById('mobile-topic-weak-supervision').checked = 
+                    document.getElementById('desktop-topic-weak-supervision').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('desktop-topic-diffusion-reasoning').addEventListener('change', () => {
+                document.getElementById('mobile-topic-diffusion-reasoning').checked = 
+                    document.getElementById('desktop-topic-diffusion-reasoning').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('desktop-topic-distributed-training').addEventListener('change', () => {
+                document.getElementById('mobile-topic-distributed-training').checked = 
+                    document.getElementById('desktop-topic-distributed-training').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
+            });
+            
+            document.getElementById('desktop-topic-datasets').addEventListener('change', () => {
+                document.getElementById('mobile-topic-datasets').checked = 
+                    document.getElementById('desktop-topic-datasets').checked;
+                updatePendingTopicFilters();
+                updateTopicButtonText();
             });
         }
 
@@ -16477,27 +16696,27 @@
         }
 
         // ============================================================================
-        // RELEVANCE FILTER DROPDOWN FUNCTIONS
+        // RECOMMENDATION FILTER DROPDOWN FUNCTIONS
         // ============================================================================
         
-        // Current and pending relevance filter states
-        let currentRelevanceFilters = {
+        // Current and pending recommendation filter states
+        let currentRecommendationFilters = {
             mustRead: true,
             shouldRead: true,
             canSkip: true,
             ignore: true
         };
         
-        let pendingRelevanceFilters = {
+        let pendingRecommendationFilters = {
             mustRead: true,
             shouldRead: true,
             canSkip: true,
             ignore: true
         };
         
-        function toggleMobileRelevanceDropdown() {
-            const button = document.getElementById('mobile-relevance-btn');
-            const dropdown = document.getElementById('mobile-relevance-dropdown');
+        function toggleMobileRecommendationDropdown() {
+            const button = document.getElementById('mobile-recommendation-btn');
+            const dropdown = document.getElementById('mobile-recommendation-dropdown');
             
             if (dropdown.classList.contains('hidden')) {
                 setDropdownDirection(button, dropdown);
@@ -16511,9 +16730,9 @@
             dropdown.classList.toggle('hidden');
         }
         
-        function toggleDesktopRelevanceDropdown() {
-            const button = document.getElementById('desktop-relevance-btn');
-            const dropdown = document.getElementById('desktop-relevance-dropdown');
+        function toggleDesktopRecommendationDropdown() {
+            const button = document.getElementById('desktop-recommendation-btn');
+            const dropdown = document.getElementById('desktop-recommendation-dropdown');
             
             if (dropdown.classList.contains('hidden')) {
                 setDropdownDirection(button, dropdown);
@@ -16527,35 +16746,35 @@
             dropdown.classList.toggle('hidden');
         }
         
-        function syncPendingRelevanceUI() {
-            document.getElementById('mobile-relevance-must').checked = pendingRelevanceFilters.mustRead;
-            document.getElementById('mobile-relevance-should').checked = pendingRelevanceFilters.shouldRead;
-            document.getElementById('mobile-relevance-skip').checked = pendingRelevanceFilters.canSkip;
-            document.getElementById('mobile-relevance-ignore').checked = pendingRelevanceFilters.ignore;
-            document.getElementById('desktop-relevance-must').checked = pendingRelevanceFilters.mustRead;
-            document.getElementById('desktop-relevance-should').checked = pendingRelevanceFilters.shouldRead;
-            document.getElementById('desktop-relevance-skip').checked = pendingRelevanceFilters.canSkip;
-            document.getElementById('desktop-relevance-ignore').checked = pendingRelevanceFilters.ignore;
+        function syncPendingRecommendationUI() {
+            document.getElementById('mobile-recommendation-must').checked = pendingRecommendationFilters.mustRead;
+            document.getElementById('mobile-recommendation-should').checked = pendingRecommendationFilters.shouldRead;
+            document.getElementById('mobile-recommendation-skip').checked = pendingRecommendationFilters.canSkip;
+            document.getElementById('mobile-recommendation-ignore').checked = pendingRecommendationFilters.ignore;
+            document.getElementById('desktop-recommendation-must').checked = pendingRecommendationFilters.mustRead;
+            document.getElementById('desktop-recommendation-should').checked = pendingRecommendationFilters.shouldRead;
+            document.getElementById('desktop-recommendation-skip').checked = pendingRecommendationFilters.canSkip;
+            document.getElementById('desktop-recommendation-ignore').checked = pendingRecommendationFilters.ignore;
         }
         
-        function syncRelevanceUI() {
-            document.getElementById('mobile-relevance-must').checked = currentRelevanceFilters.mustRead;
-            document.getElementById('mobile-relevance-should').checked = currentRelevanceFilters.shouldRead;
-            document.getElementById('mobile-relevance-skip').checked = currentRelevanceFilters.canSkip;
-            document.getElementById('mobile-relevance-ignore').checked = currentRelevanceFilters.ignore;
-            document.getElementById('desktop-relevance-must').checked = currentRelevanceFilters.mustRead;
-            document.getElementById('desktop-relevance-should').checked = currentRelevanceFilters.shouldRead;
-            document.getElementById('desktop-relevance-skip').checked = currentRelevanceFilters.canSkip;
-            document.getElementById('desktop-relevance-ignore').checked = currentRelevanceFilters.ignore;
+        function syncRecommendationUI() {
+            document.getElementById('mobile-recommendation-must').checked = currentRecommendationFilters.mustRead;
+            document.getElementById('mobile-recommendation-should').checked = currentRecommendationFilters.shouldRead;
+            document.getElementById('mobile-recommendation-skip').checked = currentRecommendationFilters.canSkip;
+            document.getElementById('mobile-recommendation-ignore').checked = currentRecommendationFilters.ignore;
+            document.getElementById('desktop-recommendation-must').checked = currentRecommendationFilters.mustRead;
+            document.getElementById('desktop-recommendation-should').checked = currentRecommendationFilters.shouldRead;
+            document.getElementById('desktop-recommendation-skip').checked = currentRecommendationFilters.canSkip;
+            document.getElementById('desktop-recommendation-ignore').checked = currentRecommendationFilters.ignore;
             
-            updateRelevanceButtonText();
+            updateRecommendationButtonText();
         }
         
-        function updateRelevanceButtonText() {
-            const mustChecked = document.getElementById('mobile-relevance-must').checked;
-            const shouldChecked = document.getElementById('mobile-relevance-should').checked;
-            const skipChecked = document.getElementById('mobile-relevance-skip').checked;
-            const ignoreChecked = document.getElementById('mobile-relevance-ignore').checked;
+        function updateRecommendationButtonText() {
+            const mustChecked = document.getElementById('mobile-recommendation-must').checked;
+            const shouldChecked = document.getElementById('mobile-recommendation-should').checked;
+            const skipChecked = document.getElementById('mobile-recommendation-skip').checked;
+            const ignoreChecked = document.getElementById('mobile-recommendation-ignore').checked;
             
             const checkedCount = [mustChecked, shouldChecked, skipChecked, ignoreChecked].filter(Boolean).length;
             
@@ -16568,37 +16787,37 @@
                 selectionText = `${checkedCount} Selected`;
             }
             
-            const mobileButton = document.getElementById('mobile-relevance-btn');
+            const mobileButton = document.getElementById('mobile-recommendation-btn');
             if (mobileButton) {
-                mobileButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+                mobileButton.innerHTML = `<span class="font-bold">Recommendation:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
             }
             
-            const desktopButton = document.getElementById('desktop-relevance-btn');
+            const desktopButton = document.getElementById('desktop-recommendation-btn');
             if (desktopButton) {
-                desktopButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+                desktopButton.innerHTML = `<span class="font-bold">Recommendation:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
             }
         }
         
-        function applyRelevanceFilter() {
-            updatePendingRelevanceFilters();
-            currentRelevanceFilters = { ...pendingRelevanceFilters };
-            syncRelevanceUI();
-            updateRelevanceFiltersInURL();
-            closeMobileRelevanceDropdown();
-            closeDesktopRelevanceDropdown();
+        function applyRecommendationFilter() {
+            updatePendingRecommendationFilters();
+            currentRecommendationFilters = { ...pendingRecommendationFilters };
+            syncRecommendationUI();
+            updateRecommendationFiltersInURL();
+            closeMobileRecommendationDropdown();
+            closeDesktopRecommendationDropdown();
             applyFiltersAndSort();
         }
         
-        function updatePendingRelevanceFilters() {
-            pendingRelevanceFilters.mustRead = document.getElementById('mobile-relevance-must').checked;
-            pendingRelevanceFilters.shouldRead = document.getElementById('mobile-relevance-should').checked;
-            pendingRelevanceFilters.canSkip = document.getElementById('mobile-relevance-skip').checked;
-            pendingRelevanceFilters.ignore = document.getElementById('mobile-relevance-ignore').checked;
+        function updatePendingRecommendationFilters() {
+            pendingRecommendationFilters.mustRead = document.getElementById('mobile-recommendation-must').checked;
+            pendingRecommendationFilters.shouldRead = document.getElementById('mobile-recommendation-should').checked;
+            pendingRecommendationFilters.canSkip = document.getElementById('mobile-recommendation-skip').checked;
+            pendingRecommendationFilters.ignore = document.getElementById('mobile-recommendation-ignore').checked;
         }
         
-        function closeMobileRelevanceDropdown() {
-            const dropdown = document.getElementById('mobile-relevance-dropdown');
-            const button = document.getElementById('mobile-relevance-btn');
+        function closeMobileRecommendationDropdown() {
+            const dropdown = document.getElementById('mobile-recommendation-dropdown');
+            const button = document.getElementById('mobile-recommendation-btn');
             if (dropdown && !dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
                 button.classList.remove('bg-neutral-600');
@@ -16606,9 +16825,9 @@
             }
         }
         
-        function closeDesktopRelevanceDropdown() {
-            const dropdown = document.getElementById('desktop-relevance-dropdown');
-            const button = document.getElementById('desktop-relevance-btn');
+        function closeDesktopRecommendationDropdown() {
+            const dropdown = document.getElementById('desktop-recommendation-dropdown');
+            const button = document.getElementById('desktop-recommendation-btn');
             if (dropdown && !dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
                 button.classList.remove('bg-neutral-600');
@@ -16616,42 +16835,42 @@
             }
         }
         
-        function updateRelevanceFiltersInURL() {
+        function updateRecommendationFiltersInURL() {
             const params = new URLSearchParams(window.location.search);
-            params.set('relevance_must', currentRelevanceFilters.mustRead.toString());
-            params.set('relevance_should', currentRelevanceFilters.shouldRead.toString());
-            params.set('relevance_skip', currentRelevanceFilters.canSkip.toString());
-            params.set('relevance_ignore', currentRelevanceFilters.ignore.toString());
+            params.set('recommendation_must', currentRecommendationFilters.mustRead.toString());
+            params.set('recommendation_should', currentRecommendationFilters.shouldRead.toString());
+            params.set('recommendation_skip', currentRecommendationFilters.canSkip.toString());
+            params.set('recommendation_ignore', currentRecommendationFilters.ignore.toString());
             const newURL = `${window.location.pathname}?${params.toString()}`;
             window.history.pushState({}, '', newURL);
         }
         
-        function updateRelevanceFiltersFromURL() {
+        function updateRecommendationFiltersFromURL() {
             const params = new URLSearchParams(window.location.search);
             
-            const mustRead = params.get('relevance_must');
-            const shouldRead = params.get('relevance_should');
-            const canSkip = params.get('relevance_skip');
-            const ignore = params.get('relevance_ignore');
+            const mustRead = params.get('recommendation_must');
+            const shouldRead = params.get('recommendation_should');
+            const canSkip = params.get('recommendation_skip');
+            const ignore = params.get('recommendation_ignore');
             
             if (mustRead !== null) {
-                currentRelevanceFilters.mustRead = mustRead === 'true';
-                pendingRelevanceFilters.mustRead = mustRead === 'true';
+                currentRecommendationFilters.mustRead = mustRead === 'true';
+                pendingRecommendationFilters.mustRead = mustRead === 'true';
             }
             if (shouldRead !== null) {
-                currentRelevanceFilters.shouldRead = shouldRead === 'true';
-                pendingRelevanceFilters.shouldRead = shouldRead === 'true';
+                currentRecommendationFilters.shouldRead = shouldRead === 'true';
+                pendingRecommendationFilters.shouldRead = shouldRead === 'true';
             }
             if (canSkip !== null) {
-                currentRelevanceFilters.canSkip = canSkip === 'true';
-                pendingRelevanceFilters.canSkip = canSkip === 'true';
+                currentRecommendationFilters.canSkip = canSkip === 'true';
+                pendingRecommendationFilters.canSkip = canSkip === 'true';
             }
             if (ignore !== null) {
-                currentRelevanceFilters.ignore = ignore === 'true';
-                pendingRelevanceFilters.ignore = ignore === 'true';
+                currentRecommendationFilters.ignore = ignore === 'true';
+                pendingRecommendationFilters.ignore = ignore === 'true';
             }
             
-            syncRelevanceUI();
+            syncRecommendationUI();
         }
 
         // ============================================================================
@@ -17011,6 +17230,200 @@
         }
 
         // ============================================================================
+        // TOPIC FILTER DROPDOWN FUNCTIONS
+        // ============================================================================
+        
+        function toggleMobileTopicDropdown() {
+            const button = document.getElementById('mobile-topic-btn');
+            const dropdown = document.getElementById('mobile-topic-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopTopicDropdown() {
+            const button = document.getElementById('desktop-topic-btn');
+            const dropdown = document.getElementById('desktop-topic-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function syncPendingTopicUI() {
+            document.getElementById('mobile-topic-rlhf').checked = pendingTopicFilters.rlhf;
+            document.getElementById('mobile-topic-weak-supervision').checked = pendingTopicFilters.weakSupervision;
+            document.getElementById('mobile-topic-diffusion-reasoning').checked = pendingTopicFilters.diffusionReasoning;
+            document.getElementById('mobile-topic-distributed-training').checked = pendingTopicFilters.distributedTraining;
+            document.getElementById('mobile-topic-datasets').checked = pendingTopicFilters.datasets;
+            document.getElementById('desktop-topic-rlhf').checked = pendingTopicFilters.rlhf;
+            document.getElementById('desktop-topic-weak-supervision').checked = pendingTopicFilters.weakSupervision;
+            document.getElementById('desktop-topic-diffusion-reasoning').checked = pendingTopicFilters.diffusionReasoning;
+            document.getElementById('desktop-topic-distributed-training').checked = pendingTopicFilters.distributedTraining;
+            document.getElementById('desktop-topic-datasets').checked = pendingTopicFilters.datasets;
+        }
+        
+        function syncTopicUI() {
+            document.getElementById('mobile-topic-rlhf').checked = currentTopicFilters.rlhf;
+            document.getElementById('mobile-topic-weak-supervision').checked = currentTopicFilters.weakSupervision;
+            document.getElementById('mobile-topic-diffusion-reasoning').checked = currentTopicFilters.diffusionReasoning;
+            document.getElementById('mobile-topic-distributed-training').checked = currentTopicFilters.distributedTraining;
+            document.getElementById('mobile-topic-datasets').checked = currentTopicFilters.datasets;
+            document.getElementById('desktop-topic-rlhf').checked = currentTopicFilters.rlhf;
+            document.getElementById('desktop-topic-weak-supervision').checked = currentTopicFilters.weakSupervision;
+            document.getElementById('desktop-topic-diffusion-reasoning').checked = currentTopicFilters.diffusionReasoning;
+            document.getElementById('desktop-topic-distributed-training').checked = currentTopicFilters.distributedTraining;
+            document.getElementById('desktop-topic-datasets').checked = currentTopicFilters.datasets;
+            
+            updateTopicButtonText();
+        }
+        
+        function updateTopicButtonText() {
+            const rlhfChecked = document.getElementById('mobile-topic-rlhf').checked;
+            const weakSupervisionChecked = document.getElementById('mobile-topic-weak-supervision').checked;
+            const diffusionReasoningChecked = document.getElementById('mobile-topic-diffusion-reasoning').checked;
+            const distributedTrainingChecked = document.getElementById('mobile-topic-distributed-training').checked;
+            const datasetsChecked = document.getElementById('mobile-topic-datasets').checked;
+            
+            const checkedCount = [rlhfChecked, weakSupervisionChecked, diffusionReasoningChecked, distributedTrainingChecked, datasetsChecked].filter(Boolean).length;
+            
+            let selectionText;
+            if (checkedCount === 5) {
+                selectionText = "All Selected";
+            } else if (checkedCount === 0) {
+                selectionText = "None Selected";
+            } else {
+                selectionText = `${checkedCount} Selected`;
+            }
+            
+            const mobileButton = document.getElementById('mobile-topic-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">Topics:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+            }
+            
+            const desktopButton = document.getElementById('desktop-topic-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">Topics:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
+        function applyTopicFilter() {
+            updatePendingTopicFilters();
+            currentTopicFilters = { ...pendingTopicFilters };
+            syncTopicUI();
+            updateTopicFiltersInURL();
+            closeMobileTopicDropdown();
+            closeDesktopTopicDropdown();
+            updateAllPaperModules();
+            applyFiltersAndSort();
+        }
+        
+        function updatePendingTopicFilters() {
+            pendingTopicFilters.rlhf = document.getElementById('mobile-topic-rlhf').checked;
+            pendingTopicFilters.weakSupervision = document.getElementById('mobile-topic-weak-supervision').checked;
+            pendingTopicFilters.diffusionReasoning = document.getElementById('mobile-topic-diffusion-reasoning').checked;
+            pendingTopicFilters.distributedTraining = document.getElementById('mobile-topic-distributed-training').checked;
+            pendingTopicFilters.datasets = document.getElementById('mobile-topic-datasets').checked;
+        }
+        
+        function resetPendingTopicFilters() {
+            pendingTopicFilters = { ...currentTopicFilters };
+            syncPendingTopicUI();
+        }
+        
+        function closeMobileTopicDropdown() {
+            const dropdown = document.getElementById('mobile-topic-dropdown');
+            const button = document.getElementById('mobile-topic-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function closeDesktopTopicDropdown() {
+            const dropdown = document.getElementById('desktop-topic-dropdown');
+            const button = document.getElementById('desktop-topic-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function updateTopicFiltersInURL() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('topic_rlhf', currentTopicFilters.rlhf.toString());
+            params.set('topic_weak_supervision', currentTopicFilters.weakSupervision.toString());
+            params.set('topic_diffusion_reasoning', currentTopicFilters.diffusionReasoning.toString());
+            params.set('topic_distributed_training', currentTopicFilters.distributedTraining.toString());
+            params.set('topic_datasets', currentTopicFilters.datasets.toString());
+            const newURL = `${window.location.pathname}?${params.toString()}`;
+            window.history.pushState({}, '', newURL);
+        }
+        
+        function updateTopicFiltersFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            
+            const rlhf = params.get('topic_rlhf');
+            const weakSupervision = params.get('topic_weak_supervision');
+            const diffusionReasoning = params.get('topic_diffusion_reasoning');
+            const distributedTraining = params.get('topic_distributed_training');
+            const datasets = params.get('topic_datasets');
+            
+            if (rlhf !== null) {
+                currentTopicFilters.rlhf = rlhf === 'true';
+                pendingTopicFilters.rlhf = rlhf === 'true';
+            }
+            if (weakSupervision !== null) {
+                currentTopicFilters.weakSupervision = weakSupervision === 'true';
+                pendingTopicFilters.weakSupervision = weakSupervision === 'true';
+            }
+            if (diffusionReasoning !== null) {
+                currentTopicFilters.diffusionReasoning = diffusionReasoning === 'true';
+                pendingTopicFilters.diffusionReasoning = diffusionReasoning === 'true';
+            }
+            if (distributedTraining !== null) {
+                currentTopicFilters.distributedTraining = distributedTraining === 'true';
+                pendingTopicFilters.distributedTraining = distributedTraining === 'true';
+            }
+            if (datasets !== null) {
+                currentTopicFilters.datasets = datasets === 'true';
+                pendingTopicFilters.datasets = datasets === 'true';
+            }
+            
+            syncTopicUI();
+        }
+        
+        function passesTopicFilter(paper) {
+            // Topic filter doesn't actually filter papers, it only affects module display
+            return true;
+        }
+        
+        function updateAllPaperModules() {
+            // Update all similarity and relevance modules when topic filters change
+            currentPagePapers.forEach(paper => {
+                updateSimilarityModuleTopics(paper.id);
+                updateRelevanceModuleTopics(paper.id);
+            });
+        }
+
+        // ============================================================================
         // FILTERING AND DISPLAY FUNCTIONS
         // ============================================================================
         
@@ -17037,9 +17450,9 @@
         function updateAdvancedFiltersDisabledState() {
             const shouldDisable = shouldDisableAdvancedFilters();
             
-            // Update Relevance
-            updateDropdownDisabledState('mobile-relevance-btn', 'mobile-relevance-dropdown', shouldDisable);
-            updateDropdownDisabledState('desktop-relevance-btn', 'desktop-relevance-dropdown', shouldDisable);
+            // Update Recommendation
+            updateDropdownDisabledState('mobile-recommendation-btn', 'mobile-recommendation-dropdown', shouldDisable);
+            updateDropdownDisabledState('desktop-recommendation-btn', 'desktop-recommendation-dropdown', shouldDisable);
             
             // Update Novelty  
             updateDropdownDisabledState('mobile-novelty-btn', 'mobile-novelty-dropdown', shouldDisable);
@@ -17057,14 +17470,17 @@
             // Apply Scoring filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesScoringFilter(paper));
             
-            // Apply Relevance filtering
-            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRelevanceFilter(paper));
+            // Apply Recommendation filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRecommendationFilter(paper));
             
             // Apply Novelty filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesNoveltyFilter(paper));
             
             // Apply Impact filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesImpactFilter(paper));
+            
+            // Apply Topic filtering (note: this doesn't filter papers, just affects display)
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesTopicFilter(paper));
             
             // Apply current sorting
             sortPapers(currentSort);
@@ -17128,8 +17544,8 @@
             return true;
         }
         
-        function passesRelevanceFilter(paper) {
-            const { mustRead, shouldRead, canSkip, ignore } = currentRelevanceFilters;
+        function passesRecommendationFilter(paper) {
+            const { mustRead, shouldRead, canSkip, ignore } = currentRecommendationFilters;
             
             // If no filters are selected, hide all papers
             if (!mustRead && !shouldRead && !canSkip && !ignore) return false;
@@ -17380,6 +17796,512 @@
         }
 
         // ============================================================================
+        // TOPIC VISIBILITY HELPER FUNCTIONS
+        // ============================================================================
+        
+        function getTopicKeyMapping() {
+            return {
+                'rlhf': 'rlhf',
+                'weakSupervision': 'weak_supervision', 
+                'diffusionReasoning': 'diffusion_reasoning',
+                'distributedTraining': 'distributed_training',
+                'datasets': 'datasets'
+            };
+        }
+        
+        function getTopicDisplayNames() {
+            return {
+                'rlhf': 'RLHF',
+                'weakSupervision': 'Weak Supervision',
+                'diffusionReasoning': 'Diffusion Reasoning', 
+                'distributedTraining': 'Distributed Training',
+                'datasets': 'Datasets'
+            };
+        }
+        
+        function getHiddenTopicsCount() {
+            const filters = currentTopicFilters;
+            return Object.values(filters).filter(visible => !visible).length;
+        }
+        
+        function getVisibleTopics() {
+            const filters = currentTopicFilters;
+            return Object.keys(filters).filter(topic => filters[topic]);
+        }
+        
+        function getHiddenTopics() {
+            const filters = currentTopicFilters;
+            return Object.keys(filters).filter(topic => !filters[topic]);
+        }
+        
+        function generateSimilarityTopicRows(paper) {
+            const topicMapping = getTopicKeyMapping();
+            const displayNames = getTopicDisplayNames();
+            const visibleTopics = getVisibleTopics();
+            
+            let html = '';
+            
+            // Add visible topic rows
+            visibleTopics.forEach(topic => {
+                const dataKey = topicMapping[topic];
+                const displayName = displayNames[topic];
+                const score = paper[`${dataKey}_score`];
+                
+                html += `
+                    <!-- ${displayName} Score Row -->
+                    <div class="flex flex-col topic-row visible-topic" data-topic="${topic}">
+                        <div class="text-left">
+                            <span class="text-neutral-70 font-heading font-bold text-lg">${displayName}:</span>
+                        </div>
+                        <div class="bg-neutral-200 relative flex items-center justify-end">
+                            <div class="similarity-progress-bar ${dataKey.replace('_', '-')}-progress-bar bg-bar-raw absolute inset-0 z-0" 
+                                 data-paper-id="${paper.id}" 
+                                 data-topic="${dataKey}">
+                            </div>
+                            <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 ${dataKey.replace('_', '-')}-similarity-score">
+                                ${score.toFixed(3)}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            return html;
+        }
+        
+        function generateRelevanceTopicRows(paper) {
+            const topicMapping = getTopicKeyMapping();
+            const displayNames = getTopicDisplayNames();
+            const visibleTopics = getVisibleTopics();
+            
+            let html = '';
+            
+            // Add visible topic rows
+            visibleTopics.forEach(topic => {
+                const dataKey = topicMapping[topic];
+                const displayName = displayNames[topic];
+                const relevance = paper[`${dataKey}_relevance`];
+                
+                html += `
+                    <!-- ${displayName} Relevance Row -->
+                    <div class="flex flex-col topic-row visible-topic" data-topic="${topic}">
+                        <div class="text-left">
+                            <span class="text-neutral-70 font-heading font-bold text-lg">${displayName}:</span>
+                        </div>
+                        <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(relevance)}">
+                            ${getRelevanceDisplayText(relevance)}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            return html;
+        }
+        
+        function generateRelevanceJustificationContent(paper, showingHidden = false) {
+            const topicMapping = getTopicKeyMapping();
+            const displayNames = getTopicDisplayNames();
+            const visibleTopics = getVisibleTopics();
+            
+            let html = '';
+            
+            // Add justification for visible topics only unless showing hidden topics
+            const topicsToShow = showingHidden ? Object.keys(displayNames) : visibleTopics;
+            
+            topicsToShow.forEach(topic => {
+                const dataKey = topicMapping[topic];
+                const displayName = displayNames[topic];
+                const justification = paper[`${dataKey}_justification`];
+                
+                html += `
+                    <div class="justification-topic-section visible-justification" data-topic="${topic}">
+                        <div class="font-heading font-bold">${displayName}:</div>
+                        <div>${getJustificationText(justification)}</div>
+                    </div>
+                `;
+            });
+            
+            return html;
+        }
+        
+        function toggleSimilarityHiddenTopics(paperId) {
+            // Find the similarity module specifically
+            const containers = document.querySelectorAll(`[data-paper-id="${paperId}"][data-show-hidden-topics]`);
+            let container = null;
+            
+            // Find the similarity container (the one that contains similarity-scores-container)
+            containers.forEach(cont => {
+                if (cont.querySelector('.similarity-scores-container')) {
+                    container = cont;
+                }
+            });
+            
+            if (!container) return;
+            
+            const isShowingHidden = container.getAttribute('data-show-hidden-topics') === 'true';
+            const button = container.querySelector('.show-other-topics-container button');
+            const hiddenTopicsContainer = container.querySelector('.hidden-topics-container');
+            
+            if (!isShowingHidden) {
+                // Show hidden topics
+                container.setAttribute('data-show-hidden-topics', 'true');
+                button.innerHTML = 'Hide Other Topics <span class="text-xs">▲</span>';
+                
+                // Show and populate the hidden topics container
+                hiddenTopicsContainer.style.display = 'block';
+                addHiddenSimilarityTopics(paperId, hiddenTopicsContainer);
+            } else {
+                // Hide other topics  
+                container.setAttribute('data-show-hidden-topics', 'false');
+                button.innerHTML = 'Show Other Topics <span class="text-xs">▼</span>';
+                
+                // Hide and clear the hidden topics container
+                hiddenTopicsContainer.style.display = 'none';
+                hiddenTopicsContainer.innerHTML = '';
+            }
+            
+            // Recalculate normalized scores if in normalized mode
+            if (container.getAttribute('data-normalized') === 'true') {
+                updateNormalizedScores(paperId);
+            }
+        }
+        
+        function toggleRelevanceHiddenTopics(paperId) {
+            // Find the relevance module specifically (not similarity module)
+            const containers = document.querySelectorAll(`[data-paper-id="${paperId}"][data-show-hidden-topics]`);
+            let container = null;
+            
+            // Find the relevance container (the one that contains relevance-scores-container)
+            containers.forEach(cont => {
+                if (cont.querySelector('.relevance-scores-container')) {
+                    container = cont;
+                }
+            });
+            
+            if (!container) return;
+            
+            const isShowingHidden = container.getAttribute('data-show-hidden-topics') === 'true';
+            const button = container.querySelector('.show-other-topics-container button');
+            const hiddenTopicsContainer = container.querySelector('.hidden-topics-container');
+            
+            if (!isShowingHidden) {
+                // Show hidden topics
+                container.setAttribute('data-show-hidden-topics', 'true');
+                button.innerHTML = 'Hide Other Topics <span class="text-xs">▲</span>';
+                
+                // Show and populate the hidden topics container
+                hiddenTopicsContainer.style.display = 'block';
+                addHiddenRelevanceTopics(paperId, hiddenTopicsContainer);
+            } else {
+                // Hide other topics
+                container.setAttribute('data-show-hidden-topics', 'false');
+                button.innerHTML = 'Show Other Topics <span class="text-xs">▼</span>';
+                
+                // Hide and clear the hidden topics container
+                hiddenTopicsContainer.style.display = 'none';
+                hiddenTopicsContainer.innerHTML = '';
+            }
+            
+            // Update justification content based on new state
+            const justificationContainer = container.querySelector('.relevance-justification-section .justification-text');
+            if (justificationContainer) {
+                const paper = currentPagePapers.find(p => p.id === paperId);
+                if (paper) {
+                    const newShowingHidden = container.getAttribute('data-show-hidden-topics') === 'true';
+                    justificationContainer.innerHTML = generateRelevanceJustificationContent(paper, newShowingHidden);
+                }
+            }
+            
+            // Update justification if it's currently visible
+            updateRelevanceJustificationVisibility(paperId);
+        }
+        
+        function addHiddenSimilarityTopics(paperId, container) {
+            const paper = currentPagePapers.find(p => p.id === paperId);
+            if (!paper) return;
+            
+            const topicMapping = getTopicKeyMapping();
+            const displayNames = getTopicDisplayNames();
+            const hiddenTopics = getHiddenTopics();
+            
+            // Check if the parent container is in normalized mode
+            const parentContainer = container.closest('[data-normalized]');
+            const isNormalized = parentContainer && parentContainer.getAttribute('data-normalized') === 'true';
+            const barColorClass = isNormalized ? 'bg-bar-normalized' : 'bg-bar-raw';
+            
+            hiddenTopics.forEach(topic => {
+                const dataKey = topicMapping[topic];
+                const displayName = displayNames[topic];
+                const score = paper[`${dataKey}_score`];
+                
+                const rowHtml = `
+                    <div class="flex flex-col topic-row hidden-topic" data-topic="${topic}">
+                        <div class="text-left">
+                            <span class="text-neutral-70 font-heading font-bold text-lg">${displayName}:</span>
+                        </div>
+                        <div class="bg-neutral-200 relative flex items-center justify-end">
+                            <div class="similarity-progress-bar ${dataKey.replace('_', '-')}-progress-bar ${barColorClass} absolute inset-0 z-0" 
+                                 data-paper-id="${paperId}" 
+                                 data-topic="${dataKey}">
+                            </div>
+                            <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 ${dataKey.replace('_', '-')}-similarity-score">
+                                ${score.toFixed(3)}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                
+                container.insertAdjacentHTML('beforeend', rowHtml);
+            });
+            
+            // Update progress bars for newly added rows with correct values and colors
+            setupProgressBarsForPaper(paper);
+            
+            // If in normalized mode, update all scores including the newly added ones
+            if (isNormalized) {
+                updateNormalizedScores(paperId);
+            }
+        }
+        
+        function addHiddenRelevanceTopics(paperId, container) {
+            const paper = currentPagePapers.find(p => p.id === paperId);
+            if (!paper) return;
+            
+            const topicMapping = getTopicKeyMapping();
+            const displayNames = getTopicDisplayNames();
+            const hiddenTopics = getHiddenTopics();
+            
+            hiddenTopics.forEach(topic => {
+                const dataKey = topicMapping[topic];
+                const displayName = displayNames[topic];
+                const relevance = paper[`${dataKey}_relevance`];
+                
+                const rowHtml = `
+                    <div class="flex flex-col topic-row hidden-topic" data-topic="${topic}">
+                        <div class="text-left">
+                            <span class="text-neutral-70 font-heading font-bold text-lg">${displayName}:</span>
+                        </div>
+                        <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(relevance)}">
+                            ${getRelevanceDisplayText(relevance)}
+                        </div>
+                    </div>
+                `;
+                
+                container.insertAdjacentHTML('beforeend', rowHtml);
+            });
+        }
+        
+        function removeHiddenTopicRows(container) {
+            const hiddenRows = container.querySelectorAll('.hidden-topic');
+            hiddenRows.forEach(row => row.remove());
+        }
+        
+        function updateSimilarityModuleTopics(paperId) {
+            // Find the similarity module specifically
+            const containers = document.querySelectorAll(`[data-paper-id="${paperId}"][data-normalized]`);
+            let container = null;
+            
+            containers.forEach(cont => {
+                if (cont.querySelector('.similarity-scores-container')) {
+                    container = cont;
+                }
+            });
+            
+            if (!container) return;
+            
+            const scoresContainer = container.querySelector('.similarity-scores-container');
+            const showOtherButton = container.querySelector('.show-other-topics-container');
+            
+            // Remove all existing topic rows
+            scoresContainer.innerHTML = '';
+            
+            // Regenerate visible topic rows
+            const paper = currentPagePapers.find(p => p.id === paperId);
+            if (paper) {
+                scoresContainer.innerHTML = generateSimilarityTopicRows(paper);
+                setupProgressBarsForPaper(paper);
+                
+                // Update normalized scores if needed
+                if (container.getAttribute('data-normalized') === 'true') {
+                    updateNormalizedScores(paperId);
+                }
+            }
+            
+            // Show/hide the "Show Other Topics" button
+            if (getHiddenTopicsCount() > 0) {
+                if (showOtherButton) {
+                    showOtherButton.style.display = 'block';
+                }
+            } else {
+                if (showOtherButton) {
+                    showOtherButton.style.display = 'none';
+                }
+            }
+            
+            // Reset the hidden topics state
+            container.setAttribute('data-show-hidden-topics', 'false');
+            
+            // Reset button text if it exists
+            const button = showOtherButton?.querySelector('button');
+            if (button) {
+                button.innerHTML = 'Show Other Topics <span class="text-xs">▼</span>';
+            }
+        }
+        
+        function updateRelevanceModuleTopics(paperId) {
+            // Find all relevance containers for this paper
+            const containers = document.querySelectorAll(`[data-paper-id="${paperId}"][data-show-hidden-topics]`);
+            
+            containers.forEach(container => {
+                const scoresContainer = container.querySelector('.relevance-scores-container');
+                if (!scoresContainer) return; // Skip if this is not a relevance container
+                
+                const showOtherButton = container.querySelector('.show-other-topics-container');
+                const justificationContainer = container.querySelector('.relevance-justification-section .justification-text');
+                
+                // Remove all existing topic rows
+                scoresContainer.innerHTML = '';
+                
+                // Regenerate visible topic rows
+                const paper = currentPagePapers.find(p => p.id === paperId);
+                if (paper) {
+                    scoresContainer.innerHTML = generateRelevanceTopicRows(paper);
+                    
+                    // Update justification content based on current visibility state
+                    if (justificationContainer) {
+                        const isShowingHidden = container.getAttribute('data-show-hidden-topics') === 'true';
+                        justificationContainer.innerHTML = generateRelevanceJustificationContent(paper, isShowingHidden);
+                    }
+                }
+                
+                // Show/hide the "Show Other Topics" button
+                if (getHiddenTopicsCount() > 0) {
+                    if (showOtherButton) {
+                        showOtherButton.style.display = 'block';
+                    }
+                } else {
+                    if (showOtherButton) {
+                        showOtherButton.style.display = 'none';
+                    }
+                }
+                
+                // Reset the hidden topics state
+                container.setAttribute('data-show-hidden-topics', 'false');
+                
+                // Reset button text if it exists
+                const button = showOtherButton?.querySelector('button');
+                if (button) {
+                    button.innerHTML = 'Show Other Topics <span class="text-xs">▼</span>';
+                }
+            });
+        }
+        
+        function updateRelevanceJustificationVisibility(paperId) {
+            const container = document.querySelector(`.relevance-justification-section[data-paper-id="${paperId}"]`);
+            if (!container) return;
+            
+            const justificationDiv = container.querySelector('.justification-text');
+            const isVisible = !justificationDiv.classList.contains('hidden');
+            
+            if (isVisible) {
+                const paper = currentPagePapers.find(p => p.id === paperId);
+                const relevanceContainer = container.closest('[data-show-hidden-topics]');
+                const isShowingHidden = relevanceContainer && relevanceContainer.getAttribute('data-show-hidden-topics') === 'true';
+                
+                if (paper) {
+                    if (isShowingHidden) {
+                        // Show all justifications
+                        justificationDiv.innerHTML = generateFullRelevanceJustificationContent(paper);
+                    } else {
+                        // Show only visible justifications
+                        justificationDiv.innerHTML = generateRelevanceJustificationContent(paper);
+                    }
+                }
+            }
+        }
+        
+        function generateFullRelevanceJustificationContent(paper) {
+            const allTopics = ['rlhf', 'weakSupervision', 'diffusionReasoning', 'distributedTraining', 'datasets'];
+            const topicMapping = getTopicKeyMapping();
+            const displayNames = getTopicDisplayNames();
+            
+            let html = '';
+            
+            allTopics.forEach(topic => {
+                const dataKey = topicMapping[topic];
+                const displayName = displayNames[topic];
+                const justification = paper[`${dataKey}_justification`];
+                const isVisible = currentTopicFilters[topic];
+                
+                html += `
+                    <div class="justification-topic-section ${isVisible ? 'visible-justification' : 'hidden-justification'}" data-topic="${topic}">
+                        <div class="font-heading font-bold">${displayName}:</div>
+                        <div>${getJustificationText(justification)}</div>
+                    </div>
+                `;
+            });
+            
+            return html;
+        }
+        
+        function setupProgressBarsForPaper(paper) {
+            const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
+            
+            topics.forEach(topic => {
+                const progressBars = document.querySelectorAll(
+                    `.similarity-progress-bar[data-paper-id="${paper.id}"][data-topic="${topic}"]`
+                );
+                
+                progressBars.forEach(progressBar => {
+                    const score = paper[`${topic}_score`];
+                    const percentage = (score * 100);
+                    progressBar.style.width = `${percentage}%`;
+                });
+            });
+        }
+        
+        function updateNormalizedScores(paperId) {
+            const container = document.querySelector(`[data-paper-id="${paperId}"][data-normalized="true"]`);
+            if (!container) return;
+            
+            const paper = currentPagePapers.find(p => p.id === paperId);
+            if (!paper) return;
+            
+            const isShowingHidden = container.getAttribute('data-show-hidden-topics') === 'true';
+            const topicsToCalculate = isShowingHidden ? 
+                ['rlhf', 'weakSupervision', 'diffusionReasoning', 'distributedTraining', 'datasets'] :
+                getVisibleTopics();
+                
+            const topicMapping = getTopicKeyMapping();
+            
+            // Calculate total score for normalization
+            const totalScore = topicsToCalculate.reduce((sum, topic) => {
+                const dataKey = topicMapping[topic];
+                return sum + paper[`${dataKey}_score`];
+            }, 0);
+            
+            // Update each visible topic
+            topicsToCalculate.forEach(topic => {
+                const dataKey = topicMapping[topic];
+                const rawScore = paper[`${dataKey}_score`];
+                const normalizedScore = (rawScore / totalScore) * 100;
+                
+                // Update progress bar
+                const progressBar = container.querySelector(`.${dataKey.replace('_', '-')}-progress-bar`);
+                if (progressBar) {
+                    progressBar.style.width = `${normalizedScore}%`;
+                }
+                
+                // Update score text
+                const scoreElement = container.querySelector(`.${dataKey.replace('_', '-')}-similarity-score`);
+                if (scoreElement) {
+                    const sigFigScore = normalizedScore.toPrecision(3);
+                    scoreElement.textContent = `${sigFigScore}%`;
+                }
+            });
+        }
+
+        // ============================================================================
         // PAPER CARD CREATION FUNCTIONS
         // ============================================================================
         function createPaperCard(paper, paperNumber) {
@@ -17541,7 +18463,7 @@
                         <!-- Row 5: Similarity, Relevance, H-index Section -->
                         <div class="flex flex-col tablet:flex-row gap-lg items-start">
                             <!-- Similarity Scores Module -->
-                            <div class="bg-neutral-300 p-lg flex-1 w-full" data-paper-id="${paper.id}" data-normalized="false">
+                            <div class="bg-neutral-300 p-lg flex-1 w-full" data-paper-id="${paper.id}" data-normalized="false" data-show-hidden-topics="false">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Title Section -->
                                     <div class="text-center py-tag-y">
@@ -17549,87 +18471,19 @@
                                     </div>
                                     
                                     <!-- Scores Section -->
-                                    <div class="flex flex-col gap-xs">
-                                        <!-- RLHF Score Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">RLHF:</span>
-                                            </div>
-                                            <div class="bg-neutral-200 relative flex items-center justify-end">
-                                                <div class="similarity-progress-bar rlhf-progress-bar bg-bar-raw absolute inset-0 z-0" 
-                                                     data-paper-id="${paper.id}" 
-                                                     data-topic="rlhf">
-                                                </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 rlhf-similarity-score">
-                                                    ${paper.rlhf_score.toFixed(3)}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Weak Supervision Score Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision:</span>
-                                            </div>
-                                            <div class="bg-neutral-200 relative flex items-center justify-end">
-                                                <div class="similarity-progress-bar weak-supervision-progress-bar bg-bar-raw absolute inset-0 z-0" 
-                                                     data-paper-id="${paper.id}" 
-                                                     data-topic="weak_supervision">
-                                                </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 weak-supervision-similarity-score">
-                                                    ${paper.weak_supervision_score.toFixed(3)}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Diffusion Reasoning Score Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning:</span>
-                                            </div>
-                                            <div class="bg-neutral-200 relative flex items-center justify-end">
-                                                <div class="similarity-progress-bar diffusion-reasoning-progress-bar bg-bar-raw absolute inset-0 z-0" 
-                                                     data-paper-id="${paper.id}" 
-                                                     data-topic="diffusion_reasoning">
-                                                </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 diffusion-reasoning-similarity-score">
-                                                    ${paper.diffusion_reasoning_score.toFixed(3)}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Distributed Training Score Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training:</span>
-                                            </div>
-                                            <div class="bg-neutral-200 relative flex items-center justify-end">
-                                                <div class="similarity-progress-bar distributed-training-progress-bar bg-bar-raw absolute inset-0 z-0" 
-                                                     data-paper-id="${paper.id}" 
-                                                     data-topic="distributed_training">
-                                                </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 distributed-training-similarity-score">
-                                                    ${paper.distributed_training_score.toFixed(3)}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Datasets Score Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Datasets:</span>
-                                            </div>
-                                            <div class="bg-neutral-200 relative flex items-center justify-end">
-                                                <div class="similarity-progress-bar datasets-progress-bar bg-bar-raw absolute inset-0 z-0" 
-                                                     data-paper-id="${paper.id}" 
-                                                     data-topic="datasets">
-                                                </div>
-                                                <span class="text-neutral-70 font-heading font-bold text-md py-tag-y px-tag-x relative z-10 datasets-similarity-score">
-                                                    ${paper.datasets_score.toFixed(3)}
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <div class="flex flex-col gap-xs similarity-scores-container">
+                                        ${generateSimilarityTopicRows(paper)}
                                     </div>
+                                    
+                                    <!-- Show Other Topics Button (conditionally shown) -->
+                                    <div class="show-other-topics-container" ${getHiddenTopicsCount() > 0 ? '' : 'style="display: none;"'}>
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y w-full text-center hover:bg-neutral-600" onclick="toggleSimilarityHiddenTopics('${paper.id}')">
+                                            Show Other Topics <span class="text-xs">▼</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Hidden Topics Container (appears after button when toggled) -->
+                                    <div class="hidden-topics-container" style="display: none;"></div>
                                     
                                     <!-- Button Section -->
                                     <div>
@@ -17641,7 +18495,7 @@
                             </div>
                             
                             <!-- Relevance Module -->
-                            <div class="bg-neutral-300 p-lg flex-1 w-full h-full">
+                            <div class="bg-neutral-300 p-lg flex-1 w-full h-full" data-paper-id="${paper.id}" data-show-hidden-topics="false">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Title Section -->
                                     <div class="text-center py-tag-y">
@@ -17649,57 +18503,19 @@
                                     </div>
                                     
                                     <!-- Scores Section -->
-                                    <div class="flex flex-col gap-xs">
-                                        <!-- RLHF Relevance Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">RLHF:</span>
-                                            </div>
-                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.rlhf_relevance)}">
-                                                ${getRelevanceDisplayText(paper.rlhf_relevance)}
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Weak Supervision Relevance Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Weak Supervision:</span>
-                                            </div>
-                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.weak_supervision_relevance)}">
-                                                ${getRelevanceDisplayText(paper.weak_supervision_relevance)}
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Diffusion Reasoning Relevance Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Diffusion Reasoning:</span>
-                                            </div>
-                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.diffusion_reasoning_relevance)}">
-                                                ${getRelevanceDisplayText(paper.diffusion_reasoning_relevance)}
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Distributed Training Relevance Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Distributed Training:</span>
-                                            </div>
-                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.distributed_training_relevance)}">
-                                                ${getRelevanceDisplayText(paper.distributed_training_relevance)}
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Datasets Relevance Row -->
-                                        <div class="flex flex-col">
-                                            <div class="text-left">
-                                                <span class="text-neutral-70 font-heading font-bold text-lg">Datasets:</span>
-                                            </div>
-                                            <div class="w-full text-center py-tag-y font-heading font-bold text-md text-neutral-10 ${getRelevanceColor(paper.datasets_relevance)}">
-                                                ${getRelevanceDisplayText(paper.datasets_relevance)}
-                                            </div>
-                                        </div>
+                                    <div class="flex flex-col gap-xs relevance-scores-container">
+                                        ${generateRelevanceTopicRows(paper)}
                                     </div>
+                                    
+                                    <!-- Show Other Topics Button (conditionally shown) -->
+                                    <div class="show-other-topics-container" ${getHiddenTopicsCount() > 0 ? '' : 'style="display: none;"'}>
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y w-full text-center hover:bg-neutral-600" onclick="toggleRelevanceHiddenTopics('${paper.id}')">
+                                            Show Other Topics <span class="text-xs">▼</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Hidden Topics Container (appears after button when toggled) -->
+                                    <div class="hidden-topics-container" style="display: none;"></div>
                                     
                                     <!-- Justification Section -->
                                     <div class="w-full relevance-justification-section" data-paper-id="${paper.id}">
@@ -17708,26 +18524,7 @@
                                             Show Justification <span class="text-xs">▲</span>
                                         </button>
                                         <div class="justification-text hidden text-neutral-20 font-mono text-md px-tag-x py-tag-y bg-neutral-500 transition-all duration-300 ease-in-out flex flex-col gap-sm">
-                                            <div>
-                                                <div class="font-heading font-bold">RLHF:</div>
-                                                <div>${getJustificationText(paper.rlhf_justification)}</div>
-                                            </div>
-                                            <div>
-                                                <div class="font-heading font-bold">Weak Supervision:</div>
-                                                <div>${getJustificationText(paper.weak_supervision_justification)}</div>
-                                            </div>
-                                            <div>
-                                                <div class="font-heading font-bold">Diffusion Reasoning:</div>
-                                                <div>${getJustificationText(paper.diffusion_reasoning_justification)}</div>
-                                            </div>
-                                            <div>
-                                                <div class="font-heading font-bold">Distributed Training:</div>
-                                                <div>${getJustificationText(paper.distributed_training_justification)}</div>
-                                            </div>
-                                            <div>
-                                                <div class="font-heading font-bold">Datasets:</div>
-                                                <div>${getJustificationText(paper.datasets_justification)}</div>
-                                            </div>
+                                            ${generateRelevanceJustificationContent(paper)}
                                         </div>
                                     </div>
                                 </div>
@@ -17827,14 +18624,17 @@
             // Load Scoring filters from URL
             updateScoringFiltersFromURL();
             
-            // Load Relevance filters from URL
-            updateRelevanceFiltersFromURL();
+            // Load Recommendation filters from URL
+            updateRecommendationFiltersFromURL();
             
             // Load Novelty filters from URL
             updateNoveltyFiltersFromURL();
             
             // Load Impact filters from URL
             updateImpactFiltersFromURL();
+            
+            // Load Topic filters from URL
+            updateTopicFiltersFromURL();
             
             // Update disabled state for advanced filters after loading scoring filters
             updateAdvancedFiltersDisabledState();
@@ -18159,19 +18959,7 @@
         // Function to setup initial similarity progress bars (raw scores only)
         function setupInitialProgressBars() {
             currentPagePapers.forEach(paper => {
-                const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
-                
-                topics.forEach(topic => {
-                    const progressBars = document.querySelectorAll(
-                        `.similarity-progress-bar[data-paper-id="${paper.id}"][data-topic="${topic}"]`
-                    );
-                    
-                    progressBars.forEach(progressBar => {
-                        const score = paper[`${topic}_score`];
-                        const percentage = (score * 100);
-                        progressBar.style.width = `${percentage}%`;
-                    });
-                });
+                setupProgressBarsForPaper(paper);
             });
         }
 
@@ -18194,42 +18982,31 @@
             // Update button text
             buttonElement.textContent = isNormalized ? 'Show Normalized Scores ⇄' : 'Show Raw Scores ⇄';
             
-            // Calculate scores and update UI
-            const topics = ['rlhf', 'weak_supervision', 'diffusion_reasoning', 'distributed_training', 'datasets'];
-            
             if (!isNormalized) {
                 // Switch to normalized mode
-                const scores = topics.map(topic => paper[`${topic}_score`]);
-                const totalScore = scores.reduce((sum, score) => sum + score, 0);
+                updateNormalizedScores(paperId);
                 
-                topics.forEach(topic => {
-                    const rawScore = paper[`${topic}_score`];
-                    const normalizedScore = (rawScore / totalScore) * 100;
-                    
-                    // Update progress bar
-                    const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
-                    if (progressBar) {
-                        progressBar.style.width = `${normalizedScore}%`;
-                        // Change to normalized bar color
-                        progressBar.classList.remove('bg-bar-raw');
-                        progressBar.classList.add('bg-bar-normalized');
-                    }
-                    
-                    // Update score text
-                    const scoreElement = container.querySelector(`.${topic.replace('_', '-')}-similarity-score`);
-                    if (scoreElement) {
-                        // Convert to 3 significant figures
-                        const sigFigScore = normalizedScore.toPrecision(3);
-                        scoreElement.textContent = `${sigFigScore}%`;
-                    }
+                // Change all progress bars to normalized color
+                const progressBars = container.querySelectorAll('.similarity-progress-bar');
+                progressBars.forEach(bar => {
+                    bar.classList.remove('bg-bar-raw');
+                    bar.classList.add('bg-bar-normalized');
                 });
             } else {
                 // Switch to raw mode
-                topics.forEach(topic => {
-                    const rawScore = paper[`${topic}_score`];
+                const isShowingHidden = container.getAttribute('data-show-hidden-topics') === 'true';
+                const topicsToShow = isShowingHidden ? 
+                    ['rlhf', 'weakSupervision', 'diffusionReasoning', 'distributedTraining', 'datasets'] :
+                    getVisibleTopics();
+                    
+                const topicMapping = getTopicKeyMapping();
+                
+                topicsToShow.forEach(topic => {
+                    const dataKey = topicMapping[topic];
+                    const rawScore = paper[`${dataKey}_score`];
                     
                     // Update progress bar
-                    const progressBar = container.querySelector(`.${topic.replace('_', '-')}-progress-bar`);
+                    const progressBar = container.querySelector(`.${dataKey.replace('_', '-')}-progress-bar`);
                     if (progressBar) {
                         progressBar.style.width = `${(rawScore * 100)}%`;
                         // Change to raw bar color
@@ -18238,7 +19015,7 @@
                     }
                     
                     // Update score text
-                    const scoreElement = container.querySelector(`.${topic.replace('_', '-')}-similarity-score`);
+                    const scoreElement = container.querySelector(`.${dataKey.replace('_', '-')}-similarity-score`);
                     if (scoreElement) {
                         scoreElement.textContent = rawScore.toFixed(3);
                     }
@@ -18573,7 +19350,15 @@
                 { dropdown: document.getElementById('mobile-hindex-dropdown'), button: document.getElementById('mobile-hindex-btn') },
                 { dropdown: document.getElementById('desktop-hindex-dropdown'), button: document.getElementById('desktop-hindex-btn') },
                 { dropdown: document.getElementById('mobile-scoring-dropdown'), button: document.getElementById('mobile-scoring-btn') },
-                { dropdown: document.getElementById('desktop-scoring-dropdown'), button: document.getElementById('desktop-scoring-btn') }
+                { dropdown: document.getElementById('desktop-scoring-dropdown'), button: document.getElementById('desktop-scoring-btn') },
+                { dropdown: document.getElementById('mobile-recommendation-dropdown'), button: document.getElementById('mobile-recommendation-btn') },
+                { dropdown: document.getElementById('desktop-recommendation-dropdown'), button: document.getElementById('desktop-recommendation-btn') },
+                { dropdown: document.getElementById('mobile-novelty-dropdown'), button: document.getElementById('mobile-novelty-btn') },
+                { dropdown: document.getElementById('desktop-novelty-dropdown'), button: document.getElementById('desktop-novelty-btn') },
+                { dropdown: document.getElementById('mobile-impact-dropdown'), button: document.getElementById('mobile-impact-btn') },
+                { dropdown: document.getElementById('desktop-impact-dropdown'), button: document.getElementById('desktop-impact-btn') },
+                { dropdown: document.getElementById('mobile-topic-dropdown'), button: document.getElementById('mobile-topic-btn') },
+                { dropdown: document.getElementById('desktop-topic-dropdown'), button: document.getElementById('desktop-topic-btn') }
             ];
             
             dropdowns.forEach(({ dropdown, button }) => {
@@ -18589,9 +19374,15 @@
                         button.classList.remove('bg-neutral-600');
                         button.classList.add('bg-neutral-500');
                         
-                        // Reset pending filters for H-Index dropdowns
+                        // Reset pending filters for specific dropdown types
                         if (dropdown.id.includes('hindex')) {
                             resetPendingHIndexFilters();
+                        } else if (dropdown.id.includes('novelty')) {
+                            resetPendingNoveltyFilters();
+                        } else if (dropdown.id.includes('impact')) {
+                            resetPendingImpactFilters();
+                        } else if (dropdown.id.includes('topic')) {
+                            resetPendingTopicFilters();
                         }
                     }
                 }
