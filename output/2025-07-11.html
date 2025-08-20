@@ -645,7 +645,56 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-lg">▼</span></button>
+                        <!-- Relevance Filter Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-relevance-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileRelevanceDropdown()">
+                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-base">▼</span>
+                            </button>
+                            <div id="mobile-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-md">
+                                    <!-- Highly Relevant Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-highly" checked>
+                                            <label for="mobile-relevance-highly"></label>
+                                        </div>
+                                        <label for="mobile-relevance-highly" class="text-neutral-10 text-xl font-heading cursor-pointer">Highly Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Moderately Relevant Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-moderately" checked>
+                                            <label for="mobile-relevance-moderately"></label>
+                                        </div>
+                                        <label for="mobile-relevance-moderately" class="text-neutral-10 text-xl font-heading cursor-pointer">Moderately Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Tangentially Relevant Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-tangentially" checked>
+                                            <label for="mobile-relevance-tangentially"></label>
+                                        </div>
+                                        <label for="mobile-relevance-tangentially" class="text-neutral-10 text-xl font-heading cursor-pointer">Tangentially Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Not Relevant Checkbox -->
+                                    <div class="flex items-center gap-md">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="mobile-relevance-not" checked>
+                                            <label for="mobile-relevance-not"></label>
+                                        </div>
+                                        <label for="mobile-relevance-not" class="text-neutral-10 text-xl font-heading cursor-pointer">Not Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- Topic Filter Dropdown -->
                         <div class="relative">
@@ -1025,7 +1074,56 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x">Relevance: All Selected <span class="text-md">▼</span></button>
+                        <!-- Relevance Filter Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-relevance-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopRelevanceDropdown()">
+                                <span class="font-bold">Relevance:</span> <span class="font-normal">All Selected</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-relevance-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 p-md">
+                                <div class="flex flex-col gap-xs">
+                                    <!-- Highly Relevant Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-highly" checked>
+                                            <label for="desktop-relevance-highly"></label>
+                                        </div>
+                                        <label for="desktop-relevance-highly" class="text-neutral-10 text-lg font-heading cursor-pointer">Highly Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Moderately Relevant Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-moderately" checked>
+                                            <label for="desktop-relevance-moderately"></label>
+                                        </div>
+                                        <label for="desktop-relevance-moderately" class="text-neutral-10 text-lg font-heading cursor-pointer">Moderately Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Tangentially Relevant Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-tangentially" checked>
+                                            <label for="desktop-relevance-tangentially"></label>
+                                        </div>
+                                        <label for="desktop-relevance-tangentially" class="text-neutral-10 text-lg font-heading cursor-pointer">Tangentially Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Not Relevant Checkbox -->
+                                    <div class="flex items-center gap-xs">
+                                        <div class="custom-checkbox">
+                                            <input type="checkbox" id="desktop-relevance-not" checked>
+                                            <label for="desktop-relevance-not"></label>
+                                        </div>
+                                        <label for="desktop-relevance-not" class="text-neutral-10 text-lg font-heading cursor-pointer">Not Relevant</label>
+                                    </div>
+                                    
+                                    <!-- Apply Filter Button -->
+                                    <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyRelevanceFilter()">
+                                        Apply Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- Topic Filter Dropdown -->
                         <div class="relative">
@@ -14911,6 +15009,16 @@
         
         let pendingTopicFilters = { ...currentTopicFilters };
         
+        // Relevance Filter State Management
+        let currentRelevanceFilters = {
+            highlyRelevant: true,
+            moderatelyRelevant: true,
+            tangentiallyRelevant: true,
+            notRelevant: true
+        };
+        
+        let pendingRelevanceFilters = { ...currentRelevanceFilters };
+        
         // Sidebar state variables
         let isMobileSidebarOpen = false;
         let isDesktopSidebarOpen = false;
@@ -15857,6 +15965,63 @@
                     document.getElementById('desktop-impact-negligible').checked;
                 updatePendingImpactFilters();
                 updateImpactButtonText();
+            });
+            
+            // Add event listeners for relevance checkboxes to sync between mobile and desktop
+            document.getElementById('mobile-relevance-highly').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-highly').checked = 
+                    document.getElementById('mobile-relevance-highly').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-moderately').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-moderately').checked = 
+                    document.getElementById('mobile-relevance-moderately').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-tangentially').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-tangentially').checked = 
+                    document.getElementById('mobile-relevance-tangentially').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('mobile-relevance-not').addEventListener('change', () => {
+                document.getElementById('desktop-relevance-not').checked = 
+                    document.getElementById('mobile-relevance-not').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-highly').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-highly').checked = 
+                    document.getElementById('desktop-relevance-highly').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-moderately').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-moderately').checked = 
+                    document.getElementById('desktop-relevance-moderately').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-tangentially').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-tangentially').checked = 
+                    document.getElementById('desktop-relevance-tangentially').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
+            });
+            
+            document.getElementById('desktop-relevance-not').addEventListener('change', () => {
+                document.getElementById('mobile-relevance-not').checked = 
+                    document.getElementById('desktop-relevance-not').checked;
+                updatePendingRelevanceFilters();
+                updateRelevanceButtonText();
             });
             
             // Add event listeners for topic checkboxes to sync between mobile and desktop
@@ -16853,6 +17018,213 @@
         }
 
         // ============================================================================
+        // RELEVANCE FILTER FUNCTIONS  
+        // ============================================================================
+        
+        function toggleMobileRelevanceDropdown() {
+            const button = document.getElementById('mobile-relevance-btn');
+            const dropdown = document.getElementById('mobile-relevance-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function toggleDesktopRelevanceDropdown() {
+            const button = document.getElementById('desktop-relevance-btn');
+            const dropdown = document.getElementById('desktop-relevance-dropdown');
+            
+            if (dropdown.classList.contains('hidden')) {
+                setDropdownDirection(button, dropdown);
+                button.classList.remove('bg-neutral-500');
+                button.classList.add('bg-neutral-600');
+            } else {
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+            
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function syncPendingRelevanceUI() {
+            document.getElementById('mobile-relevance-highly').checked = pendingRelevanceFilters.highlyRelevant;
+            document.getElementById('mobile-relevance-moderately').checked = pendingRelevanceFilters.moderatelyRelevant;
+            document.getElementById('mobile-relevance-tangentially').checked = pendingRelevanceFilters.tangentiallyRelevant;
+            document.getElementById('mobile-relevance-not').checked = pendingRelevanceFilters.notRelevant;
+            document.getElementById('desktop-relevance-highly').checked = pendingRelevanceFilters.highlyRelevant;
+            document.getElementById('desktop-relevance-moderately').checked = pendingRelevanceFilters.moderatelyRelevant;
+            document.getElementById('desktop-relevance-tangentially').checked = pendingRelevanceFilters.tangentiallyRelevant;
+            document.getElementById('desktop-relevance-not').checked = pendingRelevanceFilters.notRelevant;
+        }
+        
+        function syncRelevanceUI() {
+            document.getElementById('mobile-relevance-highly').checked = currentRelevanceFilters.highlyRelevant;
+            document.getElementById('mobile-relevance-moderately').checked = currentRelevanceFilters.moderatelyRelevant;
+            document.getElementById('mobile-relevance-tangentially').checked = currentRelevanceFilters.tangentiallyRelevant;
+            document.getElementById('mobile-relevance-not').checked = currentRelevanceFilters.notRelevant;
+            document.getElementById('desktop-relevance-highly').checked = currentRelevanceFilters.highlyRelevant;
+            document.getElementById('desktop-relevance-moderately').checked = currentRelevanceFilters.moderatelyRelevant;
+            document.getElementById('desktop-relevance-tangentially').checked = currentRelevanceFilters.tangentiallyRelevant;
+            document.getElementById('desktop-relevance-not').checked = currentRelevanceFilters.notRelevant;
+            
+            updateRelevanceButtonText();
+        }
+        
+        function updateRelevanceButtonText() {
+            const selectedOptions = [];
+            if (currentRelevanceFilters.highlyRelevant) selectedOptions.push("Highly Relevant");
+            if (currentRelevanceFilters.moderatelyRelevant) selectedOptions.push("Moderately Relevant");
+            if (currentRelevanceFilters.tangentiallyRelevant) selectedOptions.push("Tangentially Relevant");
+            if (currentRelevanceFilters.notRelevant) selectedOptions.push("Not Relevant");
+            
+            const selectionText = selectedOptions.length === 4 ? "All Selected" : 
+                                selectedOptions.length === 0 ? "None Selected" : 
+                                selectedOptions.length === 1 ? selectedOptions[0] : 
+                                `${selectedOptions.length} Selected`;
+            
+            const mobileButton = document.getElementById('mobile-relevance-btn');
+            if (mobileButton) {
+                mobileButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-base">▼</span>`;
+            }
+            
+            const desktopButton = document.getElementById('desktop-relevance-btn');
+            if (desktopButton) {
+                desktopButton.innerHTML = `<span class="font-bold">Relevance:</span> <span class="font-normal">${selectionText}</span> <span class="text-sm">▼</span>`;
+            }
+        }
+        
+        function applyRelevanceFilter() {
+            updatePendingRelevanceFilters();
+            currentRelevanceFilters = { ...pendingRelevanceFilters };
+            syncRelevanceUI();
+            updateRelevanceFiltersInURL();
+            closeMobileRelevanceDropdown();
+            closeDesktopRelevanceDropdown();
+            applyFiltersAndSort();
+        }
+        
+        function updatePendingRelevanceFilters() {
+            // Get values from mobile (primary source)
+            const mobileHighly = document.getElementById('mobile-relevance-highly');
+            const mobileModerately = document.getElementById('mobile-relevance-moderately');
+            const mobileTangentially = document.getElementById('mobile-relevance-tangentially');
+            const mobileNot = document.getElementById('mobile-relevance-not');
+            
+            // Update pending filters from mobile if available, otherwise from desktop
+            pendingRelevanceFilters.highlyRelevant = mobileHighly ? mobileHighly.checked : document.getElementById('desktop-relevance-highly').checked;
+            pendingRelevanceFilters.moderatelyRelevant = mobileModerately ? mobileModerately.checked : document.getElementById('desktop-relevance-moderately').checked;
+            pendingRelevanceFilters.tangentiallyRelevant = mobileTangentially ? mobileTangentially.checked : document.getElementById('desktop-relevance-tangentially').checked;
+            pendingRelevanceFilters.notRelevant = mobileNot ? mobileNot.checked : document.getElementById('desktop-relevance-not').checked;
+        }
+        
+        function resetPendingRelevanceFilters() {
+            pendingRelevanceFilters = { ...currentRelevanceFilters };
+            syncPendingRelevanceUI();
+        }
+        
+        function closeMobileRelevanceDropdown() {
+            const dropdown = document.getElementById('mobile-relevance-dropdown');
+            const button = document.getElementById('mobile-relevance-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function closeDesktopRelevanceDropdown() {
+            const dropdown = document.getElementById('desktop-relevance-dropdown');
+            const button = document.getElementById('desktop-relevance-btn');
+            if (dropdown && !dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+                button.classList.remove('bg-neutral-600');
+                button.classList.add('bg-neutral-500');
+            }
+        }
+        
+        function updateRelevanceFiltersInURL() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('relevance_highly', currentRelevanceFilters.highlyRelevant.toString());
+            params.set('relevance_moderately', currentRelevanceFilters.moderatelyRelevant.toString());
+            params.set('relevance_tangentially', currentRelevanceFilters.tangentiallyRelevant.toString());
+            params.set('relevance_not', currentRelevanceFilters.notRelevant.toString());
+            window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+        }
+        
+        function loadRelevanceFiltersFromURL() {
+            const highlyRelevant = getUrlParameter('relevance_highly');
+            const moderatelyRelevant = getUrlParameter('relevance_moderately');
+            const tangentiallyRelevant = getUrlParameter('relevance_tangentially');
+            const notRelevant = getUrlParameter('relevance_not');
+            
+            if (highlyRelevant !== null) {
+                currentRelevanceFilters.highlyRelevant = highlyRelevant === 'true';
+                pendingRelevanceFilters.highlyRelevant = highlyRelevant === 'true';
+            }
+            if (moderatelyRelevant !== null) {
+                currentRelevanceFilters.moderatelyRelevant = moderatelyRelevant === 'true';
+                pendingRelevanceFilters.moderatelyRelevant = moderatelyRelevant === 'true';
+            }
+            if (tangentiallyRelevant !== null) {
+                currentRelevanceFilters.tangentiallyRelevant = tangentiallyRelevant === 'true';
+                pendingRelevanceFilters.tangentiallyRelevant = tangentiallyRelevant === 'true';
+            }
+            if (notRelevant !== null) {
+                currentRelevanceFilters.notRelevant = notRelevant === 'true';
+                pendingRelevanceFilters.notRelevant = notRelevant === 'true';
+            }
+            
+            syncRelevanceUI();
+        }
+        
+        function passesRelevanceFilter(paper) {
+            // Get selected topics
+            const selectedTopics = [];
+            if (currentTopicFilters.rlhf) selectedTopics.push('rlhf');
+            if (currentTopicFilters.weakSupervision) selectedTopics.push('weak_supervision');
+            if (currentTopicFilters.diffusionReasoning) selectedTopics.push('diffusion_reasoning');
+            if (currentTopicFilters.distributedTraining) selectedTopics.push('distributed_training');
+            if (currentTopicFilters.datasets) selectedTopics.push('datasets');
+            
+            // If no topics selected, skip relevance filtering
+            if (selectedTopics.length === 0) return true;
+            
+            // Get selected relevance levels
+            const selectedRelevanceLevels = [];
+            if (currentRelevanceFilters.highlyRelevant) selectedRelevanceLevels.push('Highly Relevant');
+            if (currentRelevanceFilters.moderatelyRelevant) selectedRelevanceLevels.push('Moderately Relevant');
+            if (currentRelevanceFilters.tangentiallyRelevant) selectedRelevanceLevels.push('Tangentially Relevant');
+            if (currentRelevanceFilters.notRelevant) selectedRelevanceLevels.push('Not Relevant');
+            
+            // If no relevance levels selected, show 0 papers
+            if (selectedRelevanceLevels.length === 0) return false;
+            
+            // Check each selected topic
+            for (let topic of selectedTopics) {
+                const relevanceField = `${topic}_relevance`;
+                const paperRelevance = paper[relevanceField];
+                
+                // Treat "not_validated" same as "Not Relevant"
+                const normalizedRelevance = paperRelevance === "not_validated" ? "Not Relevant" : paperRelevance;
+                
+                // If this topic's relevance matches any selected relevance level, paper passes
+                if (selectedRelevanceLevels.includes(normalizedRelevance)) {
+                    return true; // At least one topic matches
+                }
+            }
+            
+            // No selected topics had matching relevance levels
+            return false;
+        }
+
+        // ============================================================================
         // FILTERING AND DISPLAY FUNCTIONS
         // ============================================================================
         
@@ -16890,6 +17262,10 @@
             // Update Impact
             updateDropdownDisabledState('mobile-impact-btn', 'mobile-impact-dropdown', shouldDisable);
             updateDropdownDisabledState('desktop-impact-btn', 'desktop-impact-dropdown', shouldDisable);
+            
+            // Update Relevance
+            updateDropdownDisabledState('mobile-relevance-btn', 'mobile-relevance-dropdown', shouldDisable);
+            updateDropdownDisabledState('desktop-relevance-btn', 'desktop-relevance-dropdown', shouldDisable);
         }
         
         function applyFiltersAndSort() {
@@ -16907,6 +17283,9 @@
             
             // Apply Impact filtering
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesImpactFilter(paper));
+            
+            // Apply Relevance filtering
+            filteredSortedPapers = filteredSortedPapers.filter(paper => passesRelevanceFilter(paper));
             
             // Apply Topic filtering (note: this doesn't filter papers, just affects display)
             filteredSortedPapers = filteredSortedPapers.filter(paper => passesTopicFilter(paper));
@@ -17359,9 +17738,18 @@
             let container = null;
             
             // Find the similarity container (the one that contains similarity-scores-container)
+            // and ensure it's in the currently visible layout (mobile or desktop)
             containers.forEach(cont => {
                 if (cont.querySelector('.similarity-scores-container')) {
-                    container = cont;
+                    // Check if this container is in a visible layout
+                    const mobileLayout = cont.closest('#mobile-main-container');
+                    const desktopLayout = cont.closest('.tablet\\:block');
+                    
+                    if (mobileLayout && getComputedStyle(mobileLayout).display !== 'none') {
+                        container = cont;
+                    } else if (desktopLayout && getComputedStyle(desktopLayout).display !== 'none') {
+                        container = cont;
+                    }
                 }
             });
             
@@ -17375,6 +17763,7 @@
                 // Show hidden topics
                 container.setAttribute('data-show-hidden-topics', 'true');
                 button.innerHTML = 'Hide Other Topics <span class="text-xs">▲</span>';
+                button.className = 'bg-neutral-700 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center hover:bg-neutral-600';
                 
                 // Show and populate the hidden topics container
                 hiddenTopicsContainer.style.display = 'block';
@@ -17383,6 +17772,7 @@
                 // Hide other topics  
                 container.setAttribute('data-show-hidden-topics', 'false');
                 button.innerHTML = 'Show Other Topics <span class="text-xs">▼</span>';
+                button.className = 'bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center hover:bg-neutral-600';
                 
                 // Hide and clear the hidden topics container
                 hiddenTopicsContainer.style.display = 'none';
@@ -17401,9 +17791,18 @@
             let container = null;
             
             // Find the relevance container (the one that contains relevance-scores-container)
+            // and ensure it's in the currently visible layout (mobile or desktop)
             containers.forEach(cont => {
                 if (cont.querySelector('.relevance-scores-container')) {
-                    container = cont;
+                    // Check if this container is in a visible layout
+                    const mobileLayout = cont.closest('#mobile-main-container');
+                    const desktopLayout = cont.closest('.tablet\\:block');
+                    
+                    if (mobileLayout && getComputedStyle(mobileLayout).display !== 'none') {
+                        container = cont;
+                    } else if (desktopLayout && getComputedStyle(desktopLayout).display !== 'none') {
+                        container = cont;
+                    }
                 }
             });
             
@@ -17417,6 +17816,7 @@
                 // Show hidden topics
                 container.setAttribute('data-show-hidden-topics', 'true');
                 button.innerHTML = 'Hide Other Topics <span class="text-xs">▲</span>';
+                button.className = 'bg-neutral-700 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center hover:bg-neutral-600';
                 
                 // Show and populate the hidden topics container
                 hiddenTopicsContainer.style.display = 'block';
@@ -17425,6 +17825,7 @@
                 // Hide other topics
                 container.setAttribute('data-show-hidden-topics', 'false');
                 button.innerHTML = 'Show Other Topics <span class="text-xs">▼</span>';
+                button.className = 'bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center hover:bg-neutral-600';
                 
                 // Hide and clear the hidden topics container
                 hiddenTopicsContainer.style.display = 'none';
@@ -17530,9 +17931,18 @@
             const containers = document.querySelectorAll(`[data-paper-id="${paperId}"][data-normalized]`);
             let container = null;
             
+            // Find the similarity container in the currently visible layout
             containers.forEach(cont => {
                 if (cont.querySelector('.similarity-scores-container')) {
-                    container = cont;
+                    // Check if this container is in a visible layout
+                    const mobileLayout = cont.closest('#mobile-main-container');
+                    const desktopLayout = cont.closest('.tablet\\:block');
+                    
+                    if (mobileLayout && getComputedStyle(mobileLayout).display !== 'none') {
+                        container = cont;
+                    } else if (desktopLayout && getComputedStyle(desktopLayout).display !== 'none') {
+                        container = cont;
+                    }
                 }
             });
             
@@ -17626,7 +18036,22 @@
         }
         
         function updateRelevanceJustificationVisibility(paperId) {
-            const container = document.querySelector(`.relevance-justification-section[data-paper-id="${paperId}"]`);
+            // Find the justification container in the currently visible layout
+            const containers = document.querySelectorAll(`.relevance-justification-section[data-paper-id="${paperId}"]`);
+            let container = null;
+            
+            containers.forEach(cont => {
+                // Check if this container is in a visible layout
+                const mobileLayout = cont.closest('#mobile-main-container');
+                const desktopLayout = cont.closest('.tablet\\:block');
+                
+                if (mobileLayout && getComputedStyle(mobileLayout).display !== 'none') {
+                    container = cont;
+                } else if (desktopLayout && getComputedStyle(desktopLayout).display !== 'none') {
+                    container = cont;
+                }
+            });
+            
             if (!container) return;
             
             const justificationDiv = container.querySelector('.justification-text');
@@ -17690,7 +18115,22 @@
         }
         
         function updateNormalizedScores(paperId) {
-            const container = document.querySelector(`[data-paper-id="${paperId}"][data-normalized="true"]`);
+            // Find the normalized similarity container in the currently visible layout
+            const containers = document.querySelectorAll(`[data-paper-id="${paperId}"][data-normalized="true"]`);
+            let container = null;
+            
+            containers.forEach(cont => {
+                // Check if this container is in a visible layout
+                const mobileLayout = cont.closest('#mobile-main-container');
+                const desktopLayout = cont.closest('.tablet\\:block');
+                
+                if (mobileLayout && getComputedStyle(mobileLayout).display !== 'none') {
+                    container = cont;
+                } else if (desktopLayout && getComputedStyle(desktopLayout).display !== 'none') {
+                    container = cont;
+                }
+            });
+            
             if (!container) return;
             
             const paper = currentPagePapers.find(p => p.id === paperId);
@@ -17906,7 +18346,7 @@
                                     
                                     <!-- Show Other Topics Button (conditionally shown) -->
                                     <div class="show-other-topics-container" ${getHiddenTopicsCount() > 0 ? '' : 'style="display: none;"'}>
-                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y w-full text-center hover:bg-neutral-600" onclick="toggleSimilarityHiddenTopics('${paper.id}')">
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center hover:bg-neutral-600" onclick="toggleSimilarityHiddenTopics('${paper.id}')">
                                             Show Other Topics <span class="text-xs">▼</span>
                                         </button>
                                     </div>
@@ -17924,7 +18364,7 @@
                             </div>
                             
                             <!-- Relevance Module -->
-                            <div class="bg-neutral-300 p-lg flex-1 w-full h-full" data-paper-id="${paper.id}" data-show-hidden-topics="false">
+                            <div class="bg-neutral-300 p-lg flex-1 w-full" data-paper-id="${paper.id}" data-show-hidden-topics="false">
                                 <div class="flex flex-col gap-xs">
                                     <!-- Title Section -->
                                     <div class="text-center py-tag-y">
@@ -17938,7 +18378,7 @@
                                     
                                     <!-- Show Other Topics Button (conditionally shown) -->
                                     <div class="show-other-topics-container" ${getHiddenTopicsCount() > 0 ? '' : 'style="display: none;"'}>
-                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y w-full text-center hover:bg-neutral-600" onclick="toggleRelevanceHiddenTopics('${paper.id}')">
+                                        <button class="bg-neutral-500 text-neutral-10 font-heading font-bold text-md py-tag-y mt-md w-full text-center hover:bg-neutral-600" onclick="toggleRelevanceHiddenTopics('${paper.id}')">
                                             Show Other Topics <span class="text-xs">▼</span>
                                         </button>
                                     </div>
@@ -18064,6 +18504,9 @@
             
             // Load Topic filters from URL
             updateTopicFiltersFromURL();
+            
+            // Load Relevance filters from URL
+            loadRelevanceFiltersFromURL();
             
             // Update disabled state for advanced filters after loading scoring filters
             updateAdvancedFiltersDisabledState();
@@ -18786,6 +19229,8 @@
                 { dropdown: document.getElementById('desktop-novelty-dropdown'), button: document.getElementById('desktop-novelty-btn') },
                 { dropdown: document.getElementById('mobile-impact-dropdown'), button: document.getElementById('mobile-impact-btn') },
                 { dropdown: document.getElementById('desktop-impact-dropdown'), button: document.getElementById('desktop-impact-btn') },
+                { dropdown: document.getElementById('mobile-relevance-dropdown'), button: document.getElementById('mobile-relevance-btn') },
+                { dropdown: document.getElementById('desktop-relevance-dropdown'), button: document.getElementById('desktop-relevance-btn') },
                 { dropdown: document.getElementById('mobile-topic-dropdown'), button: document.getElementById('mobile-topic-btn') },
                 { dropdown: document.getElementById('desktop-topic-dropdown'), button: document.getElementById('desktop-topic-btn') }
             ];
@@ -18810,6 +19255,8 @@
                             resetPendingNoveltyFilters();
                         } else if (dropdown.id.includes('impact')) {
                             resetPendingImpactFilters();
+                        } else if (dropdown.id.includes('relevance')) {
+                            resetPendingRelevanceFilters();
                         } else if (dropdown.id.includes('topic')) {
                             resetPendingTopicFilters();
                         }
