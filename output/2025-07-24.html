@@ -382,7 +382,7 @@
         </header>
         
         <!-- Mobile Content Area -->
-        <main class="bg-neutral-100">
+        <main class="bg-neutral-100 min-h-screen">
             <div class="max-w-[500px] mx-auto">
                 <!-- Mobile Papers Grid -->
                 <div class="flex flex-col gap-3xl" id="mobile-papers">
@@ -822,6 +822,8 @@
                                 <div class="flex flex-col gap-xs">
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('relevance_high')">Relevance (Highest to Lowest)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('relevance_low')">Relevance (Lowest to Highest)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
                                     <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
@@ -1251,6 +1253,8 @@
                                 <div class="flex flex-col gap-xs">
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('relevance_high')">Relevance (Highest to Lowest)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('relevance_low')">Relevance (Lowest to Highest)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
                                     <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
@@ -1317,7 +1321,7 @@
         </header>
         
         <!-- Desktop Content Area -->
-        <main class="px-xl py-2xl">
+        <main class="px-xl py-2xl min-h-screen">
             <div class="max-w-[1400px] mx-auto">
                 <!-- Desktop Papers Grid -->
                 <div class="flex flex-col gap-3xl" id="desktop-papers">
@@ -13993,6 +13997,39 @@
             return paper.average_h_index !== undefined ? paper.average_h_index : -1;
         }
         
+        function calculateRelevanceScore(paper) {
+            let score = 0;
+            
+            // Only consider topics that are currently selected/enabled in the topic filter
+            const topicsToConsider = [];
+            if (currentTopicFilters.rlhf) topicsToConsider.push('rlhf_relevance');
+            if (currentTopicFilters.weakSupervision) topicsToConsider.push('weak_supervision_relevance');
+            if (currentTopicFilters.diffusionReasoning) topicsToConsider.push('diffusion_reasoning_relevance');
+            if (currentTopicFilters.distributedTraining) topicsToConsider.push('distributed_training_relevance');
+            if (currentTopicFilters.datasets) topicsToConsider.push('datasets_relevance');
+            
+            // If no topics are selected, return 0
+            if (topicsToConsider.length === 0) return 0;
+            
+            // Weighted scoring system
+            const relevanceWeights = {
+                'Highly Relevant': 4,
+                'Moderately Relevant': 3,
+                'Tangentially Relevant': 2,
+                'Not Relevant': 1
+            };
+            
+            // Sum up scores for selected topics only
+            for (let topicField of topicsToConsider) {
+                const relevance = paper[topicField];
+                // Treat "not_validated" same as "Not Relevant"
+                const normalizedRelevance = relevance === "not_validated" ? "Not Relevant" : relevance;
+                score += relevanceWeights[normalizedRelevance] || 1; // Default to 1 if unknown
+            }
+            
+            return score;
+        }
+        
         function sortPapers(sortType) {
             switch (sortType) {
                 case 'recommend_best':
@@ -14000,6 +14037,12 @@
                     break;
                 case 'recommend_worst':
                     filteredSortedPapers.sort((a, b) => calculateRecommendationScore(a) - calculateRecommendationScore(b));
+                    break;
+                case 'relevance_high':
+                    filteredSortedPapers.sort((a, b) => calculateRelevanceScore(b) - calculateRelevanceScore(a));
+                    break;
+                case 'relevance_low':
+                    filteredSortedPapers.sort((a, b) => calculateRelevanceScore(a) - calculateRelevanceScore(b));
                     break;
                 case 'highest_hindex_asc':
                     filteredSortedPapers.sort((a, b) => getHighestHIndex(a) - getHighestHIndex(b));
@@ -14146,6 +14189,8 @@
             const sortNames = {
                 'recommend_best': 'Recommendation (Best First)',
                 'recommend_worst': 'Recommendation (Worst First)',
+                'relevance_high': 'Relevance (Highest to Lowest)',
+                'relevance_low': 'Relevance (Lowest to Highest)',
                 'highest_hindex_asc': 'Highest H-Index (Ascending)',
                 'highest_hindex_desc': 'Highest H-Index (Descending)',
                 'average_hindex_asc': 'Average H-Index (Ascending)',
@@ -16216,10 +16261,18 @@
         }
         
         function displayCurrentPage() {
+            // Check if there are no papers to display
+            if (filteredSortedPapers.length === 0) {
+                showNoPapersMessage();
+                hidePaginationSections();
+                return;
+            }
+            
             const startIndex = (currentPage - 1) * PAPERS_PER_PAGE;
             const endIndex = startIndex + PAPERS_PER_PAGE;
             currentPagePapers = filteredSortedPapers.slice(startIndex, endIndex);
             
+            showPaginationSections();
             populatePaperCards(currentPagePapers, startIndex + 1);
             
             // Re-run truncation after new content is displayed
@@ -16241,6 +16294,52 @@
             if (desktopContainer) {
                 desktopContainer.innerHTML = papersHTML;
             }
+        }
+
+        function showNoPapersMessage() {
+            const mobileContainer = document.getElementById('mobile-papers');
+            const desktopContainer = document.getElementById('desktop-papers');
+            
+            const noPapersHTML = '<div class="text-center"><h2 class="font-heading text-2xl text-neutral-600">No papers to show</h2></div>';
+            
+            if (mobileContainer) {
+                mobileContainer.innerHTML = noPapersHTML;
+            }
+            if (desktopContainer) {
+                desktopContainer.innerHTML = noPapersHTML;
+            }
+        }
+
+        function hidePaginationSections() {
+            const paginationIds = [
+                'mobile-prev-btn', 'mobile-next-btn', 'mobile-pagination-numbers',
+                'desktop-prev-btn', 'desktop-next-btn', 'desktop-pagination-numbers',
+                'mobile-footer-prev-btn', 'mobile-footer-next-btn', 'mobile-footer-pagination-numbers',
+                'desktop-footer-prev-btn', 'desktop-footer-next-btn', 'desktop-footer-pagination-numbers'
+            ];
+            
+            paginationIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+        }
+
+        function showPaginationSections() {
+            const paginationIds = [
+                'mobile-prev-btn', 'mobile-next-btn', 'mobile-pagination-numbers',
+                'desktop-prev-btn', 'desktop-next-btn', 'desktop-pagination-numbers',
+                'mobile-footer-prev-btn', 'mobile-footer-next-btn', 'mobile-footer-pagination-numbers',
+                'desktop-footer-prev-btn', 'desktop-footer-next-btn', 'desktop-footer-pagination-numbers'
+            ];
+            
+            paginationIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = '';
+                }
+            });
         }
 
         // ============================================================================
