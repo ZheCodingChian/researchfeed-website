@@ -457,7 +457,28 @@
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Distributed Training</button>
                         <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Datasets</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Reset To Default</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Show All Papers</button>
+                        
+                        <!-- Sort By Dropdown -->
+                        <div class="relative">
+                            <button id="mobile-sort-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileSortDropdown()">
+                                <span class="font-bold">Sort By:</span> <span id="mobile-sort-text" class="font-normal">Recommendation (Best First)</span> <span class="text-base">▼</span>
+                            </button>
+                            <div id="mobile-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 py-xs">
+                                <div class="flex flex-col gap-xs">
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_desc')">Average H-Index (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
+                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Section 3: Advanced Filters -->
@@ -812,27 +833,6 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Sort By Dropdown -->
-                        <div class="relative">
-                            <button id="mobile-sort-btn" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleMobileSortDropdown()">
-                                <span class="font-bold">Sort By:</span> <span id="mobile-sort-text" class="font-normal">Recommendation (Best First)</span> <span class="text-base">▼</span>
-                            </button>
-                            <div id="mobile-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50 py-xs">
-                                <div class="flex flex-col gap-xs">
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_desc')">Average H-Index (Descending)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
-                                    <button class="w-full py-tag-y font-heading text-xl text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -886,7 +886,28 @@
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Distributed Training</button>
                         <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Datasets</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Reset To Default</button>
+                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Show All Papers</button>
+                        
+                        <!-- Sort By Dropdown -->
+                        <div class="relative">
+                            <button id="desktop-sort-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopSortDropdown()">
+                                <span class="font-bold">Sort By:</span> <span id="desktop-sort-text" class="font-normal">Recommendation (Best First)</span> <span class="text-sm">▼</span>
+                            </button>
+                            <div id="desktop-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50">
+                                <div class="flex flex-col gap-xs">
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_desc')">Average H-Index (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
+                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Section 3: Advanced Filters -->
@@ -1238,27 +1259,6 @@
                                     <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-60 bg-neutral-300 hover:bg-neutral-500 hover:text-neutral-10 transition-colors" onclick="applyHIndexFilter()">
                                         Apply Filter
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Sort By Dropdown -->
-                        <div class="relative">
-                            <button id="desktop-sort-btn" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 text-left px-tag-x hover:bg-neutral-600" onclick="toggleDesktopSortDropdown()">
-                                <span class="font-bold">Sort By:</span> <span id="desktop-sort-text" class="font-normal">Recommendation (Best First)</span> <span class="text-sm">▼</span>
-                            </button>
-                            <div id="desktop-sort-dropdown" class="hidden absolute top-full left-0 w-full bg-neutral-700 z-50">
-                                <div class="flex flex-col gap-xs">
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_best')">Recommendation (Best First)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('recommend_worst')">Recommendation (Worst First)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_asc')">Highest H-Index (Ascending)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('highest_hindex_desc')">Highest H-Index (Descending)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_asc')">Average H-Index (Ascending)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('average_hindex_desc')">Average H-Index (Descending)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_asc')">arXiv ID (Ascending)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('id_desc')">arXiv ID (Descending)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_az')">Title (A-Z)</button>
-                                    <button class="w-full py-tag-y font-heading text-lg text-neutral-10 hover:bg-neutral-600 text-left px-tag-x" onclick="changeSortAndClose('title_za')">Title (Z-A)</button>
                                 </div>
                             </div>
                         </div>
