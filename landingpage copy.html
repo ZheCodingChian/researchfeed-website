@@ -138,7 +138,7 @@
     
     <!-- Desktop Layout (visible ≥ 768px) -->
     <div class="hidden tablet:block">
-        <main class="flex p-3xl py-6xl gap-xl min-h-screen">
+        <main class="flex p-4xl py-6xl gap-lg min-h-screen">
             <!-- Left Column: Header Content (300px enforced) -->
             <div class="w-[300px] flex-shrink-0">
                 <div class="sticky top-2xl">
@@ -160,8 +160,177 @@
     </div>
 
     <script>
-        // Data will be injected here by builder.py
-        const feedData = <!--LANDING_DATA_HERE-->;
+        // Sample data for demonstration
+        const sampleData = [
+            {
+                date: "8 August 2025",
+                day: "Friday",
+                stats: {
+                    "Must Read": 2,
+                    "Should Read": 15,
+                    "RLHF": 4,
+                    "Weak Supervision": 6,
+                    "Diffusion Reasoning": 3,
+                    "Distributed Training": 9,
+                    "Datasets": 5,
+                },
+                total: 44
+            },
+            {
+                date: "7 August 2025",
+                day: "Thursday",
+                stats: {
+                    "Must Read": 1,
+                    "Should Read": 12,
+                    "RLHF": 3,
+                    "Weak Supervision": 5,
+                    "Diffusion Reasoning": 2,
+                    "Distributed Training": 8,
+                    "Datasets": 4,
+                },
+                total: 35
+            },
+            {
+                date: "6 August 2025",
+                day: "Wednesday",
+                stats: {
+                    "Must Read": 3,
+                    "Should Read": 18,
+                    "RLHF": 5,
+                    "Weak Supervision": 7,
+                    "Diffusion Reasoning": 4,
+                    "Distributed Training": 11,
+                    "Datasets": 6,
+                },
+                total: 54
+            },
+            {
+                date: "5 August 2025",
+                day: "Tuesday",
+                stats: {
+                    "Must Read": 0,
+                    "Should Read": 8,
+                    "RLHF": 2,
+                    "Weak Supervision": 3,
+                    "Diffusion Reasoning": 1,
+                    "Distributed Training": 5,
+                    "Datasets": 2,
+                },
+                total: 21
+            },
+            {
+                date: "4 August 2025",
+                day: "Monday",
+                stats: {
+                    "Must Read": 4,
+                    "Should Read": 20,
+                    "RLHF": 6,
+                    "Weak Supervision": 8,
+                    "Diffusion Reasoning": 5,
+                    "Distributed Training": 12,
+                    "Datasets": 7,
+                },
+                total: 62
+            },
+            {
+                date: "3 August 2025",
+                day: "Sunday",
+                stats: {
+                    "Must Read": 1,
+                    "Should Read": 10,
+                    "RLHF": 2,
+                    "Weak Supervision": 4,
+                    "Diffusion Reasoning": 2,
+                    "Distributed Training": 6,
+                    "Datasets": 3,
+                },
+                total: 28
+            },
+            {
+                date: "8 August 2025",
+                day: "Friday",
+                stats: {
+                    "Must Read": 2,
+                    "Should Read": 15,
+                    "RLHF": 4,
+                    "Weak Supervision": 6,
+                    "Diffusion Reasoning": 3,
+                    "Distributed Training": 9,
+                    "Datasets": 5,
+                },
+                total: 44
+            },
+            {
+                date: "7 August 2025",
+                day: "Thursday",
+                stats: {
+                    "Must Read": 1,
+                    "Should Read": 12,
+                    "RLHF": 3,
+                    "Weak Supervision": 5,
+                    "Diffusion Reasoning": 2,
+                    "Distributed Training": 8,
+                    "Datasets": 4,
+                },
+                total: 35
+            },
+            {
+                date: "6 August 2025",
+                day: "Wednesday",
+                stats: {
+                    "Must Read": 3,
+                    "Should Read": 18,
+                    "RLHF": 5,
+                    "Weak Supervision": 7,
+                    "Diffusion Reasoning": 4,
+                    "Distributed Training": 11,
+                    "Datasets": 6,
+                },
+                total: 54
+            },
+            {
+                date: "5 August 2025",
+                day: "Tuesday",
+                stats: {
+                    "Must Read": 0,
+                    "Should Read": 8,
+                    "RLHF": 2,
+                    "Weak Supervision": 3,
+                    "Diffusion Reasoning": 1,
+                    "Distributed Training": 5,
+                    "Datasets": 2,
+                },
+                total: 21
+            },
+            {
+                date: "4 August 2025",
+                day: "Monday",
+                stats: {
+                    "Must Read": 4,
+                    "Should Read": 20,
+                    "RLHF": 6,
+                    "Weak Supervision": 8,
+                    "Diffusion Reasoning": 5,
+                    "Distributed Training": 12,
+                    "Datasets": 7,
+                },
+                total: 62
+            },
+            {
+                date: "3 August 2025",
+                day: "Sunday",
+                stats: {
+                    "Must Read": 1,
+                    "Should Read": 10,
+                    "RLHF": 2,
+                    "Weak Supervision": 4,
+                    "Diffusion Reasoning": 2,
+                    "Distributed Training": 6,
+                    "Datasets": 3,
+                },
+                total: 28
+            }
+        ];
 
         // Function to create a date card
         function createDateCard(data, index) {
@@ -199,12 +368,10 @@
                     </div>
                     
                     <!-- Section 3: Action Button -->
-                    <a href="${data.url}" class="block">
-                        <button class="card-button w-full bg-primary-accent text-text-inverse font-heading text-button-md font-bold py-xs hover:scale-[1.02] transition-transform duration-200" 
-                                aria-label="View research papers for ${data.date}">
-                            View Papers ↗
-                        </button>
-                    </a>
+                    <button class="card-button w-full bg-primary-accent text-text-inverse font-heading text-button-md font-bold py-xs hover:scale-[1.02] transition-transform duration-200" 
+                            aria-label="View research papers for ${data.date}">
+                        View Papers ↗
+                    </button>
                 </article>
             `;
         }
@@ -214,7 +381,7 @@
             const mobileContainer = document.getElementById('mobile-cards');
             const desktopContainer = document.getElementById('desktop-cards');
             
-            const cardsHTML = feedData.map((data, index) => createDateCard(data, index)).join('');
+            const cardsHTML = sampleData.map((data, index) => createDateCard(data, index)).join('');
             
             mobileContainer.innerHTML = cardsHTML;
             desktopContainer.innerHTML = cardsHTML;

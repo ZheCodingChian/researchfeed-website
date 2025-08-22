@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 # Constants
 DATABASE_PATH = 'cache.db'
 TEMPLATE_PATH = 'template.html'
+LANDING_PAGE_PATH = 'landingpage.html'
 OUTPUT_DIR = 'output'
 
 
@@ -304,6 +305,104 @@ def format_date_for_title(date_str: str) -> str:
         return date_str
 
 
+def get_day_name(date_str: str) -> str:
+    """Get day name from YYYY-MM-DD date string."""
+    try:
+        date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+        return date_obj.strftime('%A')  # "Friday"
+    except ValueError:
+        logger.warning(f"Invalid date format: {date_str}")
+        return ""
+
+
+def get_landing_page_data() -> List[Dict[str, Any]]:
+    """
+    Get data for all dates to populate the landing page.
+    Returns list of date objects with stats and URL.
+    """
+    conn = get_db_connection()
+    try:
+        cursor = conn.cursor()
+        
+        # Get all dates with papers
+        cursor.execute("""
+            SELECT DISTINCT DATE(published_date) as date 
+            FROM papers 
+            WHERE published_date IS NOT NULL 
+            ORDER BY date DESC
+        """)
+        
+        dates = [row['date'] for row in cursor.fetchall()]
+        logger.info(f"Processing {len(dates)} dates for landing page")
+        
+        landing_data = []
+        
+        for date in dates:
+            # Get total papers for this date
+            cursor.execute(
+                "SELECT COUNT(*) as total FROM papers WHERE DATE(published_date) = ?",
+                (date,)
+            )
+            total_papers = cursor.fetchone()['total']
+            
+            if total_papers == 0:
+                continue
+            
+            # Get recommendation score counts
+            cursor.execute("""
+                SELECT 
+                    COUNT(CASE WHEN recommendation_score = 'Must Read' THEN 1 END) as must_read,
+                    COUNT(CASE WHEN recommendation_score = 'Should Read' THEN 1 END) as should_read
+                FROM papers 
+                WHERE DATE(published_date) = ?
+            """, (date,))
+            
+            recommendation_counts = cursor.fetchone()
+            
+            # Get relevance counts for each category
+            cursor.execute("""
+                SELECT 
+                    COUNT(CASE WHEN rlhf_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as rlhf,
+                    COUNT(CASE WHEN weak_supervision_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as weak_supervision,
+                    COUNT(CASE WHEN diffusion_reasoning_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as diffusion_reasoning,
+                    COUNT(CASE WHEN distributed_training_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as distributed_training,
+                    COUNT(CASE WHEN datasets_relevance IN ('Highly Relevant', 'Moderately Relevant', 'Tangentially Relevant') THEN 1 END) as datasets
+                FROM papers 
+                WHERE DATE(published_date) = ?
+            """, (date,))
+            
+            relevance_counts = cursor.fetchone()
+            
+            # Format the data
+            date_data = {
+                "date": format_date_for_title(date),
+                "day": get_day_name(date),
+                "stats": {
+                    "Must Read": recommendation_counts['must_read'],
+                    "Should Read": recommendation_counts['should_read'],
+                    "RLHF": relevance_counts['rlhf'],
+                    "Weak Supervision": relevance_counts['weak_supervision'],
+                    "Diffusion Reasoning": relevance_counts['diffusion_reasoning'],
+                    "Distributed Training": relevance_counts['distributed_training'],
+                    "Datasets": relevance_counts['datasets']
+                },
+                "total": total_papers,
+                "url": f"{date}.html"
+            }
+            
+            landing_data.append(date_data)
+            logger.debug(f"Processed date {date}: {total_papers} papers")
+        
+        logger.info(f"Generated landing page data for {len(landing_data)} dates")
+        return landing_data
+        
+    except sqlite3.Error as e:
+        logger.error(f"Database query failed: {e}")
+        raise Exception(f"Failed to generate landing page data: {e}")
+    finally:
+        conn.close()
+
+
 def generate_static_page(date: str, paper_data: Dict[str, Any], template_content: str) -> str:
     """
     Generate static HTML page by injecting paper data into template.
@@ -334,23 +433,47 @@ def generate_static_page(date: str, paper_data: Dict[str, Any], template_content
         raise Exception(f"Page generation failed: {e}")
 
 
+def generate_landing_page(landing_data: List[Dict[str, Any]], landing_template_content: str) -> str:
+    """
+    Generate landing page by injecting feed data into landing page template.
+    """
+    try:
+        # Serialize landing data to JSON
+        json_data = safe_json_dumps(landing_data)
+        
+        # Replace data placeholder in landing page template
+        html_content = landing_template_content.replace('<!--LANDING_DATA_HERE-->', json_data)
+        
+        return html_content
+        
+    except Exception as e:
+        logger.error(f"Failed to generate landing page: {e}")
+        raise Exception(f"Landing page generation failed: {e}")
+
+
 def build_static_site(target_date: Optional[str] = None, max_papers: Optional[int] = None):
     """
-    Main build function - generates static HTML pages.
+    Main build function - generates static HTML pages and landing page.
     """
     logger.info("Starting static site build")
     
-    # Validate template exists
+    # Validate templates exist
     if not os.path.exists(TEMPLATE_PATH):
         raise FileNotFoundError(f"Template file not found: {TEMPLATE_PATH}")
+    if not os.path.exists(LANDING_PAGE_PATH):
+        raise FileNotFoundError(f"Landing page template not found: {LANDING_PAGE_PATH}")
     
-    # Read template content
+    # Read template contents
     try:
         with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
             template_content = f.read()
         logger.info(f"Loaded template from {TEMPLATE_PATH}")
+        
+        with open(LANDING_PAGE_PATH, 'r', encoding='utf-8') as f:
+            landing_template_content = f.read()
+        logger.info(f"Loaded landing page template from {LANDING_PAGE_PATH}")
     except Exception as e:
-        raise Exception(f"Failed to read template: {e}")
+        raise Exception(f"Failed to read templates: {e}")
     
     # Create output directory
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -391,6 +514,24 @@ def build_static_site(target_date: Optional[str] = None, max_papers: Optional[in
         except Exception as e:
             logger.error(f"Failed to build page for {date}: {e}")
             raise Exception(f"Build failed for {date}: {e}")
+    
+    # Generate landing page (only if building all dates or no specific date was requested)
+    if not target_date:
+        try:
+            logger.info("Generating landing page")
+            landing_data = get_landing_page_data()
+            landing_html = generate_landing_page(landing_data, landing_template_content)
+            
+            # Write landing page to output directory
+            landing_output_file = os.path.join(OUTPUT_DIR, "index.html")
+            with open(landing_output_file, 'w', encoding='utf-8') as f:
+                f.write(landing_html)
+            
+            logger.info(f"Generated {landing_output_file} with {len(landing_data)} date entries")
+            
+        except Exception as e:
+            logger.error(f"Failed to build landing page: {e}")
+            raise Exception(f"Landing page build failed: {e}")
     
     logger.info(f"Build completed successfully. Generated {built_pages} pages in {OUTPUT_DIR}")
 
