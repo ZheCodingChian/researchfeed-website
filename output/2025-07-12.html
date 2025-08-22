@@ -74,7 +74,7 @@
                         },
                         bar: {
                             raw: 'rgba(107, 106, 101, 0.7)',       // #6B6A65 with 70% opacity
-                            normalized: '#4f4e4b' 
+                            normalized: 'rgba(107, 106, 101, 0.7)' // #6B6A65 with 70% opacity
                         }
                     },
                     
@@ -8652,7 +8652,7 @@
             const mobileContainer = document.getElementById('mobile-papers');
             const desktopContainer = document.getElementById('desktop-papers');
             
-            const noPapersHTML = '<div class="text-center"><h2 class="font-heading text-2xl text-neutral-600">No papers to show</h2></div>';
+            const noPapersHTML = '<div class="flex items-center justify-center min-h-screen"><h2 class="font-heading text-2xl text-neutral-600">No papers to show</h2></div>';
             
             if (mobileContainer) {
                 mobileContainer.innerHTML = noPapersHTML;
