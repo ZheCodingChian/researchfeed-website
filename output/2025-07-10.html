@@ -450,14 +450,14 @@
                     <!-- Section 2: Quick Filters -->
                     <div class="flex flex-col gap-sm">
                         <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Quick Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Must Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Should Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">RLHF</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Weak Supervision</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Distributed Training</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Datasets</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500">Reset To Default</button>
+                        <button id="mobile-quick-must-read" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('must-read')">Must Read</button>
+                        <button id="mobile-quick-should-read" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('should-read')">Should Read</button>
+                        <button id="mobile-quick-rlhf" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('rlhf')">RLHF</button>
+                        <button id="mobile-quick-weak-supervision" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('weak-supervision')">Weak Supervision</button>
+                        <button id="mobile-quick-diffusion-reasoning" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('diffusion-reasoning')">Diffusion Reasoning</button>
+                        <button id="mobile-quick-distributed-training" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('distributed-training')">Distributed Training</button>
+                        <button id="mobile-quick-datasets" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('datasets')">Datasets</button>
+                        <button id="mobile-quick-reset" class="w-full py-tag-y font-heading font-bold text-xl text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('reset')">Reset To Default</button>
                     </div>
                     
                     <!-- Section 3: Advanced Filters -->
@@ -879,14 +879,14 @@
                     <!-- Section 2: Quick Filters -->
                     <div class="flex flex-col gap-xs">
                         <h3 class="text-neutral-60 font-heading font-bold text-2xl text-left bg-transparent">Quick Filters</h3>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Must Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Should Read</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">RLHF</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Weak Supervision</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Diffusion Reasoning</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Distributed Training</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Datasets</button>
-                        <button class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500">Reset To Default</button>
+                        <button id="desktop-quick-must-read" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('must-read')">Must Read</button>
+                        <button id="desktop-quick-should-read" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('should-read')">Should Read</button>
+                        <button id="desktop-quick-rlhf" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('rlhf')">RLHF</button>
+                        <button id="desktop-quick-weak-supervision" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('weak-supervision')">Weak Supervision</button>
+                        <button id="desktop-quick-diffusion-reasoning" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('diffusion-reasoning')">Diffusion Reasoning</button>
+                        <button id="desktop-quick-distributed-training" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('distributed-training')">Distributed Training</button>
+                        <button id="desktop-quick-datasets" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('datasets')">Datasets</button>
+                        <button id="desktop-quick-reset" class="w-full py-tag-y font-heading font-bold text-lg text-neutral-10 bg-neutral-500 hover:bg-neutral-600" onclick="applyQuickFilter('reset')">Reset To Default</button>
                     </div>
                     
                     <!-- Section 3: Advanced Filters -->
@@ -13313,6 +13313,7 @@
             
             // Update UI to reflect current filters
             syncPendingNoveltyUI();
+            updateNoveltyButtonText();
         }
         
         function resetPendingImpactFilters() {
@@ -13321,6 +13322,7 @@
             
             // Update UI to reflect current filters
             syncPendingImpactUI();
+            updateImpactButtonText();
         }
         
         function syncHIndexUI() {
@@ -14037,6 +14039,12 @@
             }
         }
         
+        function resetPendingScoringFilters() {
+            pendingScoringFilters = { ...currentScoringFilters };
+            syncPendingScoringUI();
+            updateScoringButtonText();
+        }
+        
         function closeMobileScoringDropdown() {
             const dropdown = document.getElementById('mobile-scoring-dropdown');
             const button = document.getElementById('mobile-scoring-btn');
@@ -14211,6 +14219,12 @@
             pendingRecommendationFilters.shouldRead = document.getElementById('mobile-recommendation-should').checked;
             pendingRecommendationFilters.canSkip = document.getElementById('mobile-recommendation-skip').checked;
             pendingRecommendationFilters.ignore = document.getElementById('mobile-recommendation-ignore').checked;
+        }
+        
+        function resetPendingRecommendationFilters() {
+            pendingRecommendationFilters = { ...currentRecommendationFilters };
+            syncPendingRecommendationUI();
+            updateRecommendationButtonText();
         }
         
         function closeMobileRecommendationDropdown() {
@@ -14742,6 +14756,7 @@
         function resetPendingTopicFilters() {
             pendingTopicFilters = { ...currentTopicFilters };
             syncPendingTopicUI();
+            updateTopicButtonText();
         }
         
         function closeMobileTopicDropdown() {
@@ -14882,15 +14897,20 @@
         }
         
         function updateRelevanceButtonText() {
+            // Read the current checkbox states from the UI (like H-Index filter does)
+            const highlyRelevantChecked = document.getElementById('mobile-relevance-highly').checked;
+            const moderatelyRelevantChecked = document.getElementById('mobile-relevance-moderately').checked;
+            const tangentiallyRelevantChecked = document.getElementById('mobile-relevance-tangentially').checked;
+            const notRelevantChecked = document.getElementById('mobile-relevance-not').checked;
+            
             const selectedOptions = [];
-            if (currentRelevanceFilters.highlyRelevant) selectedOptions.push("Highly Relevant");
-            if (currentRelevanceFilters.moderatelyRelevant) selectedOptions.push("Moderately Relevant");
-            if (currentRelevanceFilters.tangentiallyRelevant) selectedOptions.push("Tangentially Relevant");
-            if (currentRelevanceFilters.notRelevant) selectedOptions.push("Not Relevant");
+            if (highlyRelevantChecked) selectedOptions.push("Highly Relevant");
+            if (moderatelyRelevantChecked) selectedOptions.push("Moderately Relevant");
+            if (tangentiallyRelevantChecked) selectedOptions.push("Tangentially Relevant");
+            if (notRelevantChecked) selectedOptions.push("Not Relevant");
             
             const selectionText = selectedOptions.length === 4 ? "All Selected" : 
                                 selectedOptions.length === 0 ? "None Selected" : 
-                                selectedOptions.length === 1 ? selectedOptions[0] : 
                                 `${selectedOptions.length} Selected`;
             
             const mobileButton = document.getElementById('mobile-relevance-btn');
@@ -14931,6 +14951,7 @@
         function resetPendingRelevanceFilters() {
             pendingRelevanceFilters = { ...currentRelevanceFilters };
             syncPendingRelevanceUI();
+            updateRelevanceButtonText();
         }
         
         function closeMobileRelevanceDropdown() {
@@ -16283,6 +16304,118 @@
         }
 
         // ============================================================================
+        // QUICK FILTER FUNCTIONS
+        // ============================================================================
+
+
+        function applyQuickFilter(filterType) {
+            // Build URL parameters based on filter type
+            const url = new URL(window.location.href);
+            
+            // Clear all existing parameters
+            url.search = '';
+            
+            // Set sort to recommendation best first for all filters
+            url.searchParams.set('sort', 'recommend_best');
+            
+            switch(filterType) {
+                case 'must-read':
+                    // Recommendation: Only Must Read + Scoring: Only Has Scoring
+                    url.searchParams.set('recommendation_must', 'true');
+                    url.searchParams.set('recommendation_should', 'false');
+                    url.searchParams.set('recommendation_skip', 'false');
+                    url.searchParams.set('recommendation_ignore', 'false');
+                    url.searchParams.set('scoring_has', 'true');
+                    url.searchParams.set('scoring_no', 'false');
+                    break;
+                    
+                case 'should-read':
+                    // Recommendation: Only Should Read + Scoring: Only Has Scoring
+                    url.searchParams.set('recommendation_must', 'false');
+                    url.searchParams.set('recommendation_should', 'true');
+                    url.searchParams.set('recommendation_skip', 'false');
+                    url.searchParams.set('recommendation_ignore', 'false');
+                    url.searchParams.set('scoring_has', 'true');
+                    url.searchParams.set('scoring_no', 'false');
+                    break;
+                    
+                case 'rlhf':
+                    // Topic: Only RLHF + Relevance: Exclude Not Relevant
+                    url.searchParams.set('topic_rlhf', 'true');
+                    url.searchParams.set('topic_weak_supervision', 'false');
+                    url.searchParams.set('topic_diffusion_reasoning', 'false');
+                    url.searchParams.set('topic_distributed_training', 'false');
+                    url.searchParams.set('topic_datasets', 'false');
+                    url.searchParams.set('relevance_highly', 'true');
+                    url.searchParams.set('relevance_moderately', 'true');
+                    url.searchParams.set('relevance_tangentially', 'true');
+                    url.searchParams.set('relevance_not', 'false');
+                    break;
+                    
+                case 'weak-supervision':
+                    url.searchParams.set('topic_rlhf', 'false');
+                    url.searchParams.set('topic_weak_supervision', 'true');
+                    url.searchParams.set('topic_diffusion_reasoning', 'false');
+                    url.searchParams.set('topic_distributed_training', 'false');
+                    url.searchParams.set('topic_datasets', 'false');
+                    url.searchParams.set('relevance_highly', 'true');
+                    url.searchParams.set('relevance_moderately', 'true');
+                    url.searchParams.set('relevance_tangentially', 'true');
+                    url.searchParams.set('relevance_not', 'false');
+                    break;
+                    
+                case 'diffusion-reasoning':
+                    url.searchParams.set('topic_rlhf', 'false');
+                    url.searchParams.set('topic_weak_supervision', 'false');
+                    url.searchParams.set('topic_diffusion_reasoning', 'true');
+                    url.searchParams.set('topic_distributed_training', 'false');
+                    url.searchParams.set('topic_datasets', 'false');
+                    url.searchParams.set('relevance_highly', 'true');
+                    url.searchParams.set('relevance_moderately', 'true');
+                    url.searchParams.set('relevance_tangentially', 'true');
+                    url.searchParams.set('relevance_not', 'false');
+                    break;
+                    
+                case 'distributed-training':
+                    url.searchParams.set('topic_rlhf', 'false');
+                    url.searchParams.set('topic_weak_supervision', 'false');
+                    url.searchParams.set('topic_diffusion_reasoning', 'false');
+                    url.searchParams.set('topic_distributed_training', 'true');
+                    url.searchParams.set('topic_datasets', 'false');
+                    url.searchParams.set('relevance_highly', 'true');
+                    url.searchParams.set('relevance_moderately', 'true');
+                    url.searchParams.set('relevance_tangentially', 'true');
+                    url.searchParams.set('relevance_not', 'false');
+                    break;
+                    
+                case 'datasets':
+                    url.searchParams.set('topic_rlhf', 'false');
+                    url.searchParams.set('topic_weak_supervision', 'false');
+                    url.searchParams.set('topic_diffusion_reasoning', 'false');
+                    url.searchParams.set('topic_distributed_training', 'false');
+                    url.searchParams.set('topic_datasets', 'true');
+                    url.searchParams.set('relevance_highly', 'true');
+                    url.searchParams.set('relevance_moderately', 'true');
+                    url.searchParams.set('relevance_tangentially', 'true');
+                    url.searchParams.set('relevance_not', 'false');
+                    break;
+                    
+                case 'reset':
+                    // Clear all parameters, which will reset everything to defaults
+                    break;
+                    
+                default:
+                    console.warn('Unknown quick filter type:', filterType);
+                    return;
+            }
+            
+            // Navigate to new URL, which will trigger existing URL parsing logic
+            window.location.href = url.toString();
+        }
+
+
+
+        // ============================================================================
         // PAGE INITIALIZATION
         // ============================================================================
 
@@ -17063,6 +17196,10 @@
                             resetPendingRelevanceFilters();
                         } else if (dropdown.id.includes('topic')) {
                             resetPendingTopicFilters();
+                        } else if (dropdown.id.includes('recommendation')) {
+                            resetPendingRecommendationFilters();
+                        } else if (dropdown.id.includes('scoring')) {
+                            resetPendingScoringFilters();
                         }
                     }
                 }
